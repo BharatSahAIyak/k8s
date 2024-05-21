@@ -23,3 +23,7 @@ variable "k8s_worker_node_size" {}
 variable "k8s_worker_node_count" {}
 
 variable "k8s_worker_disk_size" {}
+
+#admin
+variable "k8s_admin_node_size" {}
+variable "k8s_admin_disk_size" {}
