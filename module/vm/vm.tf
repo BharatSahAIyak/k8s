@@ -6,7 +6,18 @@ variable "node_vm_size" {}
 variable "node_disk_size" {}
 variable "resource_group_location" {}
 variable "resource_group_name" {}
+variable "node_public_ip" {
+    type    = bool
+    default = false
+}
 
+resource "azurerm_public_ip" "public-ip" {
+  count = var.node_public_ip ? var.number_of_nodes : 0
+  name                = "${var.node_type}-${count.index}-ip"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Static"
+}
 resource "azurerm_network_interface" "nic" {
   count               = var.number_of_nodes
   name                = "${var.node_type}-${count.index}-nic"
@@ -17,6 +28,7 @@ resource "azurerm_network_interface" "nic" {
     name                          = "${title(var.node_type)}IpConfig"
     private_ip_address_allocation = "Dynamic"
     subnet_id                     = var.subnet_id
+    public_ip_address_id = var.node_public_ip ? azurerm_public_ip.public-ip[count.index].id : null
   }
   enable_ip_forwarding      = true
 }
@@ -71,7 +83,7 @@ output "nic_ids" {
   value = azurerm_network_interface.nic[*].id
 }
 
-output "public-ips" {
+output "vm-ips" {
   # value = azurerm_linux_virtual_machine.vm.public_ip_address 
   value = {for vm in azurerm_linux_virtual_machine.vm: vm.name => {
     id = vm.id

@@ -1,14 +1,15 @@
-output "master-public-ips" {
-  value = module.k8s_master.public-ips
+output "master-vm-ips" {
+  value = module.k8s_master.vm-ips
 }
 
-output "worker-public-ips" {
-  value = module.k8s_worker.public-ips
-
+output "worker-vm-ips" {
+  value = module.k8s_worker.vm-ips
 }
 
-output "load-balancer" {
-  value = {
-    ip = azurerm_public_ip.lb.ip_address
-  }
+output "admin-vm-ips" {
+  value = module.k8s_admin.vm-ips
+}
+
+output "lb-vm-ips" {
+  value = module.k8s_lb.vm-ips
 }
