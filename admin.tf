@@ -1,4 +1,4 @@
-module "k8s_worker" {
+module "k8s_admin" {
   source                  = "./module/vm"
   node_type               = "admin"
   number_of_nodes         = "1"

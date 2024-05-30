@@ -14,8 +14,8 @@ variable "node_public_ip" {
 resource "azurerm_public_ip" "public-ip" {
   count = var.node_public_ip ? var.number_of_nodes : 0
   name                = "${var.node_type}-${count.index}-ip"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = var.resource_group_name
+  location            = var.resource_group_location
   allocation_method   = "Static"
 }
 resource "azurerm_network_interface" "nic" {

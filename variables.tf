@@ -27,3 +27,7 @@ variable "k8s_worker_disk_size" {}
 #admin
 variable "k8s_admin_node_size" {}
 variable "k8s_admin_disk_size" {}
+
+#lb
+variable "k8s_lb_node_size" {}
+variable "k8s_lb_disk_size" {}

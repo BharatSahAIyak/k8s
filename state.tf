@@ -1,12 +1,12 @@
-#todo
-#  terraform {
-#   backend "azurerm" {
-#     resource_group_name  = "StorageAccount-ResourceGroup"
-#     storage_account_name = "abcd1234"
-#     container_name       = "tfstate"
-#     key                  = "terraform-k8s-v1/terraform.tfstate"
-#   }
-# }
+# todo
+ terraform {
+  backend "azurerm" {
+    resource_group_name  = "deployment"
+    storage_account_name = "bhasai01dl9"
+    container_name       = "terraform"
+    key                  = "terraform-k8s-v1/terraform.tfstate"
+  }
+}
 
 terraform {
   required_providers {
