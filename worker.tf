@@ -1,21 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# data "azurerm_resource_group" "rg" {
-#   name = var.resource_group_name
-# }
-
 module "k8s_worker" {
   source                  = "./module/vm"
   node_type               = "worker"

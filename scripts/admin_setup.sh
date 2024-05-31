@@ -32,3 +32,57 @@ rm kubectl
 fi
 # setup kubectl
 ansible-playbook -i kubespray/inventory/mycluster/inventory.ini  kubectl_setup.yml 
+
+#setup kong ingress
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+echo "
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+ name: kong
+ annotations:
+   konghq.com/gatewayclass-unmanaged: 'true'
+
+spec:
+ controllerName: konghq.com/kic-gateway-controller
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+ name: kong
+spec:
+ gatewayClassName: kong
+ listeners:
+ - name: proxy
+   port: 80
+   protocol: HTTP
+" | kubectl apply -f -
+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm repo add kong https://charts.konghq.com
+helm repo update
+
+cat > kong-values.yml <<EOF
+#controller:
+#  ingressController:
+#    env:
+#      LOG_LEVEL: trace
+#      dump_config: true
+
+gateway:
+  admin:
+    http:
+      enabled: true
+  proxy:
+    type: NodePort
+    http:
+      enabled: true
+      nodePort: 32001
+    tls:
+      enabled: false
+#  ingressController:
+#    env:
+#      LOG_LEVEL: trace
+EOF
+helm install kong kong/ingress -n kong --create-namespace -f kong-values.yml
