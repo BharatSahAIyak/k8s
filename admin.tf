@@ -8,4 +8,48 @@ module "k8s_admin" {
   node_disk_size          = var.k8s_admin_disk_size
   resource_group_name     = var.resource_group_name
   resource_group_location = var.resource_group_location
+  node_public_ip          = true
+}
+
+resource "local_sensitive_file" "ssh_private_key" {
+  filename = "${path.module}/admin.pem"
+  content  = module.k8s_admin.private_key
+}
+
+resource "null_resource" "setup-admin" {
+
+    connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = module.k8s_admin.private_key
+    host     = module.k8s_admin.vm-ips["admin-0"].public-ip
+  }
+  provisioner "file" {
+    content = templatefile("${path.module}/inventory.ini.tftpl",
+  {master_nodes = [for vm , ips in module.k8s_master.vm-ips: {name = vm, ip=ips.private-ip}],
+  worker_nodes = [for vm , ips in module.k8s_worker.vm-ips: {name = vm, ip=ips.private-ip}],
+  })
+  destination = "/home/ubuntu/inventory.ini"
+  }
+
+  provisioner "file" {
+    content = module.k8s_master.private_key
+    destination = "/home/ubuntu/.ssh/master.pem"
+  }
+   provisioner "file" {
+    content = module.k8s_worker.private_key
+    destination = "/home/ubuntu/.ssh/worker.pem"
+  } 
+  provisioner "file" {
+    content = module.k8s_lb.private_key
+    destination = "/home/ubuntu/.ssh/lb.pem"
+  }
+  provisioner "file" {
+source = "ansible/kubectl_setup.yml"
+destination = "/home/ubuntu/kubectl_setup.yml"
+}
+  provisioner "remote-exec" {
+script = "${path.module}/scripts/admin_setup.sh"  
+  }
+
 }
