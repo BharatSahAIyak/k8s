@@ -1,0 +1,31 @@
+## Configure 'ip' variable to bind kubernetes services on a
+## different ip than the default iface
+#node1 ansible_host=192.168.0.165
+#node2 ansible_host=192.168.0.228 
+
+%{ for nodes in master_nodes ~}
+${nodes.name} ansible_host=${nodes.ip} ansible_ssh_private_key_file=/home/ubuntu/.ssh/master.pem
+%{ endfor ~}
+%{ for nodes in worker_nodes ~}
+${nodes.name} ansible_host=${nodes.ip} ansible_ssh_private_key_file=/home/ubuntu/.ssh/worker.pem
+%{ endfor ~}
+
+
+[kube_control_plane]
+%{ for nodes in master_nodes ~}
+${nodes.name}
+%{ endfor ~}
+
+[etcd]
+%{ for nodes in master_nodes ~}
+${nodes.name}
+%{ endfor ~}
+
+[kube_node]
+%{ for nodes in worker_nodes ~}
+${nodes.name}
+%{ endfor ~}
+
+[k8s_cluster:children]
+kube_node
+kube_control_plane
