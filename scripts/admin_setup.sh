@@ -26,63 +26,15 @@ cd ~
 
 if ! command -v kubectl &> /dev/null; then
 #install kubectl
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/v1.29.5/bin/linux/amd64/kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 rm kubectl
 fi
 # setup kubectl
 ansible-playbook -i kubespray/inventory/mycluster/inventory.ini  kubectl_setup.yml 
 
-#setup kong ingress
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
-echo "
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: GatewayClass
-metadata:
- name: kong
- annotations:
-   konghq.com/gatewayclass-unmanaged: 'true'
 
-spec:
- controllerName: konghq.com/kic-gateway-controller
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
- name: kong
-spec:
- gatewayClassName: kong
- listeners:
- - name: proxy
-   port: 80
-   protocol: HTTP
-" | kubectl apply -f -
+#setup the image repository
+kubectl create secret docker-registry regcred --docker-server='ghcr.io' --docker-username="${DOCKER_USERNAME:?DOCKER_USERNAME is not set}" --docker-password="${DOCKER_PASSWORD:?DOCKER_PASSWORD is not set}"
+kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'
 
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-helm repo add kong https://charts.konghq.com
-helm repo update
-
-cat > kong-values.yml <<EOF
-#controller:
-#  ingressController:
-#    env:
-#      LOG_LEVEL: trace
-#      dump_config: true
-
-gateway:
-  admin:
-    http:
-      enabled: true
-  proxy:
-    type: NodePort
-    http:
-      enabled: true
-      nodePort: 32001
-    tls:
-      enabled: false
-#  ingressController:
-#    env:
-#      LOG_LEVEL: trace
-EOF
-helm install kong kong/ingress -n kong --create-namespace -f kong-values.yml

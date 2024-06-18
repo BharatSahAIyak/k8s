@@ -17,7 +17,10 @@ resource "local_sensitive_file" "ssh_private_key" {
 }
 
 resource "null_resource" "setup-admin" {
-
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  depends_on = [ module.k8s_admin,module.k8s_lb,module.k8s_master,module.k8s_stateful,module.k8s_worker ]
     connection {
     type     = "ssh"
     user     = "ubuntu"
@@ -48,8 +51,6 @@ resource "null_resource" "setup-admin" {
 source = "ansible/kubectl_setup.yml"
 destination = "/home/ubuntu/kubectl_setup.yml"
 }
-  provisioner "remote-exec" {
-script = "${path.module}/scripts/admin_setup.sh"  
-  }
+
 
 }

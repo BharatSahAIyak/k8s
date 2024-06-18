@@ -6,7 +6,7 @@ module "k8s_lb" {
   node_type               = "lb"
   number_of_nodes         = 1
   subnet_id               = azurerm_subnet.master.id
-  security_group_id       = azurerm_network_security_group.security_group.id
+  security_group_id       = azurerm_network_security_group.lb_security_group.id
   node_vm_size            = var.k8s_lb_node_size #todo 
   node_disk_size          = var.k8s_lb_disk_size
   resource_group_name     = var.resource_group_name

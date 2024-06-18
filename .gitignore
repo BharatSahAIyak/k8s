@@ -1,3 +1,6 @@
+/bhasai/*
+/k8s-exp-admin*
+*.pem
 # Local .terraform directories
 **/.terraform/*
 

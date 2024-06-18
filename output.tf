@@ -14,6 +14,10 @@ output "lb-vm-ips" {
   value = module.k8s_lb.vm-ips
 }
 
+output "stateful-vm-ips" {
+  value = module.k8s_stateful.vm-ips
+}
+
 output "master-private-key" {
   value = module.k8s_master.private_key
   sensitive = true
@@ -26,6 +30,12 @@ output "worker-private-key" {
   value = module.k8s_worker.private_key
   sensitive = true
 }
+
+output "stateful-private-key" {
+  value = module.k8s_stateful.private_key
+  sensitive = true
+}
+
 output "lb-private-key" {
   value = module.k8s_lb.private_key
   sensitive = true

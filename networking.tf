@@ -33,6 +33,13 @@ resource "azurerm_subnet" "worker" {
   address_prefixes     = [var.worker_subnet_cidr]
 }
 
+resource "azurerm_subnet" "stateful" {
+  name                 = "stateful-subnet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vpc.name
+  address_prefixes     = [var.stateful_subnet_cidr]
+}
+
 resource "azurerm_network_security_group" "security_group" {
   name                = "k8s-sg"
   resource_group_name = azurerm_resource_group.rg.name
@@ -58,6 +65,27 @@ resource "azurerm_network_security_group" "security_group" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = var.kube_apiserver_port
+    source_address_prefix      = "Internet"
+    destination_address_prefix = "*"
+    access                     = "Allow"
+    priority                   = 101
+    direction                  = "Inbound"
+  }
+}
+
+resource "azurerm_network_security_group" "lb_security_group" {
+  name                = "k8s-lb-sg"
+  resource_group_name = azurerm_resource_group.rg.name
+
+  location = azurerm_resource_group.rg.location
+
+
+  security_rule {
+    name                       = "https"
+    description                = "Allow http/https"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_ranges     = ["80","443"]
     source_address_prefix      = "Internet"
     destination_address_prefix = "*"
     access                     = "Allow"
