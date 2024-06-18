@@ -1,6 +1,7 @@
 /bhasai/*
 /k8s-exp-admin*
 *.pem
+*.lock.hcl
 # Local .terraform directories
 **/.terraform/*
 
