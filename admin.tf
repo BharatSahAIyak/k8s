@@ -20,7 +20,7 @@ resource "null_resource" "setup-admin" {
   triggers = {
     always_run = "${timestamp()}"
   }
-  depends_on = [ module.k8s_admin,module.k8s_lb,module.k8s_master,module.k8s_stateful,module.k8s_worker ]
+  depends_on = [ module.k8s_admin,module.k8s_lb,module.k8s_master,module.k8s_stateful,module.k8s_worker , module.k8s_worker_gpu ]
     connection {
     type     = "ssh"
     user     = "ubuntu"
@@ -30,7 +30,7 @@ resource "null_resource" "setup-admin" {
   provisioner "file" {
     content = templatefile("${path.module}/inventory.ini.tftpl",
   {master_nodes = [for vm , ips in module.k8s_master.vm-ips: {name = vm, ip=ips.private-ip}],
-  worker_nodes = [for vm , ips in module.k8s_worker.vm-ips: {name = vm, ip=ips.private-ip}],
+  worker_nodes = [for vm , ips in merge(module.k8s_worker.vm-ips,module.k8s_worker_gpu.vm-ips): {name = vm, ip=ips.private-ip}],
   })
   destination = "/home/ubuntu/inventory.ini"
   }
@@ -42,7 +42,11 @@ resource "null_resource" "setup-admin" {
    provisioner "file" {
     content = module.k8s_worker.private_key
     destination = "/home/ubuntu/.ssh/worker.pem"
-  } 
+  }
+  provisioner "file" {
+    content = module.k8s_worker_gpu.private_key
+    destination = "/home/ubuntu/.ssh/worker_gpu.pem"
+  }
   provisioner "file" {
     content = module.k8s_lb.private_key
     destination = "/home/ubuntu/.ssh/lb.pem"
