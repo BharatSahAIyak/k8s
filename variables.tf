@@ -20,11 +20,12 @@ variable "k8s_master_disk_size" {}
 
 #worker
 variable "k8s_worker_node_size" {}
-
 variable "k8s_worker_node_count" {}
-
 variable "k8s_worker_disk_size" {}
 
+variable "k8s_worker_gpu_node_size" {}
+variable "k8s_worker_gpu_node_count" {}
+variable "k8s_worker_gpu_disk_size" {}
 #admin
 variable "k8s_admin_node_size" {}
 variable "k8s_admin_disk_size" {}
