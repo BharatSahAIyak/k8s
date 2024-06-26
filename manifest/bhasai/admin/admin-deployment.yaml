@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ../kompose convert -f ../docker-compose-resolved.yaml --profile=application --profile=database
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: admin
+  name: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: admin
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ../kompose convert -f ../docker-compose-resolved.yaml --profile=application --profile=database
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.network/bhasai-default: "true"
+        io.kompose.service: admin
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: env-secret
+          image: registry.k8s.bhasai.samagra.io/bharatsahaiyak/admin:dev
+          name: admin
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+spec:
+  selector:
+    io.kompose.service: admin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: admin 
+  namespace: default
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "admin.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: admin-service
+            port:
+              number: 80
+---
