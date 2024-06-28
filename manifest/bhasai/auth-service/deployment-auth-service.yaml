@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: auth-service
           image: ghcr.io/bharatsahaiyak/auth-service:dev
           name: auth-service
           resources:

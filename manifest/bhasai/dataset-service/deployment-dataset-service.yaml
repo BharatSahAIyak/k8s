@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: dataset-service
           image: ghcr.io/bharatsahaiyak/dataset-service:dev
           name: dataset-service
       restartPolicy: Always

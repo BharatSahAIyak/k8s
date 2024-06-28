@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: ai-tools-proxy
           image: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
           name: ai-tools-proxy
       restartPolicy: Always

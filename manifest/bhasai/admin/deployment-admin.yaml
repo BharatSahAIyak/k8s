@@ -17,7 +17,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: admin
           image: registry.k8s.bhasai.samagra.io/bharatsahaiyak/admin:dev
           name: admin
       restartPolicy: Always

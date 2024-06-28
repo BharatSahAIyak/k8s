@@ -11,6 +11,6 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: demo-org
           image: registry.k8s.bhasai.samagra.io/bharatsahaiyak/demo-org:dev
           name: demo-org

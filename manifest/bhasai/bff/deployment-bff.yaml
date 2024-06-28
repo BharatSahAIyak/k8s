@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: bff
           image: ghcr.io/bharatsahaiyak/bff:dev
           name: bff
       restartPolicy: Always

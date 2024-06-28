@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: user-management-service
           image: ghcr.io/bharatsahaiyak/user-management-service:dev
           name: user-management-service
       restartPolicy: Always

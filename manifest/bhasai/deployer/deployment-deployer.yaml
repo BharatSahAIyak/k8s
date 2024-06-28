@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: deployer
           image: ghcr.io/bharatsahaiyak/deployer:dev
           name: deployer
           resources:

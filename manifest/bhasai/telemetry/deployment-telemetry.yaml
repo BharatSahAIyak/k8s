@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: telemetry
           image: ghcr.io/bharatsahaiyak/telemetry:dev
           name: telemetry
       restartPolicy: Always

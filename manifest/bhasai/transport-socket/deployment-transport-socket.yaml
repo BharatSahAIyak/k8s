@@ -18,7 +18,7 @@ spec:
       containers:
         - envFrom:
           - secretRef:
-              name: env-secret
+              name: transport-socket
           image: ghcr.io/bharatsahaiyak/transport-socket:dev
           name: transport-socket
       restartPolicy: Always
