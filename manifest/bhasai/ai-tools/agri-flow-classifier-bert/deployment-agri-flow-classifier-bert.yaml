@@ -5,7 +5,7 @@ metadata:
     service: agri-flow-classifier-bert
   name: agri-flow-classifier-bert
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       service: agri-flow-classifier-bert
