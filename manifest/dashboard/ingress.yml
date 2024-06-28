@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard 
+  namespace: kubernetes-dashboard
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "dashboard.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: kubernetes-dashboard-kong-proxy 
+            port:
+              number: 80
