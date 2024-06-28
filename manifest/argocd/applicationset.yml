@@ -14,6 +14,9 @@ spec:
       - path: manifest/bhasai/*
       - path: manifest/bhasai/demo-org
         exclude: true
+      - path: manifest/bhasai/flowise
+        exclude: true
+      - path: manifest/bhasai/app
       - path: manifest/bhasai/kaniko #todo
         exclude: true
   template:
