@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: admin
+  name: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: admin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: admin
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: env-secret
+          image: registry.k8s.bhasai.samagra.io/bharatsahaiyak/admin:dev
+          name: admin
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: admin
+  name: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: admin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: admin
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: env-secret
+          image: registry.k8s.bhasai.samagra.io/bharatsahaiyak/admin:dev
+          name: admin
+      restartPolicy: Always

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+
+  labels:
+    app.kubernetes.io/name: ai-tools-proxy
+  name: ai-tools-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-tools-proxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-tools-proxy
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: env-secret
+          image: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
+          name: ai-tools-proxy
+      restartPolicy: Always

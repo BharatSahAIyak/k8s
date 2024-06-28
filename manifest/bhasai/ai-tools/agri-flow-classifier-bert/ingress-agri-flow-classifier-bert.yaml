@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  agri-flow-classifier-bert
+  namespace: default
+  annotations:
+    konghq.com/strip-path: 'true'
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "ai-tools.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /text_classification/agri_flow_classifier_bert/local/
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: agri-flow-classifier-bert
+            port:
+              number: 80

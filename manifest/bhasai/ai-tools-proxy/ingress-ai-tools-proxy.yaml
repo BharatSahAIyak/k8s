@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-tools-proxy 
+  namespace: default
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "ai-tools-proxy.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ai-tools-proxy
+            port:
+              number: 80

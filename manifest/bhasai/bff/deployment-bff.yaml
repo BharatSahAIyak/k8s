@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+
+  labels:
+    app.kubernetes.io/name: bff
+  name: bff
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bff
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bff
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: env-secret
+          image: ghcr.io/bharatsahaiyak/bff:dev
+          name: bff
+      restartPolicy: Always

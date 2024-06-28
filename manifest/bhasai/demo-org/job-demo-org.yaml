@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demo-org
+spec:
+  completionMode: Indexed  # required for the feature
+  backoffLimitPerIndex: 1  # maximal number of failures per index
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - envFrom:
+          - secretRef:
+              name: env-secret
+          image: registry.k8s.bhasai.samagra.io/bharatsahaiyak/demo-org:dev
+          name: demo-org
