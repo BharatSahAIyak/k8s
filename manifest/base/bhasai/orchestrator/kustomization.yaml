@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- VaultStaticSecret-orchestrator.yml
+- deployment-orchestrator.yaml
+- ingress-orchestrator.yaml
+- service-orchestrator.yaml

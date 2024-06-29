@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: bhasai-dev
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/BharatSahAIyak/k8s
+      revision: add_argocd
+      directories:
+      - path: manifest/bhasai/*
+      - path: manifest/bhasai/demo-org
+        exclude: true
+      - path: manifest/bhasai/flowise
+        exclude: true
+      - path: manifest/bhasai/app
+        exclude: true
+      - path: manifest/bhasai/kaniko #todo
+        exclude: true
+  template:
+    metadata:
+      name: '{{.path.basename}}'
+    spec:
+      project: "bhasai-dev"
+      source:
+        repoURL: https://github.com/BharatSahAIyak/k8s
+        targetRevision: add_argocd
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: 'default'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true
