@@ -4,14 +4,14 @@ resources:
 - admin
 - ai-tools
 - ai-tools-proxy
-# - app
+- app
 - auth-service
 - bff
 - dataset-service
 # - demo-org
 - deployer
 - document-service
-# - flowise
+- flowise
 - inboundjs
 # - kaniko
 - orchestrator
