@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-demo
+spec:
+  containers:
+  - name: kaniko-admin-builder
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=git://Ansh-Sarkar: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@github.com/BharatSahAIyak/docker-bhasai#263-local-install"
+    - "--destination=registry.k8s.bhasai.samagra.io/bharatsahaiyak/demo-org:dev"
+    - "--context-sub-path=demo"
+    - "--verbosity=trace"
+  restartPolicy: Never

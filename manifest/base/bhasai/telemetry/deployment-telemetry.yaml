@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+
+  labels:
+    app.kubernetes.io/name: telemetry
+  name: telemetry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: telemetry
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: telemetry
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: telemetry
+          image: ghcr.io/bharatsahaiyak/telemetry:dev
+          name: telemetry
+      restartPolicy: Always

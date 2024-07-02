@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: telemetry 
+  namespace: default
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "telemetry.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry
+            port:
+              number: 80
+---

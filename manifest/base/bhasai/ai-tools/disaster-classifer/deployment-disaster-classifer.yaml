@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: disaster-classifer
+  name: disaster-classifer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: disaster-classifer
+  template:
+    metadata:
+      labels:
+        service: disaster-classifer
+    spec:
+      containers:
+        - image: "ghcr.io/bharatsahaiyak/ai-tools/disaster_classifer:dev"
+          name: disaster-classifer
+      nodeSelector:
+        kubernetes.io/hostname: worker-gpu-0
+      restartPolicy: Always

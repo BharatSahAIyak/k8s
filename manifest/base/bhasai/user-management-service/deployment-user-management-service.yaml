@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+
+  labels:
+    app.kubernetes.io/name: user-management-service
+  name: user-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: user-management-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: user-management-service
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: user-management-service
+          image: ghcr.io/bharatsahaiyak/user-management-service:dev
+          name: user-management-service
+      restartPolicy: Always

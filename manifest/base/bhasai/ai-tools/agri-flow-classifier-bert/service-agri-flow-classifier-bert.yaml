@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: agri-flow-classifier-bert
+spec:
+  selector:
+    service: agri-flow-classifier-bert
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000

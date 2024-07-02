@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: agri-flow-classifier-bert
+  name: agri-flow-classifier-bert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: agri-flow-classifier-bert
+  template:
+    metadata:
+      labels:
+        service: agri-flow-classifier-bert
+    spec:
+      containers:
+        - image: "ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_bert:dev"
+          name: agri-flow-classifier-bert
+      nodeSelector:
+        kubernetes.io/hostname: worker-gpu-0
+      restartPolicy: Always

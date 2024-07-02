@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uci-apis
+spec:
+  selector:
+    app.kubernetes.io/name: uci-apis
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

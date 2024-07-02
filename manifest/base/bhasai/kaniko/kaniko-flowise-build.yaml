@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-flowise
+spec:
+  containers:
+  - name: kaniko-flowise-builder
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=git://Ansh-Sarkar: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@github.com/BharatSahAIyak/flowise"
+    - "--destination=192.168.0.100:5000/bharatsahaiyak/flowise:dev"
+    - "--build-arg=REACT_APP_UCI_API=http://uci-apis.k8s.bhasai.samagra.io"
+  restartPolicy: Never
