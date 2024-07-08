@@ -2,6 +2,8 @@ variable "resource_group_name" {}
 variable "resource_group_location" {}
 #network
 
+variable "vpc_subnet_cidr" {}
+
 variable "master_subnet_cidr" {}
 
 variable "admin_subnet_cidr" {}

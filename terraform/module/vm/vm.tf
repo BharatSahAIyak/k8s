@@ -30,7 +30,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = var.subnet_id
     public_ip_address_id = var.node_public_ip ? azurerm_public_ip.public-ip[count.index].id : null
   }
-  enable_ip_forwarding      = true
+  ip_forwarding_enabled      = true
 }
 
 
