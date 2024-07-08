@@ -35,6 +35,7 @@ ansible-playbook -i kubespray/inventory/mycluster/inventory.ini  kubectl_setup.y
 
 
 #setup the image repository
+# Reference https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#add-imagepullsecrets-to-a-service-account
 kubectl create secret docker-registry regcred --docker-server='ghcr.io' --docker-username="${DOCKER_USERNAME:?DOCKER_USERNAME is not set}" --docker-password="${DOCKER_PASSWORD:?DOCKER_PASSWORD is not set}"
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'
 

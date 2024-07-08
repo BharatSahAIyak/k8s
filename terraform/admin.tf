@@ -3,7 +3,7 @@ module "k8s_admin" {
   node_type               = "admin"
   number_of_nodes         = "1"
   subnet_id               = azurerm_subnet.master.id
-  security_group_id       = azurerm_network_security_group.security_group.id
+  security_group_id       = azurerm_network_security_group.admin_security_group.id
   node_vm_size            = var.k8s_admin_node_size
   node_disk_size          = var.k8s_admin_disk_size
   resource_group_name     = var.resource_group_name
@@ -25,7 +25,7 @@ resource "null_resource" "setup-admin" {
     type     = "ssh"
     user     = "ubuntu"
     private_key = module.k8s_admin.private_key
-    host     = module.k8s_admin.vm-ips["admin-0"].public-ip
+    host     = module.k8s_admin.vm-ips["${var.resource_group_name}-admin-0"].public-ip
   }
   provisioner "file" {
     content = templatefile("${path.module}/inventory.ini.tftpl",
@@ -54,6 +54,11 @@ resource "null_resource" "setup-admin" {
   provisioner "file" {
 source = "ansible/kubectl_setup.yml"
 destination = "/home/ubuntu/kubectl_setup.yml"
+}
+
+provisioner "file" {
+source = "scripts/admin_setup.sh"
+destination = "/home/ubuntu/admin_setup.sh"
 }
 
 

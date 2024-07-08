@@ -13,19 +13,19 @@ variable "node_public_ip" {
 
 resource "azurerm_public_ip" "public-ip" {
   count = var.node_public_ip ? var.number_of_nodes : 0
-  name                = "${var.node_type}-${count.index}-ip"
+  name                = "${var.resource_group_name}-${var.node_type}-${count.index}-ip"
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
   allocation_method   = "Static"
 }
 resource "azurerm_network_interface" "nic" {
   count               = var.number_of_nodes
-  name                = "${var.node_type}-${count.index}-nic"
+  name                = "${var.resource_group_name}-${var.node_type}-${count.index}-nic"
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
 
   ip_configuration {
-    name                          = "${title(var.node_type)}IpConfig"
+    name                          = "${var.resource_group_name}-${var.node_type}-ipc"
     private_ip_address_allocation = "Dynamic"
     subnet_id                     = var.subnet_id
     public_ip_address_id = var.node_public_ip ? azurerm_public_ip.public-ip[count.index].id : null
@@ -47,7 +47,7 @@ resource "tls_private_key" "rsa_key" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                  = "${var.node_type}-${count.index}"
+  name                  = "${var.resource_group_name}-${var.node_type}-${count.index}"
   count                 = var.number_of_nodes
   resource_group_name = var.resource_group_name
   location              = var.resource_group_location
@@ -70,7 +70,7 @@ source_image_reference { #todo remove
   }
 
   os_disk {
-    name              = "${var.node_type}disk${count.index}"
+    name              = "${var.resource_group_name}-${var.node_type}-disk-${count.index}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
     disk_size_gb         = var.node_disk_size
