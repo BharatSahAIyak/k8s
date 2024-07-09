@@ -1,3 +1,19 @@
+## Provisioning a Cluster
+
+### Tweaks to make in default kuberspray yamls
+
+1. Disable nginx-based proxy
+SET `loadbalancer_apiserver_localhost` to false in `group_vars/all/all.yml`
+
+## Steps after provisioning cluster using Kubespray
+
+### Setting up Image Registry Credentials
+
+Reference: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#add-imagepullsecrets-to-a-service-account
+
+1. `kubectl create secret docker-registry regcred --docker-server='ghcr.io' --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_PASSWORD}"`
+2. `kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'`
+
 ### Directory Structure
 
 - [./terraform](./terraform): Contains all the Terraform files to set up a cluster.
