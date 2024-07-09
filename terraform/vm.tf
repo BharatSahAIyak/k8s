@@ -11,7 +11,7 @@ module "k8s_lb" {
   node_disk_size          = var.k8s_lb_disk_size
   resource_group_name     = var.resource_group_name
   resource_group_location = var.resource_group_location
-  node_public_ip          = false
+  node_public_ip          = true
 }
 
 module "k8s_master" {
