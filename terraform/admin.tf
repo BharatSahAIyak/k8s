@@ -52,6 +52,10 @@ resource "null_resource" "setup-admin" {
     destination = "/home/ubuntu/.ssh/lb.pem"
   }
   provisioner "file" {
+    content = module.k8s_stateful.private_key
+    destination = "/home/ubuntu/.ssh/stateful.pem"
+  }
+  provisioner "file" {
 source = "ansible/kubectl_setup.yml"
 destination = "/home/ubuntu/kubectl_setup.yml"
 }
