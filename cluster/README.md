@@ -14,3 +14,9 @@
 5. Change the directory to kubespray `cd kubespray`
 6. Install essesntial python packages `pip install -r requirements.txt`
 7. RUN `ansible-playbook -i inventory/kubespray-vars/inventory.ini  --become --become-user=root cluster.yml` to bootstrap the cluster
+
+### Steps to configure kubeconfig on Admin
+
+1. Run `ansible-playbook -i kubespray/inventory/kubespray-vars/inventory.ini k8s/cluster/scripts/setup-kubeconfig.yaml`
+
+
