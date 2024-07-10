@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- VaultStaticSecret-inboundjs.yml
-- deployment-inboundjs.yaml
-- ingress-inboundjs.yaml
-- service-inboundjs.yaml

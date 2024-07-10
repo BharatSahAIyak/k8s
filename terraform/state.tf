@@ -1,9 +1,9 @@
- terraform {
+terraform {
   backend "azurerm" {
     resource_group_name  = "deployment"
     storage_account_name = "bhasaideploymentstorage"
     container_name       = "terraform"
-    key                  = "bhasai/live/terraform-k8s-v1/terraform.tfstate"
+    key                  = "bhasai/live/dev-k8s"
   }
 }
 

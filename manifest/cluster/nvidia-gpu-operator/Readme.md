@@ -1,1 +1,0 @@
-https://www.jimangel.io/posts/nvidia-rtx-gpu-kubernetes-setup/
