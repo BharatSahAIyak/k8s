@@ -1,4 +1,4 @@
-Setting up Infra
+## Documentation
 
-1. `cd terraform`
-2. Find further steps [here](./terraform/README.md)
+1. [Setting up Infra](./infra/README.md)
+2. [Setting up Cluster](./cluster/README.md)
