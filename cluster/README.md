@@ -20,3 +20,8 @@
 1. Run `ansible-playbook -i kubespray/inventory/kubespray-vars/inventory.ini k8s/cluster/scripts/setup-kubeconfig.yaml`
 
 
+### Steps to configure image registry credentials
+
+1. `kubectl create secret docker-registry regcred --docker-server='ghcr.io' --docker-username="${DOCKER_USERNAME}" --docker-password="${DOCKER_PASSWORD}"`
+2. `kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'`
+3. For more check [this](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#add-imagepullsecrets-to-a-service-account)
