@@ -44,3 +44,89 @@ Note: The admin server has all the applied YAMLs in a similar directory structur
 7. Bootstrap the cluster as per [./manifest/cluster](./manifest/cluster) as described above in the Directory Structure.
 8. Set up the load balancer and stateful machines (their setup has not been documented yet).
 9. Apply [manifest/cluster/argocd/applicationset.yml](./manifest/cluster/argocd/applicationset.yml) for ArgoCD to deploy your application.
+
+## Important containerd Commands
+
+Here are some essential `containerd` commands that can help you manage containers efficiently:
+
+### Basic Commands
+
+- **View all containers:**
+`
+ctr containers list
+`
+- **Start a container:**
+`
+ctr containers start <container-id>
+`
+
+- **Stop a container:**
+`
+ctr containers stop <container-id>
+`
+- **Remove a container:**
+`
+ctr containers delete <container-id>
+`
+- **Pull an image:**
+`
+ctr images pull <image-name>
+`
+
+- **List all images:**
+`
+ctr images list
+`
+
+- **Remove an image:**
+`
+ctr images rm <image-name>
+`
+
+- **Run a task:**
+`
+ctr run --rm -t <image-name> <task-name>
+`
+
+- **List all snapshots:**
+`
+ctr snapshots list
+`
+- **Remove a snapshot:**
+`
+ctr snapshots remove <snapshot-name>
+`
+
+- **List all namespaces:**
+`
+ctr ns ls
+`
+
+- **Create a namespace:**
+`
+ctr namespaces create <namespace-name>
+`
+
+- **Remove a namespace:**
+`
+ctr namespaces remove <namespace-name>
+`
+- **List all tasks:**
+`
+ctr tasks list
+`
+- **Kill a task:**
+`
+ctr tasks kill <task-id>
+`
+
+- **List all containers in the k8s.io namespace:**
+`
+ctr -n k8s.io containers list
+`
+
+- **Execute a command in a container in the k8s.io namespace:**
+`
+ctr -n k8s.io t exec -t --exec-id xyz <container-id> <command>
+`
+
