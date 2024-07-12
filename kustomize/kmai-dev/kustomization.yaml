@@ -4,26 +4,3 @@ resources:
 
 namespace: kmai-dev
 
-replacements:
-- source:
-    kind: Namespace
-    fieldPath: metadata.name
-  targets:
-    - select:
-        kind: VaultStaticSecret
-      fieldPaths:
-      - spec.path
-      options:
-        delimiter: "/"
-        index: 0
-- source:
-    kind: Namespace
-    fieldPath: metadata.name
-  targets:
-    - select:
-        kind: Ingress
-      fieldPaths:
-      - spec.rules.0.host
-      options:
-        delimiter: "."
-        index: 1
