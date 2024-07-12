@@ -1,0 +1,69 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: user
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/user
+  destination:
+    name: user
+    create: true
+  refreshAfter: 10s
+
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: user
+  name: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: user
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: user
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: user
+          image: samagragovernance/esamwad-user-service:latest 
+          name: user
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+spec:
+  selector:
+    app.kubernetes.io/name: user
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "user.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user
+            port:
+              number: 80
+
