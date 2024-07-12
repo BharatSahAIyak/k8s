@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "ci.dev-k8s.bhasai.samagra.io"
+  - host: "ci.k8s.bhasai.samagra.io"
     http:
       paths:
       - path: /
