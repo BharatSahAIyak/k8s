@@ -1,0 +1,3 @@
+resources:
+  - user.yaml
+  - vault-auth.yaml
