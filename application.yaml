@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kmai-dev
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kustomize/kmai-dev
+    repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
+    targetRevision: v2
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kmai-stage
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kustomize/kmai-stage
+    repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
+    targetRevision: v2
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
