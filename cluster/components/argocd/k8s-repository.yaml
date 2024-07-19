@@ -1,0 +1,18 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: k8s-repository
+  namespace: argocd
+spec:
+  type: kv-v2
+  mount: kv
+  path: k8s-repository
+  destination:
+    name: k8s-repository
+    create: true
+    labels:
+      argocd.argoproj.io/secret-type: repository
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+
+# Reference: https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-repositories-yaml/
