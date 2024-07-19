@@ -31,12 +31,12 @@
 # containerd_metrics_grpc_histogram: false
 
 # Registries defined within containerd.
-# containerd_registries_mirrors:
-#  - prefix: docker.io
-#    mirrors:
-#     - host: https://registry-1.docker.io
-#       capabilities: ["pull", "resolve"]
-#       skip_verify: false
+ containerd_registries_mirrors:
+  - prefix: registry.local
+    mirrors:
+     - host: http://10.10.4.4:5000
+       capabilities: ["pull", "resolve"]
+       skip_verify: false
 
 # containerd_max_container_log_line_size: -1
 

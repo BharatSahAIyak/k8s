@@ -9,7 +9,8 @@
 ### Steps to setup cluter
 
 1. Clone kubespray repository at ~ `git clone -b release-2.25 https://github.com/kubernetes-sigs/kubespray`
-3. `cp -r k8s/cluster/kubespray-vars kubespray/inventory/kubespray-vars`
+2. Update the endpoint for your local registry in `k8s/kubespray-vars/group_vars/all/containerd.yml` 
+3. `cp -r k8s/setup/kubespray-vars kubespray/inventory/kubespray-vars`
 4. `cp inventory.ini kubespray/inventory/kubespray-vars/inventory.ini` 
 5. Change the directory to kubespray `cd kubespray`
 6. Install essesntial python packages `pip install -r requirements.txt`
