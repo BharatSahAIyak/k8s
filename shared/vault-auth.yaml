@@ -1,7 +1,12 @@
+# This is required in every namepsace to be able to pull from Vault
+
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultAuth
 metadata:
   name: static-auth
+  annotations:
+    reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+    reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
 spec:
   method: kubernetes
   mount: kubernetes
