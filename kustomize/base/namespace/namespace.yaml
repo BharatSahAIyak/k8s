@@ -1,0 +1,5 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  # This name doesn't matter for our usecase as we provide namespace in overlay and this value is replaced by the same
+  name: NAMESPACE

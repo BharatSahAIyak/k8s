@@ -7,7 +7,7 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
   source:
-    path: kustomize/kmai-dev
+    path: kustomize/overlays/kmai-dev
     repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
     targetRevision: v2
   project: default
@@ -25,7 +25,7 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
   source:
-    path: kustomize/kmai-stage
+    path: kustomize/overlays/kmai-stage
     repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
     targetRevision: v2
   project: default

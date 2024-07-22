@@ -1,6 +1,7 @@
 resources:
-  - ../base
-  - namespace.yaml
+  - ../../base/namespace
+  - ../../base/user
+  - ../../base/vault-auth
 
 namespace: kmai-stage
 
