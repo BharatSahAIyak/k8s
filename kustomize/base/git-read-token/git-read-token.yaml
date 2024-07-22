@@ -1,0 +1,15 @@
+# This secret is utilised in Kaniko to pull the code of repositories to be able to build images
+
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: git-read-token
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/git-read-token
+  destination:
+    name: git-read-token
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
