@@ -4,3 +4,4 @@
 2. [Setting up Vault](./vault/README.md)
 3. [Setting up Promtail](./promtail/README.md)
 4. [Setting up ArgoCD](./argocd/README.md)
+5. [Setting up Reflector](./reflector/README.md)
