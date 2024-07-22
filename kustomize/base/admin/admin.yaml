@@ -1,0 +1,93 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: admin
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/admin
+  destination:
+    name: admin
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-admin
+spec:
+  containers:
+  - name: kaniko-admin
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=$(CONTEXT)"
+    - "--destination=$(DESTINATION)"
+    - "--build-arg=NEXT_PUBLIC_DATASET_SERVICE_URL=$(NEXT_PUBLIC_DATASET_SERVICE_URL)"
+    - "--build-arg=NEXT_PUBLIC_BFF_API_URL=$(NEXT_PUBLIC_BFF_API_URL)"
+    - "--build-arg=NEXT_PUBLIC_TELEMETRY_API_URL=$(NEXT_PUBLIC_TELEMETRY_API_URL)"
+    - "--build-arg=NEXT_PUBLIC_SOCKET_URL=$(NEXT_PUBLIC_SOCKET_URL)"
+    - "--build-arg=NEXT_PUBLIC_UCI_API_URL=$(NEXT_PUBLIC_UCI_API_URL)"
+    - "--build-arg=NEXT_PUBLIC_AUTH_SERVICE_URL=$(NEXT_PUBLIC_AUTH_SERVICE_URL)"
+    - "--build-arg=NEXT_PUBLIC_PWA_DEPLOYER_URL=$(NEXT_PUBLIC_PWA_DEPLOYER_URL)"
+    - "--build-arg=NEXT_PUBLIC_FLOWISE_URL=$(NEXT_PUBLIC_FLOWISE_URL)"
+    - "--build-arg=NEXT_PUBLIC_DOC_SERVICE_URL=$(NEXT_PUBLIC_DOC_SERVICE_URL)"
+    - "--build-arg=NEXT_PUBLIC_AUTOTUNE_API_URL=$(NEXT_PUBLIC_AUTOTUNE_API_URL)"
+    envFrom:
+      - secretRef:
+          name: git-read-token
+      - secretRef:
+          name: admin
+  restartPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: admin
+  name: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: admin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: admin
+    spec:
+      containers:
+        - image: registry.local/bharatsahaiyak/admin:IMAGE_TAG
+          imagePullPolicy: Always
+          name: admin
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin
+spec:
+  selector:
+    app.kubernetes.io/name: admin
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: admin
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "admin.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: admin
+            port:
+              number: 80
