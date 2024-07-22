@@ -67,7 +67,10 @@ spec:
         app.kubernetes.io/name: app
     spec:
       containers:
-        - image: registry.local/bharatsahaiyak/kisai-bot:IMAGE_TAG
+        - envFrom:
+          - secretRef:
+              name: app
+          image: registry.local/bharatsahaiyak/kisai-bot:IMAGE_TAG
           imagePullPolicy: Always
           name: app
       restartPolicy: Always
