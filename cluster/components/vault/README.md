@@ -1,7 +1,7 @@
 ### Steps to Setup Vault
 
 1. `helm repo add hashicorp https://helm.releases.hashicorp.com`
-2. `help update`
+2. `helm repo update`
 3. `kubectl create namespace vault`
 4. `kubectl apply -f sa.yaml`
 5. Navigate to stateful machine and exec into Vault
