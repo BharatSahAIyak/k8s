@@ -6,6 +6,6 @@ Steps to Install Kustomize
 Steps to deploy a new environment
 
 1. Make a copy of any of your existing environments
-2. Update the name of namespace in namespace.yaml and kustomization.yaml
+2. Update the name of namespace in kustomization.yaml
 3. Run `kubectl build <location-of-folder-of-environment>` to verify the resources being generated
 4. Run `kubectl apply -k <location-of-folder-of-environment>` to apply the resources 
