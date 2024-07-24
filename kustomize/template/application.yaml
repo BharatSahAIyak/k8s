@@ -1,0 +1,67 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: {{APPLICATION}}
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/{{APPLICATION}}
+  destination:
+    name: {{APPLICATION}}
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: {{APPLICATION}}
+  name: {{APPLICATION}}
+spec:
+  replicas: {{REPLICAS}}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{APPLICATION}}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{APPLICATION}}
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: {{APPLICATION}}
+          image: {{IMAGE_URL}}
+          name: {{APPLICATION}}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{APPLICATION}}
+spec:
+  selector:
+    app.kubernetes.io/name: {{APPLICATION}}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{TARGET_PORT}}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{APPLICATION}}
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "{{APPLICATION}}.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{APPLICATION}}
+            port:
+              number: 80
