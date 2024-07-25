@@ -66,10 +66,10 @@ update_overlay_kustomization() {
       else
         awk -v app="$app_entry" '/resources:/ {print; print app; next}1' "$overlay_file" > "${overlay_file}.tmp" \
           && mv "${overlay_file}.tmp" "$overlay_file"
-        echo "Updated ${overlay_file} with the application ${application}."
+        echo "Added ${application} to ${overlay_file}."
       fi
     else
-      echo "Environment ${env} does not exist in the overlays directory."
+      echo "Environment ${env} does not exist in the kustomize/overlays directory."
     fi
   done
 }
@@ -103,7 +103,7 @@ EOF
     echo "${APPLICATION}.yaml file created at kustomize/base/${APPLICATION}/${APPLICATION}.yaml"
     echo "kustomization.yaml file created at kustomize/base/${APPLICATION}/kustomization.yaml"
 
-    read -p "Do you want to add another application? (yes/no): " continue_choice
+    read -p "Do you want to onboard another application? (yes/no): " continue_choice
     if [[ "$continue_choice" != "yes" ]]; then
       echo "Aborting."
       break
@@ -128,7 +128,7 @@ add_existing_application() {
       # Update the overlay kustomization.yaml files
       update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
 
-      read -p "Do you want to add the application to other environments? (yes/no): " continue_env
+      read -p "Do you want to add ${APPLICATION} application to any other environment? (yes/no): " continue_env
       if [[ "$continue_env" != "yes" ]]; then
         break
       fi
@@ -145,8 +145,8 @@ add_existing_application() {
 # Main menu
 while true; do
   echo "Please select the action you want to do:"
-  echo "1. Create an application"
-  echo "2. Add an existing application"
+  echo "1. Onboard an application"
+  echo "2. Add an existing application to an environment"
   echo "3. Abort"
   read -p "Enter your choice (1, 2, or 3): " choice
 
