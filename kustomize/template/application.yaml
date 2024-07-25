@@ -34,6 +34,11 @@ spec:
               name: {{APPLICATION}}
           image: {{IMAGE_URL}}
           name: {{APPLICATION}}
+          resources:
+            requests:
+              memory: "{{MEMORY_REQUEST}}"
+            limits:
+              memory: "{{MEMORY_LIMIT}}"
       restartPolicy: Always
 ---
 apiVersion: v1
