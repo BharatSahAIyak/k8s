@@ -2,14 +2,15 @@
 
 # Prompt messages
 PROMPT_APP_NAME="Please enter your application name: "
-PROMPT_TARGET_PORT="Enter the TARGET_PORT: "
+PROMPT_TARGET_PORT=$'\nEnter the TARGET_PORT: '
 PROMPT_IMAGE_URL="Enter the IMAGE_URL: "
 PROMPT_REPLICAS="Enter the number of REPLICAS: "
 PROMPT_ENVIRONMENTS="Please enter the environment names (separated by space) in which you want to add the application: "
 PROMPT_CONTINUE_ONBOARD="Do you want to onboard another application? (yes/no): "
-PROMPT_CONTINUE_ENV="Do you want to add ${APPLICATION} application to any other environment? (yes/no): "
+PROMPT_CONTINUE_ENV="Do you want to add the application named {APPLICATION} to any other environment? (yes/no): "
 PROMPT_ADD_ANOTHER="Do you want to add another existing application to an environment? (yes/no): "
-PROMPT_PROCEED="An application with the name ${APPLICATION} already exists. Do you want to proceed? (yes/no): "
+PROMPT_PROCEED="An application with the name {APPLICATION} already exists. Do you want to proceed? (yes/no): "
+PROMPT_APP_NOT_EXIST="The application {APPLICATION} does not exist."
 OUTPUT_RETURN_MAIN_MENU=$'\nReturning to the main menu'
 
 # Function to validate the APPLICATION name
@@ -54,7 +55,8 @@ prompt_input() {
 check_existing_application() {
   if [[ -f "kustomize/base/${1}/${1}.yaml" ]]; then
     while true; do
-      read -p "$PROMPT_PROCEED" choice
+      printf "\n"
+      read -p "$(echo "$PROMPT_PROCEED" | sed "s/{APPLICATION}/$1/")" choice
       case "$choice" in
         yes) return 0;;
         no) return 1;;  # Return 1 to indicate not to proceed
@@ -92,7 +94,7 @@ create_application() {
     # Prompt the user for inputs
     prompt_input "$PROMPT_APP_NAME" validate_application_name APPLICATION
     if ! check_existing_application "$APPLICATION"; then
-      echo $OUTPUT_RETURN_MAIN_MENU
+      echo "$OUTPUT_RETURN_MAIN_MENU"
       return
     fi
     prompt_input "$PROMPT_TARGET_PORT" validate_number TARGET_PORT
@@ -118,9 +120,10 @@ EOF
     echo "${APPLICATION}.yaml file created at kustomize/base/${APPLICATION}/${APPLICATION}.yaml"
     echo "kustomization.yaml file created at kustomize/base/${APPLICATION}/kustomization.yaml"
 
+    printf "\n"
     read -p "$PROMPT_CONTINUE_ONBOARD" continue_choice
     if [[ "$continue_choice" != "yes" ]]; then
-      echo "${OUTPUT_RETURN_MAIN_MENU}"
+      echo "$OUTPUT_RETURN_MAIN_MENU"
       return
     fi
   done
@@ -133,38 +136,71 @@ add_existing_application() {
 
     # Check if the application YAML file exists
     if [[ ! -f "kustomize/base/${APPLICATION}/${APPLICATION}.yaml" ]]; then
-      echo "The application ${APPLICATION} does not exist."
+      echo "$(echo "$PROMPT_APP_NOT_EXIST" | sed "s/{APPLICATION}/$APPLICATION/")"
       printf "\n"  # Add a blank line for better readability
     else
       while true; do
+        printf "\n"
         read -p "$PROMPT_ENVIRONMENTS" ENVIRONMENTS
+        printf "\n"
 
         # Update the overlay kustomization.yaml files
         update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
 
-        read -p "$PROMPT_CONTINUE_ENV" continue_env
+        while true; do
+          printf "\n"
+          read -p "$(echo "$PROMPT_CONTINUE_ENV" | sed "s/{APPLICATION}/$APPLICATION/")" continue_env
+          if [[ "$continue_env" == "yes" || "$continue_env" == "no" ]]; then
+            break
+          else
+            printf "\n"
+            echo "Invalid input. Please choose again from yes or no."
+          fi
+        done
+
         if [[ "$continue_env" != "yes" ]]; then
           break
         fi
       done
     fi
 
-    read -p "$PROMPT_ADD_ANOTHER" continue_choice
+    while true; do
+      printf "\n"
+      read -p "$(echo "$PROMPT_ADD_ANOTHER" | sed "s/{APPLICATION}/$APPLICATION/")" continue_choice
+      if [[ "$continue_choice" == "yes" || "$continue_choice" == "no" ]]; then
+        break
+      else
+        echo "Invalid input. Please choose again from yes or no."
+      fi
+    done
+
     if [[ "$continue_choice" != "yes" ]]; then
-      echo "${OUTPUT_RETURN_MAIN_MENU}"
+      echo "$OUTPUT_RETURN_MAIN_MENU"
       return
     fi
   done
 }
 
-# Main menu
-while true; do
+# Menu options array
+MENU_OPTIONS=(
+  "Onboard an application"
+  "Add an existing application to an environment"
+  "Abort"
+)
+
+# Function to display the main menu
+display_main_menu() {
   echo
   echo "Please select the action you want to do:"
-  echo "1. Onboard an application"
-  echo "2. Add an existing application to an environment"
-  echo "3. Abort"
+  for i in "${!MENU_OPTIONS[@]}"; do
+    echo "$((i + 1)). ${MENU_OPTIONS[i]}"
+  done
   echo
+}
+
+# Main menu
+while true; do
+  display_main_menu
   read -p "Enter your choice (1, 2, or 3): " choice
 
   case "$choice" in
