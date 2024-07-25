@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Prompt messages
+PROMPT_APP_NAME="Please enter your application name: "
+PROMPT_TARGET_PORT="Enter the TARGET_PORT: "
+PROMPT_IMAGE_URL="Enter the IMAGE_URL: "
+PROMPT_REPLICAS="Enter the number of REPLICAS: "
+PROMPT_ENVIRONMENTS="Please enter the environment names (separated by space) in which you want to add the application: "
+PROMPT_CONTINUE_ONBOARD="Do you want to onboard another application? (yes/no): "
+PROMPT_CONTINUE_ENV="Do you want to add ${APPLICATION} application to any other environment? (yes/no): "
+PROMPT_ADD_ANOTHER="Do you want to add another existing application to an environment? (yes/no): "
+PROMPT_PROCEED="An application with the name ${APPLICATION} already exists. Do you want to proceed? (yes/no): "
+
 # Function to validate the APPLICATION name
 validate_application_name() {
   if [[ ! "$1" =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]; then
@@ -42,10 +53,10 @@ prompt_input() {
 check_existing_application() {
   if [[ -f "kustomize/base/${1}/${1}.yaml" ]]; then
     while true; do
-      read -p "An application with the name ${1} already exists. Do you want to proceed? (yes/no): " choice
+      read -p "$PROMPT_PROCEED" choice
       case "$choice" in
         yes) return 0;;
-        no) echo "Aborting."; exit 1;;
+        no) return 1;;  # Return 1 to indicate not to proceed
         *) echo "Please answer yes or no.";;
       esac
     done
@@ -78,11 +89,14 @@ update_overlay_kustomization() {
 create_application() {
   while true; do
     # Prompt the user for inputs
-    prompt_input "Please enter your application name: " validate_application_name APPLICATION
-    check_existing_application "$APPLICATION"
-    prompt_input "Enter the TARGET_PORT: " validate_number TARGET_PORT
-    read -p "Enter the IMAGE_URL: " IMAGE_URL
-    prompt_input "Enter the number of REPLICAS: " validate_number REPLICAS
+    prompt_input "$PROMPT_APP_NAME" validate_application_name APPLICATION
+    if ! check_existing_application "$APPLICATION"; then
+      echo "Returning to the main menu."
+      return
+    fi
+    prompt_input "$PROMPT_TARGET_PORT" validate_number TARGET_PORT
+    read -p "$PROMPT_IMAGE_URL" IMAGE_URL
+    prompt_input "$PROMPT_REPLICAS" validate_number REPLICAS
 
     # Create the application folder
     mkdir -p kustomize/base/${APPLICATION}
@@ -103,10 +117,10 @@ EOF
     echo "${APPLICATION}.yaml file created at kustomize/base/${APPLICATION}/${APPLICATION}.yaml"
     echo "kustomization.yaml file created at kustomize/base/${APPLICATION}/kustomization.yaml"
 
-    read -p "Do you want to onboard another application? (yes/no): " continue_choice
+    read -p "$PROMPT_CONTINUE_ONBOARD" continue_choice
     if [[ "$continue_choice" != "yes" ]]; then
-      echo "Aborting."
-      break
+      echo "Returning to the main menu."
+      return
     fi
   done
 }
@@ -114,40 +128,42 @@ EOF
 # Function to add an existing application to specific environments
 add_existing_application() {
   while true; do
-    prompt_input "Please enter your application name: " validate_application_name APPLICATION
+    prompt_input "$PROMPT_APP_NAME" validate_application_name APPLICATION
 
     # Check if the application YAML file exists
     if [[ ! -f "kustomize/base/${APPLICATION}/${APPLICATION}.yaml" ]]; then
-      echo "The application ${APPLICATION} does not exist. Aborting."
-      exit 1
+      echo "The application ${APPLICATION} does not exist."
+      printf "\n"  # Add a blank line for better readability
+    else
+      while true; do
+        read -p "$PROMPT_ENVIRONMENTS" ENVIRONMENTS
+
+        # Update the overlay kustomization.yaml files
+        update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
+
+        read -p "$PROMPT_CONTINUE_ENV" continue_env
+        if [[ "$continue_env" != "yes" ]]; then
+          break
+        fi
+      done
     fi
 
-    while true; do
-      read -p "Please enter the environment names (separated by space) in which you want to add the application: " ENVIRONMENTS
-
-      # Update the overlay kustomization.yaml files
-      update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
-
-      read -p "Do you want to add ${APPLICATION} application to any other environment? (yes/no): " continue_env
-      if [[ "$continue_env" != "yes" ]]; then
-        break
-      fi
-    done
-
-    read -p "Do you want to add another application? (yes/no): " continue_choice
+    read -p "$PROMPT_ADD_ANOTHER" continue_choice
     if [[ "$continue_choice" != "yes" ]]; then
-      echo "Aborting."
-      break
+      echo "Returning to the main menu."
+      return
     fi
   done
 }
 
 # Main menu
 while true; do
+  echo
   echo "Please select the action you want to do:"
   echo "1. Onboard an application"
   echo "2. Add an existing application to an environment"
   echo "3. Abort"
+  echo
   read -p "Enter your choice (1, 2, or 3): " choice
 
   case "$choice" in
