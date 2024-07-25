@@ -12,6 +12,7 @@ PROMPT_ADD_ANOTHER="Do you want to add another existing application to an enviro
 PROMPT_PROCEED="An application with the name {APPLICATION} already exists. Do you want to proceed? (yes/no): "
 PROMPT_APP_NOT_EXIST="The application {APPLICATION} does not exist."
 OUTPUT_RETURN_MAIN_MENU=$'\nReturning to the main menu'
+OUTPUT_INVALID_INPUT="Invalid input. Returning to the main menu."
 
 # Function to validate the APPLICATION name
 validate_application_name() {
@@ -49,6 +50,13 @@ prompt_input() {
       echo "Invalid input. Please try again or press Ctrl+C to exit."
     fi
   done
+}
+
+# Function to handle invalid input and return to the main menu
+handle_invalid_input() {
+  echo "$OUTPUT_INVALID_INPUT"
+  echo "$OUTPUT_RETURN_MAIN_MENU"
+  return
 }
 
 # Function to check if the application already exists
@@ -122,7 +130,10 @@ EOF
 
     printf "\n"
     read -p "$PROMPT_CONTINUE_ONBOARD" continue_choice
-    if [[ "$continue_choice" != "yes" ]]; then
+    if [[ "$continue_choice" != "yes" && "$continue_choice" != "no" ]]; then
+      handle_invalid_input
+      return
+    elif [[ "$continue_choice" == "no" ]]; then
       echo "$OUTPUT_RETURN_MAIN_MENU"
       return
     fi
@@ -154,7 +165,8 @@ add_existing_application() {
             break
           else
             printf "\n"
-            echo "Invalid input. Please choose again from yes or no."
+            handle_invalid_input
+            return
           fi
         done
 
@@ -170,7 +182,8 @@ add_existing_application() {
       if [[ "$continue_choice" == "yes" || "$continue_choice" == "no" ]]; then
         break
       else
-        echo "Invalid input. Please choose again from yes or no."
+        handle_invalid_input
+        return
       fi
     done
 
