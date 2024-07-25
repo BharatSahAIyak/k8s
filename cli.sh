@@ -5,6 +5,8 @@ PROMPT_APP_NAME="Please enter your application name: "
 PROMPT_TARGET_PORT=$'\nEnter the TARGET_PORT: '
 PROMPT_IMAGE_URL="Enter the IMAGE_URL: "
 PROMPT_REPLICAS="Enter the number of REPLICAS: "
+PROMPT_MEMORY_REQUEST="Enter the MEMORY_REQUEST (e.g., 64Mi): "
+PROMPT_MEMORY_LIMIT="Enter the MEMORY_LIMIT (e.g., 128Mi): "
 PROMPT_ENVIRONMENTS="Please enter the environment names (separated by space) in which you want to add the application: "
 PROMPT_CONTINUE_ONBOARD="Do you want to onboard another application? (yes/no): "
 PROMPT_CONTINUE_ENV="Do you want to add the application named {APPLICATION} to any other environment? (yes/no): "
@@ -17,7 +19,7 @@ OUTPUT_INVALID_INPUT="Invalid input. Returning to the main menu."
 # Function to validate the APPLICATION name
 validate_application_name() {
   if [[ ! "$1" =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]; then
-    echo "Invalid APPLICATION name. It must contain only lowercase letters, numbers, and dashes, and must start and end with a lowercase letter or number."
+    echo $'\nInvalid APPLICATION name. It must contain only lowercase letters, numbers, and dashes, and must start and end with a lowercase letter or number.\n'
     return 1
   else
     return 0
@@ -34,6 +36,20 @@ validate_number() {
   fi
 }
 
+
+# Function to validate MEMORY_REQUEST and MEMORY_LIMIT
+validate_memory() {
+  if [[ "$1" =~ ^[0-9]+(Mi|Gi|Ei|Pi|Ti|Ki|E|P|T|G|M|k)$ ]]; then
+    return 0
+  else
+    printf "\n"
+    echo "Invalid input. Memory value must be in the format of '64Mi' or '128Gi'."
+    printf "\n"
+    return 1
+  fi
+}
+
+
 # Function to prompt the user for input and validate it
 prompt_input() {
   local prompt_message=$1
@@ -47,7 +63,7 @@ prompt_input() {
       eval "$input_variable='$input_value'"
       break
     else
-      echo "Invalid input. Please try again or press Ctrl+C to exit."
+      echo $'\nInvalid input. Please try again or press Ctrl+C to exit.\n'
     fi
   done
 }
@@ -109,6 +125,24 @@ create_application() {
     read -p "$PROMPT_IMAGE_URL" IMAGE_URL
     prompt_input "$PROMPT_REPLICAS" validate_number REPLICAS
 
+
+     # Prompt for MEMORY_REQUEST with validation
+    while true; do
+      read -p "$PROMPT_MEMORY_REQUEST" MEMORY_REQUEST
+      if validate_memory "$MEMORY_REQUEST"; then
+        break
+      fi
+    done
+
+    # Prompt for MEMORY_LIMIT with validation
+    while true; do
+      read -p "$PROMPT_MEMORY_LIMIT" MEMORY_LIMIT
+      if validate_memory "$MEMORY_LIMIT"; then
+        break
+      fi
+    done
+
+
     # Create the application folder
     mkdir -p kustomize/base/${APPLICATION}
 
@@ -117,6 +151,8 @@ create_application() {
         -e "s|{{TARGET_PORT}}|${TARGET_PORT}|g" \
         -e "s|{{IMAGE_URL}}|${IMAGE_URL}|g" \
         -e "s|{{REPLICAS}}|${REPLICAS}|g" \
+        -e "s|{{MEMORY_REQUEST}}|${MEMORY_REQUEST}|g" \
+        -e "s|{{MEMORY_LIMIT}}|${MEMORY_LIMIT}|g" \
         kustomize/template/application.yaml > kustomize/base/${APPLICATION}/${APPLICATION}.yaml
 
     # Create the kustomization.yaml file
