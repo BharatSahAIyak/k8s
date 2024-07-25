@@ -10,6 +10,7 @@ PROMPT_CONTINUE_ONBOARD="Do you want to onboard another application? (yes/no): "
 PROMPT_CONTINUE_ENV="Do you want to add ${APPLICATION} application to any other environment? (yes/no): "
 PROMPT_ADD_ANOTHER="Do you want to add another existing application to an environment? (yes/no): "
 PROMPT_PROCEED="An application with the name ${APPLICATION} already exists. Do you want to proceed? (yes/no): "
+OUTPUT_RETURN_MAIN_MENU=$'\nReturning to the main menu'
 
 # Function to validate the APPLICATION name
 validate_application_name() {
@@ -91,7 +92,7 @@ create_application() {
     # Prompt the user for inputs
     prompt_input "$PROMPT_APP_NAME" validate_application_name APPLICATION
     if ! check_existing_application "$APPLICATION"; then
-      echo "Returning to the main menu."
+      echo $OUTPUT_RETURN_MAIN_MENU
       return
     fi
     prompt_input "$PROMPT_TARGET_PORT" validate_number TARGET_PORT
@@ -119,7 +120,7 @@ EOF
 
     read -p "$PROMPT_CONTINUE_ONBOARD" continue_choice
     if [[ "$continue_choice" != "yes" ]]; then
-      echo "Returning to the main menu."
+      echo "${OUTPUT_RETURN_MAIN_MENU}"
       return
     fi
   done
@@ -150,7 +151,7 @@ add_existing_application() {
 
     read -p "$PROMPT_ADD_ANOTHER" continue_choice
     if [[ "$continue_choice" != "yes" ]]; then
-      echo "Returning to the main menu."
+      echo "${OUTPUT_RETURN_MAIN_MENU}"
       return
     fi
   done
