@@ -58,10 +58,16 @@ update_overlay_kustomization() {
   local environments=$2
   for env in $environments; do
     if [[ -d "kustomize/overlays/${env}" ]]; then
-      awk -v app="  - ../../base/${application}" '/resources:/ {print; print app; next}1' \
-        kustomize/overlays/${env}/kustomization.yaml > kustomize/overlays/${env}/kustomization.yaml.tmp \
-        && mv kustomize/overlays/${env}/kustomization.yaml.tmp kustomize/overlays/${env}/kustomization.yaml
-      echo "Updated kustomize/overlays/${env}/kustomization.yaml"
+      local overlay_file="kustomize/overlays/${env}/kustomization.yaml"
+      local app_entry="  - ../../base/${application}"
+
+      if grep -q "$app_entry" "$overlay_file"; then
+        echo "The application ${application} is already present in ${overlay_file}."
+      else
+        awk -v app="$app_entry" '/resources:/ {print; print app; next}1' "$overlay_file" > "${overlay_file}.tmp" \
+          && mv "${overlay_file}.tmp" "$overlay_file"
+        echo "Updated ${overlay_file} with the application ${application}."
+      fi
     else
       echo "Environment ${env} does not exist in the overlays directory."
     fi
@@ -94,7 +100,7 @@ resources:
   - ${APPLICATION}.yaml
 EOF
 
-    echo "Kubernetes manifest file created at kustomize/base/${APPLICATION}/${APPLICATION}.yaml"
+    echo "${APPLICATION}.yaml file created at kustomize/base/${APPLICATION}/${APPLICATION}.yaml"
     echo "kustomization.yaml file created at kustomize/base/${APPLICATION}/kustomization.yaml"
 
     read -p "Do you want to add another application? (yes/no): " continue_choice
