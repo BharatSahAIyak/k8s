@@ -6,7 +6,7 @@
 
 1. Increase the node count (e.g., increase k8s_worker_node_count by 1 to provision a non-gpu worker node ) in [dev.tfvars](../infra/dev.tfvars)
 2. Run `terraform plan -var-file=dev.tfvars -out plan.out` to generate the plan (ensure to properly review the output of this command)
-3. Run `terraform plan plan.out` to apply the changes to infrastructure
+3. Run `terraform apply plan.out` to apply the changes to infrastructure
 
 Note: This automatically updated the inventory.ini file on the admin machine with newly provisioned node. 
 
