@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: nodehub
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/nodehub
+  destination:
+    name: nodehub
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: nodehub
+  name: nodehub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nodehub
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nodehub
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: nodehub
+          image: ghcr.io/bharatsahaiyak/nodehub:dev
+          name: nodehub
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodehub
+spec:
+  selector:
+    app.kubernetes.io/name: nodehub
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nodehub
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "nodehub.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nodehub
+            port:
+              number: 80

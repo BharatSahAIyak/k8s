@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: transport-socket
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/transport-socket
+  destination:
+    name: transport-socket
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: transport-socket
+  name: transport-socket
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: transport-socket
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: transport-socket
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: transport-socket
+          image: ghcr.io/bharatsahaiyak/transport-socket:dev
+          name: transport-socket
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transport-socket
+spec:
+  selector:
+    app.kubernetes.io/name: transport-socket
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: transport-socket
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "transport-socket.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: transport-socket
+            port:
+              number: 80

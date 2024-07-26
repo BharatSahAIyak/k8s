@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: ai-tools-proxy
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/ai-tools-proxy
+  destination:
+    name: ai-tools-proxy
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: ai-tools-proxy
+  name: ai-tools-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-tools-proxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-tools-proxy
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: ai-tools-proxy
+          image: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
+          name: ai-tools-proxy
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-tools-proxy
+spec:
+  selector:
+    app.kubernetes.io/name: ai-tools-proxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-tools-proxy
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "ai-tools-proxy.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ai-tools-proxy
+            port:
+              number: 80

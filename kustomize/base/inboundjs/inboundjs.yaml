@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: inboundjs
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/inboundjs
+  destination:
+    name: inboundjs
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: inboundjs
+  name: inboundjs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inboundjs
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: inboundjs
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: inboundjs
+          image: ghcr.io/bharatsahaiyak/inbound-js:dev
+          name: inboundjs
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inboundjs
+spec:
+  selector:
+    app.kubernetes.io/name: inboundjs
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: inboundjs
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "inboundjs.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: inboundjs
+            port:
+              number: 80

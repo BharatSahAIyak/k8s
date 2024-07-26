@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: uci-apis
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/uci-apis
+  destination:
+    name: uci-apis
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: uci-apis
+  name: uci-apis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: uci-apis
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: uci-apis
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: uci-apis
+          image: ghcr.io/bharatsahaiyak/uci-apis:dev
+          name: uci-apis
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uci-apis
+spec:
+  selector:
+    app.kubernetes.io/name: uci-apis
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uci-apis
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "uci-apis.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: uci-apis
+            port:
+              number: 80

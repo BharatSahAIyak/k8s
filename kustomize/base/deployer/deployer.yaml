@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: deployer
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/deployer
+  destination:
+    name: deployer
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: deployer
+  name: deployer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: deployer
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: deployer
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: deployer
+          image: ghcr.io/bharatsahaiyak/deployer:dev
+          name: deployer
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployer
+spec:
+  selector:
+    app.kubernetes.io/name: deployer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: deployer
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "deployer.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: deployer
+            port:
+              number: 80

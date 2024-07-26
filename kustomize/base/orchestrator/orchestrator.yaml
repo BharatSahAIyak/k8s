@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: orchestrator
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/orchestrator
+  destination:
+    name: orchestrator
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: orchestrator
+  name: orchestrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: orchestrator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: orchestrator
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: orchestrator
+          image: ghcr.io/bharatsahaiyak/orchestrator:dev
+          name: orchestrator
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orchestrator
+spec:
+  selector:
+    app.kubernetes.io/name: orchestrator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orchestrator
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "orchestrator.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: orchestrator
+            port:
+              number: 80

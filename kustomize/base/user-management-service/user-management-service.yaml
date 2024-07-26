@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: user-management-service
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/user-management-service
+  destination:
+    name: user-management-service
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: user-management-service
+  name: user-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: user-management-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: user-management-service
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: user-management-service
+          image: ghcr.io/bharatsahaiyak/user-management-service:dev
+          name: user-management-service
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-management-service
+spec:
+  selector:
+    app.kubernetes.io/name: user-management-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user-management-service
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "user-management-service.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user-management-service
+            port:
+              number: 80

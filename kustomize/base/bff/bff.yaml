@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: bff
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/bff
+  destination:
+    name: bff
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: bff
+  name: bff
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bff
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bff
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: bff
+          image: ghcr.io/bharatsahaiyak/bff:dev
+          name: bff
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bff
+spec:
+  selector:
+    app.kubernetes.io/name: bff
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bff
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "bff.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80

@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: document-service
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/document-service
+  destination:
+    name: document-service
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: document-service
+  name: document-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: document-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: document-service
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: document-service
+          image: ghcr.io/bharatsahaiyak/document-service:dev
+          name: document-service
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-service
+spec:
+  selector:
+    app.kubernetes.io/name: document-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: document-service
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "document-service.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: document-service
+            port:
+              number: 80
