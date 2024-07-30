@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: spell-check
   name: spell-check
 spec:
-  replicas: 8
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: spell-check

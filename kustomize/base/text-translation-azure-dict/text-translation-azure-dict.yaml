@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: text-translation-azure-dict
   name: text-translation-azure-dict
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: text-translation-azure-dict
