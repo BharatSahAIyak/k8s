@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/name: user
   name: user
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: user
@@ -35,6 +35,11 @@ spec:
               name: user
           image: samagragovernance/esamwad-user-service:latest 
           name: user
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
       restartPolicy: Always
 ---
 apiVersion: v1
