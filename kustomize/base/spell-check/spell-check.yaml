@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: spell-check
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/spell-check
+  destination:
+    name: spell-check
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: spell-check
+  name: spell-check
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spell-check
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spell-check
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: spell-check
+          image: ghcr.io/bharatsahaiyak/ai-tools/spell_check:dev
+          name: spell-check
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spell-check
+spec:
+  selector:
+    app.kubernetes.io/name: spell-check
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spell-check
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "spell-check.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: spell-check
+            port:
+              number: 80
