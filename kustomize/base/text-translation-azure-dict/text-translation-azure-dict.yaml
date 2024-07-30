@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: text-translation-azure-dict
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/text-translation-azure-dict
+  destination:
+    name: text-translation-azure-dict
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: text-translation-azure-dict
+  name: text-translation-azure-dict
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: text-translation-azure-dict
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: text-translation-azure-dict
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: text-translation-azure-dict
+          image: ghcr.io/bharatsahaiyak/ai-tools/text_translation_azure_dict:dev
+          name: text-translation-azure-dict
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: text-translation-azure-dict
+spec:
+  selector:
+    app.kubernetes.io/name: text-translation-azure-dict
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: text-translation-azure-dict
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "text-translation-azure-dict.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: text-translation-azure-dict
+            port:
+              number: 80
