@@ -1,0 +1,70 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: agri-flow-classifier-bert
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/agri-flow-classifier-bert
+  destination:
+    name: agri-flow-classifier-bert
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: agri-flow-classifier-bert
+  name: agri-flow-classifier-bert
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: agri-flow-classifier-bert
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: agri-flow-classifier-bert
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: agri-flow-classifier-bert
+          image: ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_bert:dev
+          name: agri-flow-classifier-bert
+          resources:
+            limits:
+              nvidia.com/gpu: 4
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agri-flow-classifier-bert
+spec:
+  selector:
+    app.kubernetes.io/name: agri-flow-classifier-bert
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agri-flow-classifier-bert
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "agri-flow-classifier-bert.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: agri-flow-classifier-bert
+            port:
+              number: 80
