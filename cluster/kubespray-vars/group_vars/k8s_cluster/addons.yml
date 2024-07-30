@@ -268,7 +268,7 @@ kube_vip_enabled: false
 # kube_vip_enable_node_labeling: false
 
 # Node Feature Discovery
-node_feature_discovery_enabled: false
+node_feature_discovery_enabled: true
 # node_feature_discovery_gc_sa_name: node-feature-discovery
 # node_feature_discovery_gc_sa_create: false
 # node_feature_discovery_worker_sa_name: node-feature-discovery
