@@ -9,6 +9,9 @@ ${nodes.name} ansible_host=${nodes.ip} ansible_ssh_private_key_file=/home/ubuntu
 %{ for nodes in worker_nodes ~}
 ${nodes.name} ansible_host=${nodes.ip} ansible_ssh_private_key_file=/home/ubuntu/.ssh/worker.pem
 %{ endfor ~}
+%{ for nodes in worker_gpu_nodes ~}
+${nodes.name} ansible_host=${nodes.ip} ansible_ssh_private_key_file=/home/ubuntu/.ssh/worker_gpu.pem
+%{ endfor ~}
 
 
 [kube_control_plane]
@@ -23,6 +26,9 @@ ${nodes.name}
 
 [kube_node]
 %{ for nodes in worker_nodes ~}
+${nodes.name}
+%{ endfor ~}
+%{ for nodes in worker_gpu_nodes ~}
 ${nodes.name}
 %{ endfor ~}
 

@@ -93,7 +93,8 @@ resource "null_resource" "setup-admin" {
   provisioner "file" {
     content = templatefile("${path.module}/inventory.ini.tftpl",
       { master_nodes = [for vm, ips in module.k8s_master.vm-ips : { name = vm, ip = ips.private-ip }],
-        worker_nodes = [for vm, ips in merge(module.k8s_worker.vm-ips, module.k8s_worker_gpu.vm-ips) : { name = vm, ip = ips.private-ip }],
+        worker_nodes = [for vm, ips in module.k8s_worker.vm-ips : { name = vm, ip = ips.private-ip }],
+        worker_gpu_nodes = [for vm, ips in module.k8s_worker_gpu.vm-ips : { name = vm, ip = ips.private-ip }],
     })
     destination = "/home/ubuntu/inventory.ini"
   }
