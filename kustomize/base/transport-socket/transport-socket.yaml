@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: transport-socket
           image: ghcr.io/bharatsahaiyak/transport-socket:dev
+          imagePullPolicy: Always
           name: transport-socket
           resources:
             requests:
