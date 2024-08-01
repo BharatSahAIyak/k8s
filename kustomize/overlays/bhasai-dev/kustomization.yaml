@@ -1,7 +1,4 @@
 resources:
-  - ../../base/agri-flow-classifier-bert
-  - ../../base/text-translation-azure-dict
-  - ../../base/spell-check
   - ../../base/ai-tools-proxy
   - ../../base/auth-service
   - ../../base/bff
