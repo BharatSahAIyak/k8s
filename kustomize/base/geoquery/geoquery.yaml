@@ -1,0 +1,72 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: geoquery
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/geoquery
+  destination:
+    name: geoquery
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: geoquery
+  name: geoquery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: geoquery
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: geoquery
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: geoquery
+          image: ghcr.io/chakshugautam/geoquery.in:master
+          name: geoquery
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: geoquery
+spec:
+  selector:
+    app.kubernetes.io/name: geoquery
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: geoquery
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "geoquery.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: geoquery
+            port:
+              number: 80

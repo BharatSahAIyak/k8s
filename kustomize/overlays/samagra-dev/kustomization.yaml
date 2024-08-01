@@ -1,4 +1,5 @@
 resources:
+  - ../../base/geoquery
   - ../../base/zoho-identity-service
   - ../../base/namespace
   - ../../base/vault-auth
