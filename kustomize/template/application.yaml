@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: {{APPLICATION}}
           image: {{IMAGE_URL}}
+          imagePullPolicy: Always
           name: {{APPLICATION}}
           resources:
             requests:

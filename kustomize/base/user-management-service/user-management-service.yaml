@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: user-management-service
           image: ghcr.io/bharatsahaiyak/user-management-service:dev
+          imagePullPolicy: Always
           name: user-management-service
           resources:
             requests:

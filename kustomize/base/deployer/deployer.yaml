@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: deployer
           image: ghcr.io/bharatsahaiyak/deployer:dev
+          imagePullPolicy: Always
           name: deployer
           resources:
             requests:

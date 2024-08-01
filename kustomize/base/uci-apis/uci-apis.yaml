@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: uci-apis
           image: ghcr.io/bharatsahaiyak/uci-apis:dev
+          imagePullPolicy: Always
           name: uci-apis
           resources:
             requests:

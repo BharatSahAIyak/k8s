@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: nodehub
           image: ghcr.io/bharatsahaiyak/nodehub:dev
+          imagePullPolicy: Always
           name: nodehub
           resources:
             requests:

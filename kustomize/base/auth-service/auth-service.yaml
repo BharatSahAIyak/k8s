@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: auth-service
           image: ghcr.io/bharatsahaiyak/auth-service:dev
+          imagePullPolicy: Always
           name: auth-service
           resources:
             requests:

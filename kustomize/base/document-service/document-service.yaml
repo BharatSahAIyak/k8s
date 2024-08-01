@@ -34,6 +34,7 @@ spec:
               name: document-service
           image: ghcr.io/bharatsahaiyak/document-service:dev
           name: document-service
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "2048Mi"

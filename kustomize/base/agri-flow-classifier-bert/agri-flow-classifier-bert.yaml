@@ -34,6 +34,7 @@ spec:
               name: agri-flow-classifier-bert
           image: ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_bert:dev
           name: agri-flow-classifier-bert
+          imagePullPolicy: Always
           resources:
             limits:
               nvidia.com/gpu: 1

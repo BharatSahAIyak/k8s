@@ -34,6 +34,7 @@ spec:
           - secretRef:
               name: user
           image: samagragovernance/esamwad-user-service:latest 
+          imagePullPolicy: Always          
           name: user
           resources:
             requests:

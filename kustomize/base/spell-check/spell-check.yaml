@@ -34,6 +34,7 @@ spec:
               name: spell-check
           image: ghcr.io/bharatsahaiyak/ai-tools/spell_check:dev
           name: spell-check
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "512Mi"

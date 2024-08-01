@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: inboundjs
           image: ghcr.io/bharatsahaiyak/inbound-js:dev
+          imagePullPolicy: Always
           name: inboundjs
           resources:
             requests:

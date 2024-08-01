@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: bff
           image: ghcr.io/bharatsahaiyak/bff:dev
+          imagePullPolicy: Always
           name: bff
           resources:
             requests:

@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: telemetry
           image: ghcr.io/bharatsahaiyak/telemetry:dev
+          imagePullPolicy: Always
           name: telemetry
           resources:
             requests:

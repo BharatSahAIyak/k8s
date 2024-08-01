@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: geoquery
           image: ghcr.io/chakshugautam/geoquery.in:master
+          imagePullPolicy: Always
           name: geoquery
           resources:
             requests:

@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: dataset-service
           image: ghcr.io/bharatsahaiyak/dataset-service:dev
+          imagePullPolicy: Always
           name: dataset-service
           resources:
             requests:

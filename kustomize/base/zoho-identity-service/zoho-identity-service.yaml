@@ -34,6 +34,7 @@ spec:
               name: zoho-identity-service
           image: ghcr.io/bharatsahaiyak/zoho-identity-service:0.5.0
           name: zoho-identity-service
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "512Mi"

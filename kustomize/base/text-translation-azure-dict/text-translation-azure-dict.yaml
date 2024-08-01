@@ -34,6 +34,7 @@ spec:
               name: text-translation-azure-dict
           image: ghcr.io/bharatsahaiyak/ai-tools/text_translation_azure_dict:dev
           name: text-translation-azure-dict
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "512Mi"

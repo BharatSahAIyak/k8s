@@ -33,6 +33,7 @@ spec:
           - secretRef:
               name: ai-tools-proxy
           image: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
+          imagePullPolicy: Always
           name: ai-tools-proxy
           resources:
             requests:
