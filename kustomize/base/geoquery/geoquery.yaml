@@ -32,7 +32,7 @@ spec:
         - envFrom:
           - secretRef:
               name: geoquery
-          image: ghcr.io/chakshugautam/geoquery.in:master
+          image: ghcr.io/chakshugautam/geoquery.in@sha256:a34c891c4a5339018ead8c9b2efd466315f17127a8d31c141721bf71407d464c
           imagePullPolicy: Always
           name: geoquery
           resources:
