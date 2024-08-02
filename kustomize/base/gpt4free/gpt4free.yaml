@@ -1,0 +1,73 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: gpt4free
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/gpt4free
+  destination:
+    name: gpt4free
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: gpt4free
+  name: gpt4free
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gpt4free
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gpt4free
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: gpt4free
+          image: hlohaus789/g4f:latest
+          imagePullPolicy: Always
+          name: gpt4free
+          resources:
+            requests:
+              memory: "256Mi"
+            limits:
+              memory: "256Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpt4free
+spec:
+  selector:
+    app.kubernetes.io/name: gpt4free
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 1337
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gpt4free
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "gpt4free.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: gpt4free
+            port:
+              number: 80
