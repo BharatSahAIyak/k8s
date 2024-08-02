@@ -32,7 +32,7 @@ spec:
         - envFrom:
           - secretRef:
               name: zoho-identity-service
-          image: ghcr.io/bharatsahaiyak/zoho-identity-service:0.5.0
+          image: ghcr.io/bharatsahaiyak/zoho-identity-service:dev
           name: zoho-identity-service
           imagePullPolicy: Always
           resources:
