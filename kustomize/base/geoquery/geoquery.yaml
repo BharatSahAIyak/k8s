@@ -71,3 +71,23 @@ spec:
             name: geoquery
             port:
               number: 80
+  - host: "geoquery.in"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: geoquery
+            port:
+              number: 80
+  - host: "geoip.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: geoquery
+            port:
+              number: 80
