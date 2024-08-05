@@ -14,6 +14,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{APPLICATION}}
     spec:
+      restartPolicy: Always
       containers:
         - envFrom:
           - secretRef:
@@ -26,4 +27,4 @@ spec:
               memory: "{{MEMORY_REQUEST}}"
             limits:
               memory: "{{MEMORY_LIMIT}}"
-      restartPolicy: Always
+      
