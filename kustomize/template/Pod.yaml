@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: kaniko-admin
+  name: kaniko-{{APPLICATION}}
 spec:
   containers:
-  - name: kaniko-admin
+  - name: kaniko-{{APPLICATION}}
     image: gcr.io/kaniko-project/executor:latest
     args:
     - "--context=$(CONTEXT)"
@@ -13,5 +13,5 @@ spec:
       - secretRef:
           name: git-read-token
       - secretRef:
-          name: admin
+          name: {{APPLICATION}}
   restartPolicy: Never
