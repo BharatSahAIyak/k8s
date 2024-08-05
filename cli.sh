@@ -217,7 +217,7 @@ create_application() {
       
   # Append GPU limits if requested
       if [[ "$GPU_REQUEST" == "yes" ]]; then
-        printf "\n"
+        # printf "\n"
         printf '              nvidia.com/gpu: "%s"' "$GPU_LIMIT"
       fi
 
