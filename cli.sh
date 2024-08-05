@@ -13,13 +13,24 @@ PROMPT_CONTINUE_ENV="Do you want to add the application named {APPLICATION} to a
 PROMPT_ADD_ANOTHER="Do you want to add another existing application to an environment? (yes/no): "
 PROMPT_PROCEED="An application with the name {APPLICATION} already exists. Do you want to proceed? (yes/no): "
 PROMPT_APP_NOT_EXIST="The application {APPLICATION} does not exist."
+PROMPT_ADD_INGRESS="Do you want to add Ingress for the application named {APPLICATION}? (yes/no): "
+PROMPT_ADD_SECRET="Do you want to add secrets for the application named {APPLICATION}? (yes/no): "
+PROMPT_GPU_REQUEST="Does the application require GPUs? (yes/no): "
+PROMPT_GPU_LIMIT="Enter the GPU_LIMIT (e.g., 1, 2, etc.): "
+PROMPT_BUILD_IMAGE="Do you want to build the image for application {APPLICATION} on Kubernetes? (yes/no): "
+PROMPT_CONTEXT="What is the context value? "
+PROMPT_DESTINATION="What is the destination? "
+INVALID_INPUT="Invalid input. Please enter 'yes' or 'no' only."
+INVALID_MEMORY="Invalid input. Memory value must be in the format of '64Mi' or '128Gi'."
+INVALID_NUMBER="Invalid input. It must be a number."
+INVALID_APPLICATION_NAME=$'\nInvalid APPLICATION name. It must contain only lowercase letters, numbers, and dashes, and must start and end with a lowercase letter or number.\n'
 OUTPUT_RETURN_MAIN_MENU=$'\nReturning to the main menu'
 OUTPUT_INVALID_INPUT="Invalid input. Returning to the main menu."
 
 # Function to validate the APPLICATION name
 validate_application_name() {
   if [[ ! "$1" =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]; then
-    echo $'\nInvalid APPLICATION name. It must contain only lowercase letters, numbers, and dashes, and must start and end with a lowercase letter or number.\n'
+    echo "$INVALID_APPLICATION_NAME"
     return 1
   else
     return 0
@@ -29,13 +40,12 @@ validate_application_name() {
 # Function to validate that the input is a number
 validate_number() {
   if ! [[ "$1" =~ ^[0-9]+$ ]]; then
-    echo "Invalid input. It must be a number."
+    echo "$INVALID_NUMBER"
     return 1
   else
     return 0
   fi
 }
-
 
 # Function to validate MEMORY_REQUEST and MEMORY_LIMIT
 validate_memory() {
@@ -43,12 +53,22 @@ validate_memory() {
     return 0
   else
     printf "\n"
-    echo "Invalid input. Memory value must be in the format of '64Mi' or '128Gi'."
+    echo "$INVALID_MEMORY"
     printf "\n"
     return 1
   fi
 }
 
+# Function to validate yes/no input
+validate_yes_no() {
+  if [[ "$1" =~ ^(yes|no)$ ]]; then
+    return 0
+  else
+    printf "\n"
+    echo "$INVALID_INPUT"
+    return 1
+  fi
+}
 
 # Function to prompt the user for input and validate it
 prompt_input() {
@@ -125,8 +145,7 @@ create_application() {
     read -p "$PROMPT_IMAGE_URL" IMAGE_URL
     prompt_input "$PROMPT_REPLICAS" validate_number REPLICAS
 
-
-     # Prompt for MEMORY_REQUEST with validation
+    # Prompt for MEMORY_REQUEST with validation
     while true; do
       read -p "$PROMPT_MEMORY_REQUEST" MEMORY_REQUEST
       if validate_memory "$MEMORY_REQUEST"; then
@@ -142,18 +161,105 @@ create_application() {
       fi
     done
 
+    # Prompt for GPU request
+    while true; do
+      read -p "$PROMPT_GPU_REQUEST" GPU_REQUEST
+      if validate_yes_no "$GPU_REQUEST"; then
+        break
+      fi
+    done
+
+    # Prompt for GPU limit if required
+    if [[ "$GPU_REQUEST" == "yes" ]]; then
+      prompt_input "$PROMPT_GPU_LIMIT" validate_number GPU_LIMIT
+    else
+      GPU_LIMIT=""
+    fi
+
+    # Prompt for including Ingress and secrets
+    while true; do
+      read -p "$(echo "$PROMPT_ADD_INGRESS" | sed "s/{APPLICATION}/$APPLICATION/")" ADD_INGRESS
+      if validate_yes_no "$ADD_INGRESS"; then
+        break
+      fi
+    done
+
+    while true; do
+      read -p "$(echo "$PROMPT_ADD_SECRET" | sed "s/{APPLICATION}/$APPLICATION/")" ADD_SECRET
+      if validate_yes_no "$ADD_SECRET"; then
+        break
+      fi
+    done
+
+    # Prompt for image build option.
+    while true; do
+      read -p "$(echo "$PROMPT_BUILD_IMAGE" | sed "s/{APPLICATION}/$APPLICATION/")" BUILD_IMAGE
+      if [[ "$BUILD_IMAGE" == "yes" || "$BUILD_IMAGE" == "no" ]]; then
+        break
+      else
+        echo "$INVALID_INPUT"
+      fi
+    done
+
 
     # Create the application folder
     mkdir -p kustomize/base/${APPLICATION}
 
-    # Replace placeholders in the manifest template and create the Kubernetes manifest
-    sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
+    # Create the Kubernetes manifest based on user choices
+    {
+      # Add Deployment section
+      cat kustomize/template/Deployment.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
         -e "s|{{TARGET_PORT}}|${TARGET_PORT}|g" \
         -e "s|{{IMAGE_URL}}|${IMAGE_URL}|g" \
         -e "s|{{REPLICAS}}|${REPLICAS}|g" \
         -e "s|{{MEMORY_REQUEST}}|${MEMORY_REQUEST}|g" \
-        -e "s|{{MEMORY_LIMIT}}|${MEMORY_LIMIT}|g" \
-        kustomize/template/application.yaml > kustomize/base/${APPLICATION}/${APPLICATION}.yaml
+        -e "s|{{MEMORY_LIMIT}}|${MEMORY_LIMIT}|g"
+      
+  # Append GPU limits if requested
+      if [[ "$GPU_REQUEST" == "yes" ]]; then
+        printf "\n"
+        printf '              nvidia.com/gpu: "%s"' "$GPU_LIMIT"
+      fi
+
+      # Always add separator after Deployment section
+      echo $'\n---'
+
+      # Add Service section
+      cat kustomize/template/Service.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
+        -e "s|{{TARGET_PORT}}|${TARGET_PORT}|g"
+      
+      # Add separator if Ingress or Secret are included
+      if [[ "$ADD_SECRET" == "yes" || "$ADD_INGRESS" == "yes" ]]; then
+        echo $'\n---'
+      fi
+
+      # Add VaultStaticSecret section if required
+      if [[ "$ADD_SECRET" == "yes" ]]; then
+        cat kustomize/template/VaultStaticSecret.yaml | sed "s|{{APPLICATION}}|${APPLICATION}|g"
+        
+        # Add separator if Ingress is included
+        if [[ "$ADD_INGRESS" == "yes" ]]; then
+          echo $'\n---'
+        fi
+      fi
+
+      # Add Ingress section if required
+      if [[ "$ADD_INGRESS" == "yes" ]]; then
+        cat kustomize/template/Ingress.yaml | sed "s|{{APPLICATION}}|${APPLICATION}|g"
+        # No separator needed after the last section
+      fi
+
+      # Add separator if Pod section is included
+        if [[ "$BUILD_IMAGE" == "yes" ]]; then
+          echo $'\n---'
+      fi
+
+      # Add Pod section if required
+      if [[ "$BUILD_IMAGE" == "yes" ]]; then
+        cat kustomize/template/Pod.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g"
+      fi
+
+    } > kustomize/base/${APPLICATION}/${APPLICATION}.yaml
 
     # Create the kustomization.yaml file
     cat <<EOF > kustomize/base/${APPLICATION}/kustomization.yaml
@@ -184,78 +290,49 @@ add_existing_application() {
     # Check if the application YAML file exists
     if [[ ! -f "kustomize/base/${APPLICATION}/${APPLICATION}.yaml" ]]; then
       echo "$(echo "$PROMPT_APP_NOT_EXIST" | sed "s/{APPLICATION}/$APPLICATION/")"
-      printf "\n"  # Add a blank line for better readability
-    else
-      while true; do
-        printf "\n"
-        read -p "$PROMPT_ENVIRONMENTS" ENVIRONMENTS
-        printf "\n"
-
-        # Update the overlay kustomization.yaml files
-        update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
-
-        while true; do
-          printf "\n"
-          read -p "$(echo "$PROMPT_CONTINUE_ENV" | sed "s/{APPLICATION}/$APPLICATION/")" continue_env
-          if [[ "$continue_env" == "yes" || "$continue_env" == "no" ]]; then
-            break
-          else
-            printf "\n"
-            handle_invalid_input
-            return
-          fi
-        done
-
-        if [[ "$continue_env" != "yes" ]]; then
-          break
-        fi
-      done
+      echo "$OUTPUT_RETURN_MAIN_MENU"
+      return
     fi
 
-    while true; do
-      printf "\n"
-      read -p "$(echo "$PROMPT_ADD_ANOTHER" | sed "s/{APPLICATION}/$APPLICATION/")" continue_choice
-      if [[ "$continue_choice" == "yes" || "$continue_choice" == "no" ]]; then
-        break
-      else
-        handle_invalid_input
-        return
-      fi
-    done
+    prompt_input "$PROMPT_ENVIRONMENTS" validate_application_name ENVIRONMENTS
 
-    if [[ "$continue_choice" != "yes" ]]; then
+    # Update kustomization.yaml files in the overlay directories
+    update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
+
+    echo "$APPLICATION has been added to the specified environments."
+
+    read -p "$PROMPT_CONTINUE_ENV" continue_choice
+    if [[ "$continue_choice" != "yes" && "$continue_choice" != "no" ]]; then
+      handle_invalid_input
+      return
+    elif [[ "$continue_choice" == "no" ]]; then
       echo "$OUTPUT_RETURN_MAIN_MENU"
       return
     fi
   done
 }
 
-# Menu options array
-MENU_OPTIONS=(
-  "Onboard an application"
-  "Add an existing application to an environment"
-  "Abort"
-)
-
-# Function to display the main menu
-display_main_menu() {
-  echo
-  echo "Please select the action you want to do:"
-  for i in "${!MENU_OPTIONS[@]}"; do
-    echo "$((i + 1)). ${MENU_OPTIONS[i]}"
-  done
-  echo
-}
-
-# Main menu
+# Main script loop
 while true; do
-  display_main_menu
-  read -p "Enter your choice (1, 2, or 3): " choice
+  echo "Main Menu"
+  echo "1. Onboard a new application"
+  echo "2. Add an existing application to an environment"
+  echo "3. Abort"
 
-  case "$choice" in
-    1) create_application;;
-    2) add_existing_application;;
-    3) echo "Aborting."; exit 0;;
-    *) echo "Invalid choice. Please enter 1, 2, or 3.";;
+  read -p "Please select an option (1, 2, or 3): " option
+
+  case $option in
+    1)
+      create_application
+      ;;
+    2)
+      add_existing_application
+      ;;
+    3)
+      exit 0
+      ;;
+    *)
+      handle_invalid_input
+      ;;
   esac
 done
