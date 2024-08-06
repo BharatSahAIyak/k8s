@@ -57,7 +57,10 @@ spec:
         app.kubernetes.io/name: admin
     spec:
       containers:
-        - image: registry.local/bharatsahaiyak/admin:IMAGE_TAG
+        - envFrom:
+          - secretRef:
+              name: admin
+          image: registry.local/bharatsahaiyak/admin:IMAGE_TAG
           imagePullPolicy: Always
           name: admin
       restartPolicy: Always
