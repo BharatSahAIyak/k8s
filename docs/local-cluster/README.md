@@ -5,43 +5,24 @@ At the end will:
 - Another part is that you should also be able to sync the secrets from Vault.
 
 # Creating the Virtual Machine (VM) :
-You can use UTM(Link is for macOS: https://mac.getutm.app/) to create the VM.
+You can use UTM(This link is for macOS: [UTM](https://mac.getutm.app/) to create the VM. You can also use any other software for creating VM according to your OS, e.g. [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html)
 
-1. Use the below image for creating the ubuntu vm :
-```https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso```
+1. Use the following image for creating the ubuntu vm :
+[Ubuntu Image for Creating VM](https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso)
 
 2. Shutdown the VM. Create and use a Bridge network in the settings for the VM.
 
-
 # Installing docker, vault and Caddy on Vm:
-1. Fork and clone the fork of the following repo to setup docker, vault and caddy: ```https://github.com/Samagra-Development/devops.git```
+1. Fork and clone the fork of the following repo to setup docker, vault and caddy: ```https://github.com/Samagra-Development/devops.git``` 
 Follow the steps(Upto step 9) under : "Setting up services on VM". 
 
-2. In the .env file add the following details:
-![valut, caddy credentials](./ss/initial.png)
+2. In the .env file add the DOMAIN_NAME, ENVIRONMENT_USERNAME & ENVIRONMENT_PASSWORD :
+![vault, caddy credentials](./ss/initial.png)
 
 
-3. Make the following changes for vault's docker-compose.yaml(/home/username/devops/common/environment/docker-compose.yaml) (Leave the rest as it is):![Example for Vault's docker-compose.yaml](./ss/vault.png)
-``` 
-volumes:
-  environment:
+3. Make the following changes for vault's docker-compose.yaml(/home/username/devops/common/environment/docker-compose.yaml). Add the ports and the network_mode (**Leave the rest as it is**):![Example for Vault's docker-compose.yaml](./ss/vault.png)
 
-services:
-  environment:
-    ports:
-      - "8200:8200"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    network_mode: host
-    environment:
-      VAULT_USERNAME: ${ENVIRONMENT_USERNAME:?ENVIRONMENT_USERNAME is not set}
-      VAULT_PASSWORD: ${ENVIRONMENT_PASSWORD:?ENVIRONMENT_PASSWORD is not set}
-      VAULT_LOG_LEVEL: "trace"
-``` 
-
-4. Make the following changes for caddy's docker-compose.yaml (/home/username/devops/common/caddy/docker-compose.yaml):```network_mode: host``` ![Example for caddy's docker-compose.yaml](./ss/caddy.png)
+4. Make the following changes for caddy's docker-compose.yaml (/home/username/devops/common/caddy/docker-compose.yaml). Just add the: ```network_mode: host``` (**Leave the rest as it is**) ![Example for caddy's docker-compose.yaml](./ss/caddy.png)
 
 Make sure to use the network_mode as "host":```network_mode : host```
 
@@ -52,18 +33,19 @@ Use the ```make deploy```command
 
 # Creating the cluster using kind :
 
-1. Install kind on your local machine: https://kind.sigs.k8s.io/docs/user/quick-start/ 
+1. [Install kind on your local machine:](https://kind.sigs.k8s.io/docs/user/quick-start/) 
 
-2. Install kubectl on local: https://kubernetes.io/docs/tasks/tools/
+2. [Install kubectl on local:](https://kubernetes.io/docs/tasks/tools/)
 
 3. Use the docs/local-cluster/cluster-config.yaml file of this repository for creating cluster.
 
-2. Create the cluster using the following command: ```kind create cluster --name <Name for the cluster> --config ./cluster-config.yaml```
+4. Create the cluster using the following command: ```kind create cluster --name <Name for the cluster> --config ./cluster-config.yaml```
 
 
 # Setting up vault :
 
 Follow this : [Setting up Vault](../../cluster/components/vault/README.md)
+(You will find all the necessary files at the same level as the README.md in this repo.)
 
 Make sure :
 1. In vault-values.yaml: ```
@@ -83,8 +65,9 @@ Go to the Vault's UI using <VM's IP>:8200 and In Secrets Engine "kv" create a se
 # Setting up kong :
 
 Follow this to setup kong : [Setting up kong](../../cluster/components/kong/README.md)
+(You will find all the necessary files at the same level as the README.md in this repo.)
 
-
+At last to check the services, type : ```kubectl get svc -n kong```
 ![kong's svc](./ss/kong-svc.png)
 
 
