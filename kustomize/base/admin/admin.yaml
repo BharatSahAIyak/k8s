@@ -33,8 +33,6 @@ spec:
     - "--build-arg=NEXT_PUBLIC_FLOWISE_URL=$(NEXT_PUBLIC_FLOWISE_URL)"
     - "--build-arg=NEXT_PUBLIC_DOC_SERVICE_URL=$(NEXT_PUBLIC_DOC_SERVICE_URL)"
     - "--build-arg=NEXT_PUBLIC_AUTOTUNE_API_URL=$(NEXT_PUBLIC_AUTOTUNE_API_URL)"
-    - "--build-arg=NEXT_PUBLIC_INBOUND_API=$(NEXT_PUBLIC_INBOUND_API)"
-    - "--build-arg=NEXT_PUBLIC_AI_TOOLS_API=$(NEXT_PUBLIC_AI_TOOLS_API)"
     envFrom:
       - secretRef:
           name: git-read-token
@@ -59,7 +57,10 @@ spec:
         app.kubernetes.io/name: admin
     spec:
       containers:
-        - image: registry.local/bharatsahaiyak/admin:IMAGE_TAG
+        - envFrom:
+          - secretRef:
+              name: admin
+          image: registry.local/bharatsahaiyak/admin:IMAGE_TAG
           imagePullPolicy: Always
           name: admin
       restartPolicy: Always
