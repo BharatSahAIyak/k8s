@@ -33,9 +33,11 @@ Use the ```make deploy```command
 
 # Creating the cluster using kind :
 
-1. [Install kind on your local machine:](https://kind.sigs.k8s.io/docs/user/quick-start/) 
+1. [Install kind on your local machine](https://kind.sigs.k8s.io/docs/user/quick-start/) 
 
-2. [Install kubectl on local:](https://kubernetes.io/docs/tasks/tools/)
+2. [Install kubectl on local](https://kubernetes.io/docs/tasks/tools/)
+
+3. [Install Helm on local machine](https://helm.sh/docs/intro/install/#from-apt-debianubuntu)
 
 3. Use the docs/local-cluster/cluster-config.yaml file of this repository for creating cluster.
 
