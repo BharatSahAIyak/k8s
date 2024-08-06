@@ -16,8 +16,10 @@ PROMPT_APP_NOT_EXIST="The application {APPLICATION} does not exist."
 PROMPT_ADD_INGRESS="Do you want to expose the application named {APPLICATION} publicly? (yes/no): "
 PROMPT_ADD_SECRET="Do you want to pull secrets from vault for {APPLICATION}? (yes/no): "
 PROMPT_GPU_REQUEST="Does the application require GPUs? (yes/no): "
-PROMPT_GPU_LIMIT="Enter the GPU_LIMIT (1 GPU = 4 Units, e.g., 1, 2)"
+PROMPT_GPU_LIMIT="Enter the GPU_LIMIT (1 GPU = 4 Units, e.g., 1, 2): "
 PROMPT_BUILD_IMAGE="Do you want to build the image for application {APPLICATION} on Kubernetes? (yes/no): "
+PROMPT_ENSURE_CONTEXT="Ensure to add context and destination in vault. Eg. Context=git://github.com/BharatSahAIyak/admin
+10.10.4.4:5000/bharatsahaiyak/admin:bhasai-dev"
 INVALID_INPUT="Invalid input. Please enter 'yes' or 'no' only."
 INVALID_MEMORY="Invalid input. Memory value must be in the format of '64Mi' or '128Gi'."
 INVALID_NUMBER="Invalid input. It must be a number."
@@ -174,6 +176,29 @@ create_application() {
       GPU_LIMIT=""
     fi
 
+   # Prompt for image build option.
+    while true; do
+      read -p "$(echo "$PROMPT_BUILD_IMAGE" | sed "s/{APPLICATION}/$APPLICATION/")" BUILD_IMAGE
+      if validate_yes_no "$BUILD_IMAGE"; then
+        break
+      fi
+    done
+
+    # Check if the user chose to build the image
+    if [[ "$BUILD_IMAGE" == "yes" ]]; then
+      echo "$PROMPT_ENSURE_CONTEXT"
+      printf "\n"
+      ADD_SECRET="yes"
+    else
+      # Prompt for including Vault secrets
+      while true; do
+        read -p "$(echo "$PROMPT_ADD_SECRET" | sed "s/{APPLICATION}/$APPLICATION/")" ADD_SECRET
+        if validate_yes_no "$ADD_SECRET"; then
+          break
+        fi
+      done
+    fi
+
     # Prompt for including Ingress and secrets
     while true; do
       read -p "$(echo "$PROMPT_ADD_INGRESS" | sed "s/{APPLICATION}/$APPLICATION/")" ADD_INGRESS
@@ -181,24 +206,6 @@ create_application() {
         break
       fi
     done
-
-    while true; do
-      read -p "$(echo "$PROMPT_ADD_SECRET" | sed "s/{APPLICATION}/$APPLICATION/")" ADD_SECRET
-      if validate_yes_no "$ADD_SECRET"; then
-        break
-      fi
-    done
-
-    # Prompt for image build option.
-    while true; do
-      read -p "$(echo "$PROMPT_BUILD_IMAGE" | sed "s/{APPLICATION}/$APPLICATION/")" BUILD_IMAGE
-      if [[ "$BUILD_IMAGE" == "yes" || "$BUILD_IMAGE" == "no" ]]; then
-        break
-      else
-        echo "$INVALID_INPUT"
-      fi
-    done
-
 
     # Create the application folder
     mkdir -p kustomize/base/${APPLICATION}
@@ -215,8 +222,8 @@ create_application() {
       
   # Append GPU limits if requested
       if [[ "$GPU_REQUEST" == "yes" ]]; then
-        printf "\n"
-        printf '              nvidia.com/gpu: "%s"' "$GPU_LIMIT"
+        # printf "\n"
+        printf '        nvidia.com/gpu: "%s"' "$GPU_LIMIT"
       fi
 
       # Always add separator after Deployment section
