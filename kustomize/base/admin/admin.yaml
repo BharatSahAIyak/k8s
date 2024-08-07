@@ -23,6 +23,7 @@ spec:
     args:
     - "--context=$(CONTEXT)"
     - "--destination=$(DESTINATION)"
+    - "--cache=true"
     - "--build-arg=NEXT_PUBLIC_DATASET_SERVICE_URL=$(NEXT_PUBLIC_DATASET_SERVICE_URL)"
     - "--build-arg=NEXT_PUBLIC_BFF_API_URL=$(NEXT_PUBLIC_BFF_API_URL)"
     - "--build-arg=NEXT_PUBLIC_TELEMETRY_API_URL=$(NEXT_PUBLIC_TELEMETRY_API_URL)"
