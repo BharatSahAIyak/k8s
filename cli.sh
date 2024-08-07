@@ -18,8 +18,8 @@ PROMPT_ADD_SECRET="Do you want to pull secrets from vault for {APPLICATION}? (ye
 PROMPT_GPU_REQUEST="Does the application require GPUs? (yes/no): "
 PROMPT_GPU_LIMIT="Enter the GPU_LIMIT (1 GPU = 4 Units, e.g., 1, 2): "
 PROMPT_BUILD_IMAGE="Do you want to build the image for application {APPLICATION} on Kubernetes? (yes/no): "
-PROMPT_ENSURE_CONTEXT="Ensure to add context and destination in vault. Eg. Context=git://github.com/BharatSahAIyak/admin
-10.10.4.4:5000/bharatsahaiyak/admin:bhasai-dev"
+PROMPT_ENSURE_CONTEXT=$'Ensure to add context and destination in vault.\nEg. Context=git://github.com/BharatSahAIyak/admin
+10.10.4.4:5000/bharatsahaiyak/admin:bhasai-dev'
 INVALID_INPUT="Invalid input. Please enter 'yes' or 'no' only."
 INVALID_MEMORY="Invalid input. Memory value must be in the format of '64Mi' or '128Gi'."
 INVALID_NUMBER="Invalid input. It must be a number."
