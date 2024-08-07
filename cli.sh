@@ -295,22 +295,46 @@ add_existing_application() {
     # Check if the application YAML file exists
     if [[ ! -f "kustomize/base/${APPLICATION}/${APPLICATION}.yaml" ]]; then
       echo "$(echo "$PROMPT_APP_NOT_EXIST" | sed "s/{APPLICATION}/$APPLICATION/")"
-      echo "$OUTPUT_RETURN_MAIN_MENU"
-      return
+      printf "\n"  # Add a blank line for better readability
+    else
+      while true; do
+        printf "\n"
+        read -p "$PROMPT_ENVIRONMENTS" ENVIRONMENTS
+        printf "\n"
+
+        # Update the overlay kustomization.yaml files
+        update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
+
+        while true; do
+          printf "\n"
+          read -p "$(echo "$PROMPT_CONTINUE_ENV" | sed "s/{APPLICATION}/$APPLICATION/")" continue_env
+          if [[ "$continue_env" == "yes" || "$continue_env" == "no" ]]; then
+            break
+          else
+            printf "\n"
+            handle_invalid_input
+            return
+          fi
+        done
+
+        if [[ "$continue_env" != "yes" ]]; then
+          break
+        fi
+      done
     fi
 
-    prompt_input "$PROMPT_ENVIRONMENTS" validate_application_name ENVIRONMENTS
+    while true; do
+      printf "\n"
+      read -p "$(echo "$PROMPT_ADD_ANOTHER" | sed "s/{APPLICATION}/$APPLICATION/")" continue_choice
+      if [[ "$continue_choice" == "yes" || "$continue_choice" == "no" ]]; then
+        break
+      else
+        handle_invalid_input
+        return
+      fi
+    done
 
-    # Update kustomization.yaml files in the overlay directories
-    update_overlay_kustomization "$APPLICATION" "$ENVIRONMENTS"
-
-    echo "$APPLICATION has been added to the specified environments."
-
-    read -p "$PROMPT_CONTINUE_ENV" continue_choice
-    if [[ "$continue_choice" != "yes" && "$continue_choice" != "no" ]]; then
-      handle_invalid_input
-      return
-    elif [[ "$continue_choice" == "no" ]]; then
+    if [[ "$continue_choice" != "yes" ]]; then
       echo "$OUTPUT_RETURN_MAIN_MENU"
       return
     fi
