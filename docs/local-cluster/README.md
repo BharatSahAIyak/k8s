@@ -1,16 +1,35 @@
-# Overview:
-In the below steps you will be creating a Virtual Machine on you local system. Firstly, on Virtual Machine you will be installing docker, Vault and Caddy using the "devops" repo given below. On your  VM install kind, kubectl  then create a Cluster using kind. After the cluster is created follow the steps to setup vault and kong.
-At the end will:
-- When You will hit the domain name configured from your local system then it will take you to kong-gateway-proxy which is configured on the cluster. 
-- Another part is that you should also be able to sync the secrets from Vault.
+# Overview
+![Overview](./ss/overview.png)
 
-# Creating the Virtual Machine (VM) :
-You can use UTM(This link is for macOS: [UTM](https://mac.getutm.app/) to create the VM. You can also use any other software for creating VM according to your OS, e.g. [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html)
+In the following steps, you will:
 
-1. Use the following image for creating the ubuntu vm :
-[Ubuntu Image for Creating VM](https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso)
+- **Create a Virtual Machine (VM)** on your local system.
+- **Install Docker, Vault, and Caddy** on the VM using the provided "devops" repository.
+- **Install `kind` and `kubectl`** on your VM, and create a Kubernetes cluster using `kind`.
+- **Set up Vault and Kong** in the Kubernetes cluster.
 
-2. Shutdown the VM. Create and use a Bridge network in the settings for the VM.
+By the end of this process:
+
+- Accessing the configured domain name from your local system will route you to the `kong-gateway-proxy` service within the cluster.
+- You will also be able to synchronize secrets from Vault successfully.
+
+
+# Creating the Virtual Machine (VM)
+
+To create a Virtual Machine (VM), follow these steps based on your operating system:
+
+- **macOS:** Use [UTM](https://mac.getutm.app/) to create the VM.
+- **Windows/Linux:** Use [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html) or another virtualization tool compatible with your OS.
+
+1. **Download the Ubuntu Image:**
+   - Obtain the Ubuntu image for your VM from the following link: [Ubuntu 24.04 Live Server ARM64](https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso).
+
+2. **Configure the VM:**
+   - After installing Ubuntu, shut down the VM.
+   - In your VM settings, create and configure a Bridge network to ensure proper network connectivity for your VM.
+
+Follow the instructions provided by your chosen virtualization tool for creating and configuring the VM with the downloaded image.
+
 
 # Installing docker, vault and Caddy on Vm:
 1. Fork and clone the fork of the following repo to setup docker, vault and caddy: ```https://github.com/Samagra-Development/devops.git``` 
