@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: yt-parser
+  name: yt-parser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: yt-parser
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: yt-parser
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: yt-parser
+          image: ghcr.io/bharatsahaiyak/yt-parser:dev
+          imagePullPolicy: Always
+          name: yt-parser
+          command: ["uvicorn"]
+          args: ["main:app", "--host", "0.0.0.0", "--port", "8000"]
+          resources:
+            requests:
+              memory: "2048Mi"
+            limits:
+              memory: "2048Mi"
+        - envFrom:
+          - secretRef:
+              name: yt-parser
+          image: ghcr.io/bharatsahaiyak/yt-parser:dev
+          imagePullPolicy: Always
+          name: yt-parser-celery-worker
+          command: ["celery"]
+          args: ["-A", "worker", "worker", "-P", "gevent", "--loglevel=info"]
+          resources:
+            requests:
+              memory: "2048Mi"
+            limits:
+              memory: "2048Mi"
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yt-parser
+spec:
+  selector:
+    app.kubernetes.io/name: yt-parser
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: yt-parser
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/yt-parser
+  destination:
+    name: yt-parser
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: yt-parser
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "yt-parser.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: yt-parser
+            port:
+              number: 80
