@@ -23,7 +23,7 @@ spec:
           imagePullPolicy: Always
           name: pdf-parser
           command: ["bash", "-c"]
-          args: ["./setup.sh && python manage.py runserver 0.0.0.0:8000o"]
+          args: ["./setup.sh && python manage.py runserver 0.0.0.0:8000"]
           resources:
             requests:
               memory: "2048Mi"
