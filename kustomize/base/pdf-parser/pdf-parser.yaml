@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: pdf-parser
+  name: pdf-parser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pdf-parser
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pdf-parser
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: pdf-parser
+          image: ghcr.io/bharatsahaiyak/pdf-parser:dev
+          imagePullPolicy: Always
+          name: pdf-parser
+          command: ["bash", "-c"]
+          args: ["./setup.sh && python manage.py runserver 0.0.0.0:8000o"]
+          resources:
+            requests:
+              memory: "2048Mi"
+            limits:
+              memory: "2048Mi"
+        - envFrom:
+          - secretRef:
+              name: pdf-parser
+          image: ghcr.io/bharatsahaiyak/pdf-parser:dev
+          imagePullPolicy: Always
+          name: pdf-parser-celery-worker
+          command: ["bash", "-c"]
+          args: ["./setup.sh && celery -A pdf_parser worker -P solo -l info"]
+          resources:
+            requests:
+              memory: "8192Mi"
+            limits:
+              memory: "8192Mi"
+              nvidia.com/gpu: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdf-parser
+spec:
+  selector:
+    app.kubernetes.io/name: pdf-parser
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: pdf-parser
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/pdf-parser
+  destination:
+    name: pdf-parser
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pdf-parser
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "pdf-parser.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: pdf-parser
+            port:
+              number: 80
