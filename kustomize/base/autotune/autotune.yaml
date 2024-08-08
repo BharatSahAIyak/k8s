@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: autotune
+  name: autotune
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: autotune
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: autotune
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: autotune
+          image: ghcr.io/bharatsahaiyak/autotune:dev
+          imagePullPolicy: Always
+          name: autotune
+          command: ["bash", "-c"]
+          args: ["poetry install && python manage.py database && python manage.py runserver 0.0.0.0:8000"]
+          resources:
+            requests:
+              memory: "2048Mi"
+            limits:
+              memory: "2048Mi"
+        - envFrom:
+          - secretRef:
+              name: autotune
+          image: ghcr.io/bharatsahaiyak/autotune:dev
+          imagePullPolicy: Always
+          name: autotune-celery-worker
+          command: ["bash", "-c"]
+          args: ["poetry install && celery -A autotune worker --loglevel=info -P gevent"]
+          resources:
+            requests:
+              memory: "2048Mi"
+            limits:
+              memory: "2048Mi"
+              nvidia.com/gpu: 1
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: autotune
+spec:
+  selector:
+    app.kubernetes.io/name: autotune
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: autotune
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/autotune
+  destination:
+    name: autotune
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: autotune
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "autotune.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: autotune
+            port:
+              number: 80
