@@ -1,6 +1,6 @@
 # Overview
 
-![Overview](./ss/overview.png)
+![Overview](./ss/Overview.png)
 
 In the following steps, you will:
 
