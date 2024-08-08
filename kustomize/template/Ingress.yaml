@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{APPLICATION}}
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "{{APPLICATION}}.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{APPLICATION}}
+            port:
+              number: 80
