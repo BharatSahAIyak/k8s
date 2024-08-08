@@ -1,7 +1,7 @@
 # Overview
 
 
-<img src="./ss/Overview.png" alt="Overview" width="370" style="margin-left: 110px;" />
+<img src="./ss/Overview.png" alt="Overview" width="370" style="margin-left: 210px;" />
 
 In the following steps, you will:
 
@@ -39,25 +39,25 @@ Follow the steps(Upto step 9) under : "Setting up services on VM".
 
 2. In the .env file add the DOMAIN_NAME, ENVIRONMENT_USERNAME & ENVIRONMENT_PASSWORD :
 
-<img src="./ss/initial.png" alt="vault, caddy credentials" width="370" style="margin-left: 100px;" />
+<img src="./ss/initial.png" alt="vault, caddy credentials" width="370" style="margin-left: 200px;" />
 
 
 
 
 3. Make the following changes for vault's docker-compose.yaml(/home/username/devops/common/environment/docker-compose.yaml). Add the ports and the network_mode (**Leave the rest as it is**):
 
-<img src="./ss/vault.png" alt="Example for Vault's docker-compose.yaml" width="340" style="margin-left: 110px;" />
+<img src="./ss/vault.png" alt="Example for Vault's docker-compose.yaml" width="340" style="margin-left: 210px;" />
 
 
 4. Make the following changes for caddy's docker-compose.yaml (/home/username/devops/common/caddy/docker-compose.yaml). Just add the: ```network_mode: host``` (**Leave the rest as it is**) 
 
-<img src="./ss/caddy.png" alt="Example for caddy's docker-compose.yaml" width="340" style="margin-left: 110px;" />
+<img src="./ss/caddy.png" alt="Example for caddy's docker-compose.yaml" width="340" style="margin-left: 210px;" />
 
 Make sure to use the network_mode as "host":```network_mode : host```
 
 5. Only uncomment the service in docker-comopose file which you want to use, like :
 
-<img src="./ss/uncomment.png" alt="Uncomment services in docker-compose.yaml" width="340" style="margin-left: 110px;" />
+<img src="./ss/uncomment.png" alt="Uncomment services in docker-compose.yaml" width="340" style="margin-left: 210px;" />
 
 Use the ```make deploy```command
 
@@ -94,7 +94,7 @@ Follow this to setup kong : [Setting up kong](../../cluster/components/kong/READ
 
 At last to check the services, type : ```kubectl get svc -n kong```
 
-<img src="./ss/kong-svc.png" alt="kong's svc" width="400" style="margin-left: 70px;" />
+<img src="./ss/kong-svc.png" alt="kong's svc" width="400" style="margin-left: 170px;" />
 
 
 
@@ -103,7 +103,7 @@ At last to check the services, type : ```kubectl get svc -n kong```
 1. Cd into the devops repository which you used to setup Caddy.
 2. Configure the Caddy file at root level. Use the Node's Internal IP. 
 
-<img src="./ss/caddy-config.png" alt="Caddy" width="340" style="margin-left: 100px;" />
+<img src="./ss/caddy-config.png" alt="Caddy" width="340" style="margin-left: 200px;" />
 
 ```
 #import ./common/monitoring/Caddyfile
