@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: testbed
+  name: testbed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: testbed
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: testbed
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: testbed
+          image: ghcr.io/bharatsahaiyak/testbed:dev
+          imagePullPolicy: Always
+          name: testbed
+          resources:
+            requests:
+              memory: "256Mi"
+            limits:
+              memory: "256Mi"
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testbed
+spec:
+  selector:
+    app.kubernetes.io/name: testbed
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: testbed
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/testbed
+  destination:
+    name: testbed
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: testbed
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "testbed.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: testbed
+            port:
+              number: 80
