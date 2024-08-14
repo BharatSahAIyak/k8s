@@ -12,7 +12,6 @@ resources:
   - ../../base/inboundjs
   - ../../base/nodehub
   - ../../base/orchestrator
-  - ../../base/telemetry
   - ../../base/transport-socket
   - ../../base/uci-apis
   - ../../base/user-management-service
