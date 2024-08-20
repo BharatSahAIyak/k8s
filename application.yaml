@@ -123,4 +123,21 @@ spec:
     automated:
       prune: false
       selfHeal: true
-
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vistaar-prod
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: kustomize/overlays/vistaar-prod
+    repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
+    targetRevision: v2
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
