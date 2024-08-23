@@ -21,7 +21,7 @@ k8s_worker_node_count = "2"
 k8s_worker_disk_size  = "128"
 
 k8s_worker_gpu_node_size  = "Standard_NC4as_T4_v3"
-k8s_worker_gpu_node_count = "0"
+k8s_worker_gpu_node_count = "2"
 k8s_worker_gpu_disk_size  = "512"
 
 k8s_admin_disk_size = "128"
