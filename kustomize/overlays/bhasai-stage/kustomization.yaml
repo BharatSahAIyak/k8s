@@ -1,0 +1,51 @@
+resources:
+  - ../../base/testbed
+  - ../../base/autotune
+  - ../../base/yt-parser
+  - ../../base/pdf-parser
+  - ../../base/ai-tools-proxy
+  - ../../base/auth-service
+  - ../../base/bff
+  - ../../base/dataset-service
+  - ../../base/deployer
+  - ../../base/document-service
+  - ../../base/inboundjs
+  - ../../base/nodehub
+  - ../../base/orchestrator
+  - ../../base/transport-socket
+  - ../../base/uci-apis
+  - ../../base/user-management-service
+  - ../../base/namespace
+  - ../../base/vault-auth
+  - ../../base/git-read-token
+  - ../../base/admin
+
+namespace: bhasai-stage
+
+images:
+  - name: registry.local/bharatsahaiyak/admin
+    newTag: bhasai-stage
+
+replacements:
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: VaultStaticSecret
+      fieldPaths:
+      - spec.path
+      options:
+        delimiter: "/"
+        index: 0
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: Ingress
+      fieldPaths:
+      - spec.rules.0.host
+      options:
+        delimiter: "."
+        index: 1
