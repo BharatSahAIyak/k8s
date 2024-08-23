@@ -25,6 +25,37 @@ namespace: bhasai-uat
 images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-uat
+  - name: ghcr.io/bharatsahaiyak/autotune
+    newTag: 0.5.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/bff
+    newTag: 0.5.5-rc-1
+  - name: ghcr.io/bharatsahaiyak/inbound
+    newTag: 0.5.0-hotfix-1
+  - name: ghcr.io/bharatsahaiyak/orchestrator
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/transport-socket
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/uci-apis
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/user-management-service
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/yt-parser
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/pdf-parser
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/ai-tools-proxy
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/auth-service 
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/dataset-service
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/deployer
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/document-service
+    newTag: 0.5.0
+  - name: ghcr.io/bharatsahaiyak/nodehub
+    newTag: 0.5.0
+
 
 replacements:
 - source:
