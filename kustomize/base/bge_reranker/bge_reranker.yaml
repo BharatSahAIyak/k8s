@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: bge_reranker
+  name: bge_reranker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bge_reranker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bge_reranker
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: bge_reranker
+          image: ghcr.io/bharatsahaiyak/ai-tools/bge_reranker:dev
+          imagePullPolicy: Always
+          name: bge_reranker
+          resources:
+            requests:
+              memory: "1500Mi"
+            limits:
+              memory: "2400Mi"
+              nvidia.com/gpu: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bge_reranker
+spec:
+  selector:
+    app.kubernetes.io/name: bge_reranker
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: bge_reranker
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/bge_reranker
+  destination:
+    name: bge_reranker
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bge_reranker
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "bge_reranker.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bge_reranker
+            port:
+              number: 80
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-bge_reranker
+spec:
+  containers:
+  - name: kaniko-bge_reranker
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=$(CONTEXT)"
+    - "--destination=$(DESTINATION)"
+    envFrom:
+      - secretRef:
+          name: git-read-token
+      - secretRef:
+          name: bge_reranker
+  restartPolicy: Never
