@@ -23,13 +23,13 @@ PROMPT_ENSURE_CONTEXT=$'Ensure to add context and destination in vault.\nEg. Con
 INVALID_INPUT="Invalid input. Please enter 'yes' or 'no' only."
 INVALID_MEMORY="Invalid input. Memory value must be in the format of '64Mi' or '128Gi'."
 INVALID_NUMBER="Invalid input. It must be a number."
-INVALID_APPLICATION_NAME=$'\nInvalid APPLICATION name. It must contain only lowercase letters, numbers, and dashes, and must start and end with a lowercase letter or number.\n'
+INVALID_APPLICATION_NAME=$'\nInvalid APPLICATION name. It must contain only lowercase letters, numbers, underscores, and dashes, and must start and end with a lowercase letter or number.\n'
 OUTPUT_RETURN_MAIN_MENU=$'\nReturning to the main menu'
 OUTPUT_INVALID_INPUT="Invalid input. Returning to the main menu."
 
 # Function to validate the APPLICATION name
 validate_application_name() {
-  if [[ ! "$1" =~ ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$ ]]; then
+  if [[ ! "$1" =~ ^[a-z0-9]([-a-z0-9_]*[a-z0-9])?$ ]]; then
     echo "$INVALID_APPLICATION_NAME"
     return 1
   else
