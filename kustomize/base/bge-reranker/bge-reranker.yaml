@@ -19,14 +19,18 @@ spec:
         - envFrom:
           - secretRef:
               name: bge-reranker
+
           image: ghcr.io/bharatsahaiyak/ai-tools/bge_reranker:dev
+
           imagePullPolicy: Always
           name: bge-reranker
           resources:
             requests:
               memory: "2400Mi"
             limits:
+
               memory: "3300Mi"
+
               nvidia.com/gpu: "1"
 ---
 apiVersion: v1
