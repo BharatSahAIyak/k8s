@@ -1,5 +1,5 @@
 resources:
-    - ../../base/bge-reranker
+  - ../../base/bge-reranker
   - ../../base/testbed
   - ../../base/autotune
   - ../../base/yt-parser
