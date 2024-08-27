@@ -2,40 +2,40 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: agri-flow-classifier-bert
-  name: agri-flow-classifier-bert
+    app.kubernetes.io/name: llm-openai-evaluator
+  name: llm-openai-evaluator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: agri-flow-classifier-bert
+      app.kubernetes.io/name: llm-openai-evaluator
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: agri-flow-classifier-bert
+        app.kubernetes.io/name: llm-openai-evaluator
     spec:
       restartPolicy: Always
       containers:
         - envFrom:
           - secretRef:
-              name: agri-flow-classifier-bert
-          image: ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_bert:dev
+              name: llm-openai-evaluator
+          image: ghcr.io/bharatsahaiyak/ai-tools/llm_openai_evaluator:dev
           imagePullPolicy: Always
-          name: agri-flow-classifier-bert
+          name: llm-openai-evaluator
           resources:
             requests:
-              memory: "2100Mi"
+              memory: "512Mi"
             limits:
-              memory: "2400Mi"
-              nvidia.com/gpu: "1"
+              memory: "800Mi"
+      
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: agri-flow-classifier-bert
+  name: llm-openai-evaluator
 spec:
   selector:
-    app.kubernetes.io/name: agri-flow-classifier-bert
+    app.kubernetes.io/name: llm-openai-evaluator
   ports:
     - protocol: TCP
       port: 80
@@ -44,13 +44,13 @@ spec:
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultStaticSecret
 metadata:
-  name: agri-flow-classifier-bert
+  name: llm-openai-evaluator
 spec:
   type: kv-v2
   mount: kv
-  path: NAMESPACE/agri-flow-classifier-bert
+  path: NAMESPACE/llm-openai-evaluator
   destination:
-    name: agri-flow-classifier-bert
+    name: llm-openai-evaluator
     create: true
   refreshAfter: 10s
   vaultAuthRef: static-auth
@@ -58,18 +58,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: agri-flow-classifier-bert
+  name: llm-openai-evaluator
 spec:
   ingressClassName: kong
   rules:
-  - host: "agri-flow-classifier-bert.NAMESPACE.k8s.bhasai.samagra.io"
+  - host: "llm-openai-evaluator.NAMESPACE.k8s.bhasai.samagra.io"
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
           service:
-            name: agri-flow-classifier-bert
+            name: llm-openai-evaluator
             port:
               number: 80
 
@@ -77,10 +77,10 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: kaniko-agri-flow-classifier-bert
+  name: kaniko-llm-openai-evaluator
 spec:
   containers:
-  - name: kaniko-agri-flow-classifier-bert
+  - name: kaniko-llm-openai-evaluator
     image: gcr.io/kaniko-project/executor:latest
     args:
     - "--context=$(CONTEXT)"
@@ -89,5 +89,5 @@ spec:
       - secretRef:
           name: git-read-token
       - secretRef:
-          name: agri-flow-classifier-bert
+          name: llm-openai-evaluator
   restartPolicy: Never
