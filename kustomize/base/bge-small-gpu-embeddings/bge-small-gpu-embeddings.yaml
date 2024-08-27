@@ -2,40 +2,40 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: spell-check
-  name: spell-check
+    app.kubernetes.io/name: bge-small-gpu-embeddings
+  name: bge-small-gpu-embeddings
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: spell-check
+      app.kubernetes.io/name: bge-small-gpu-embeddings
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: spell-check
+        app.kubernetes.io/name: bge-small-gpu-embeddings
     spec:
       restartPolicy: Always
       containers:
         - envFrom:
           - secretRef:
-              name: spell-check
-          image: ghcr.io/bharatsahaiyak/ai-tools/spell_check:dev
+              name: bge-small-gpu-embeddings
+          image: ghcr.io/bharatsahaiyak/ai-tools/bge_small_gpu_embeddings:dev
           imagePullPolicy: Always
-          name: spell-check
+          name: bge-small-gpu-embeddings
           resources:
             requests:
-              memory: "720Mi"
+              memory: "1024Mi"
             limits:
-              memory: "1520Mi"
-      
+              memory: "20148Mi"
+              nvidia.com/gpu: "1"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: spell-check
+  name: bge-small-gpu-embeddings
 spec:
   selector:
-    app.kubernetes.io/name: spell-check
+    app.kubernetes.io/name: bge-small-gpu-embeddings
   ports:
     - protocol: TCP
       port: 80
@@ -44,17 +44,17 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: spell-check
+  name: bge-small-gpu-embeddings
 spec:
   ingressClassName: kong
   rules:
-  - host: "spell-check.NAMESPACE.k8s.bhasai.samagra.io"
+  - host: "bge-small-gpu-embeddings.NAMESPACE.k8s.bhasai.samagra.io"
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
           service:
-            name: spell-check
+            name: bge-small-gpu-embeddings
             port:
               number: 80

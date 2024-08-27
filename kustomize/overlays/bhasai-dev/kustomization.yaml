@@ -1,4 +1,14 @@
 resources:
+  - ../../base/spell-check
+  - ../../base/text-translation-azure-dict
+  - ../../base/bge-small-gpu-embeddings
+  - ../../base/agri-flow-classifier-bert
+  - ../../base/llm-openai-evaluator
+  - ../../base/asr-mms
+  - ../../base/mini-lm-embed
+  - ../../base/bm25
+  - ../../base/ner
+  - ../../base/bge-reranker
   - ../../base/testbed
   - ../../base/autotune
   - ../../base/yt-parser
