@@ -59,6 +59,7 @@ module "k8s_stateful" {
   node_disk_size          = var.k8s_stateful_disk_size
   resource_group_name     = var.resource_group_name
   resource_group_location = var.resource_group_location
+  node_public_ip          = true
 }
 
 module "k8s_admin" {

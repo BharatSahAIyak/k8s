@@ -16,7 +16,7 @@ PROMPT_APP_NOT_EXIST="The application {APPLICATION} does not exist."
 PROMPT_ADD_INGRESS="Do you want to expose the application named {APPLICATION} publicly? (yes/no): "
 PROMPT_ADD_SECRET="Do you want to pull secrets from vault for {APPLICATION}? (yes/no): "
 PROMPT_GPU_REQUEST="Does the application require GPUs? (yes/no): "
-PROMPT_GPU_LIMIT="Enter the GPU_LIMIT (1 GPU = 4 Units, e.g., 1, 2): "
+PROMPT_GPU_LIMIT="Enter the GPU_LIMIT (1 GPU = 8 Units, e.g., 1, 2): "
 PROMPT_BUILD_IMAGE="Do you want to build the image for application {APPLICATION} on Kubernetes? (yes/no): "
 PROMPT_ENSURE_CONTEXT=$'Ensure to add context and destination in vault.\nEg. Context=git://github.com/BharatSahAIyak/admin
 10.10.4.4:5000/bharatsahaiyak/admin:bhasai-dev'
