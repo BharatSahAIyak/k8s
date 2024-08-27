@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: spell-check
-  name: spell-check
+    app.kubernetes.io/name: bm25
+  name: bm25
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: spell-check
+      app.kubernetes.io/name: bm25
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: spell-check
+        app.kubernetes.io/name: bm25
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/bharatsahaiyak/ai-tools/spell_check:dev
+        - image: ghcr.io/bharatsahaiyak/ai-tools/bm25:dev
           imagePullPolicy: Always
-          name: spell-check
+          name: bm25
           resources:
             requests:
               memory: "512Mi"
@@ -29,10 +29,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spell-check
+  name: bm25
 spec:
   selector:
-    app.kubernetes.io/name: spell-check
+    app.kubernetes.io/name: bm25
   ports:
     - protocol: TCP
       port: 80
@@ -41,17 +41,17 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: spell-check
+  name: bm25
 spec:
   ingressClassName: kong
   rules:
-  - host: "spell-check.NAMESPACE.k8s.bhasai.samagra.io"
+  - host: "bm25.NAMESPACE.k8s.bhasai.samagra.io"
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
           service:
-            name: spell-check
+            name: bm25
             port:
               number: 80
