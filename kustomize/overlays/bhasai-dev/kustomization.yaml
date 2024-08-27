@@ -1,4 +1,5 @@
 resources:
+  - ../../base/telemetry
   - ../../base/spell-check
   - ../../base/text-translation-azure-dict
   - ../../base/bge-small-gpu-embeddings
