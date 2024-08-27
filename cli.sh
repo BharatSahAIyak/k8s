@@ -212,22 +212,7 @@ create_application() {
 
     # Create the Kubernetes manifest based on user choices
     {
-      # Add Deployment section
-      cat kustomize/template/Deployment.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
-        -e "s|{{TARGET_PORT}}|${TARGET_PORT}|g" \
-        -e "s|{{IMAGE_URL}}|${IMAGE_URL}|g" \
-        -e "s|{{REPLICAS}}|${REPLICAS}|g" \
-        -e "s|{{MEMORY_REQUEST}}|${MEMORY_REQUEST}|g" \
-        -e "s|{{MEMORY_LIMIT}}|${MEMORY_LIMIT}|g"
-      
-  # Append GPU limits if requested
-      if [[ "$GPU_REQUEST" == "yes" ]]; then
-        # printf "\n"
-        printf '        nvidia.com/gpu: "%s"' "$GPU_LIMIT"
-      fi
 
-      # Always add separator after Deployment section
-      echo $'\n---'
 
       # Add Service section
       cat kustomize/template/Service.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
@@ -241,12 +226,37 @@ create_application() {
       # Add VaultStaticSecret section if required
       if [[ "$ADD_SECRET" == "yes" ]]; then
         cat kustomize/template/VaultStaticSecret.yaml | sed "s|{{APPLICATION}}|${APPLICATION}|g"
-        
+
+        echo $'\n---'
+        # Add Deployment section with Vault
+        cat kustomize/template/Deployment.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
+          -e "s|{{TARGET_PORT}}|${TARGET_PORT}|g" \
+          -e "s|{{IMAGE_URL}}|${IMAGE_URL}|g" \
+          -e "s|{{REPLICAS}}|${REPLICAS}|g" \
+          -e "s|{{MEMORY_REQUEST}}|${MEMORY_REQUEST}|g" \
+          -e "s|{{MEMORY_LIMIT}}|${MEMORY_LIMIT}|g"
+          
+      else
+        echo $'\n---'
+        # Add Deployment section without Vault
+        cat kustomize/template/DepWithoutVault.yaml | sed -e "s|{{APPLICATION}}|${APPLICATION}|g" \
+          -e "s|{{TARGET_PORT}}|${TARGET_PORT}|g" \
+          -e "s|{{IMAGE_URL}}|${IMAGE_URL}|g" \
+          -e "s|{{REPLICAS}}|${REPLICAS}|g" \
+          -e "s|{{MEMORY_REQUEST}}|${MEMORY_REQUEST}|g" \
+          -e "s|{{MEMORY_LIMIT}}|${MEMORY_LIMIT}|g"
+      fi
+
+       # Append GPU limits if requested
+          if [[ "$GPU_REQUEST" == "yes" ]]; then
+            # printf "\n"
+            printf '        nvidia.com/gpu: "%s"' "$GPU_LIMIT"
+          fi
+
         # Add separator if Ingress is included
         if [[ "$ADD_INGRESS" == "yes" ]]; then
           echo $'\n---'
         fi
-      fi
 
       # Add Ingress section if required
       if [[ "$ADD_INGRESS" == "yes" ]]; then
