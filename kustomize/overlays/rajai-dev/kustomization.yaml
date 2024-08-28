@@ -1,12 +1,9 @@
 resources:
+  - ../../base/namespace
   - ../../base/user
   - ../../base/vault-auth
 
 namespace: rajai-dev
-
-images:
-  - name: registry.local/bharatsahaiyak/XYZ
-    newTag: rajai-dev
 
 replacements:
 - source:
