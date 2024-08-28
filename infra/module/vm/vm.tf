@@ -51,7 +51,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   count               = var.number_of_nodes
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
-  size                = var.node_vm_size
+  size                = var.node_vm_size[count.index]
   admin_username      = "ubuntu"
   tags = {
     roles = "k8s-${var.node_type}"
