@@ -1,4 +1,5 @@
 resources:
+  - ../../base/telemetry
   - ../../base/testbed
   - ../../base/autotune
   - ../../base/yt-parser
