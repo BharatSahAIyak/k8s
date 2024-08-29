@@ -1,6 +1,5 @@
 resources:
   - ../../base/testbed
-  - ../../base/autotune
   - ../../base/yt-parser
   - ../../base/pdf-parser
   - ../../base/ai-tools-proxy
