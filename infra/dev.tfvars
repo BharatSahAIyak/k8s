@@ -16,13 +16,13 @@ k8s_master_node_size  = ["Standard_D4s_v3"]
 k8s_master_node_count = "1"
 k8s_master_disk_size  = "256"
 
-k8s_worker_node_size  = ["Standard_D4s_v3", "Standard_D4s_v3"]
-k8s_worker_node_count = "2"
+k8s_worker_node_size  = ["Standard_D4s_v3", "Standard_D4s_v3", "Standard_D4s_v3"]
+k8s_worker_node_count = "3"
 k8s_worker_disk_size  = "128"
 
 k8s_worker_gpu_node_size  = ["Standard_NC4as_T4_v3", "Standard_NC4as_T4_v3", "Standard_NC4as_T4_v3"]
 k8s_worker_gpu_node_count = "3"
-k8s_worker_gpu_disk_size  = "512"
+k8s_worker_gpu_disk_size  = "256"
 
 k8s_admin_disk_size = "128"
 k8s_admin_node_size = ["Standard_D4s_v3"]
