@@ -10,6 +10,8 @@ namespace: kmai-dev
 images:
   - name: registry.local/bharatsahaiyak/kisai-bot
     newTag: kmai-dev
+  - name: ghcr.io/bharatsahaiyak/pdf-parser
+    newTag: 0.5.0
 
 replacements:
 - source:
