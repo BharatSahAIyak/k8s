@@ -1,0 +1,64 @@
+resources:
+  - ../../base/spell-check
+  - ../../base/text-translation-azure-dict
+  - ../../base/bge-small-gpu-embeddings
+  - ../../base/agri-flow-classifier-bert
+  - ../../base/llm-openai-evaluator
+  - ../../base/asr-mms
+  - ../../base/mini-lm-embed
+  - ../../base/bm25
+  - ../../base/ner
+  - ../../base/bge-reranker
+  - ../../base/namespace
+  - ../../base/vault-auth
+  - ../../base/git-read-token
+
+namespace: bhasai-prod
+
+images:
+  - name: ghcr.io/bharatsahaiyak/ai-tools/spell_check
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/ner
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/bge_small_gpu_embeddings
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/text_translation_azure_dict
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_bert
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/llm_openai_evaluator
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/asr_mms
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/mini_lm_embed
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/bm25
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/ner
+    newTag: 0.6.0-rc-1
+  - name: ghcr.io/bharatsahaiyak/ai-tools/bge_reranker
+    newTag: 0.6.0-rc-1
+
+replacements:
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: VaultStaticSecret
+      fieldPaths:
+      - spec.path
+      options:
+        delimiter: "/"
+        index: 0
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: Ingress
+      fieldPaths:
+      - spec.rules.0.host
+      options:
+        delimiter: "."
+        index: 1
