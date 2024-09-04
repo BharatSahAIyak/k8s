@@ -16,9 +16,6 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - envFrom:
-          - secretRef:
-              name: org-classifier
           image: ghcr.io/bharatsahaiyak/ai-tools/org_classifier:dev
           imagePullPolicy: Always
           name: org-classifier
