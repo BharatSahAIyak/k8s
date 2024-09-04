@@ -1,7 +1,6 @@
 resources:
   - ../../base/testbed
   - ../../base/yt-parser
-  - ../../base/pdf-parser
   - ../../base/ai-tools-proxy
   - ../../base/auth-service
   - ../../base/bff
