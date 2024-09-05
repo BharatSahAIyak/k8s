@@ -24,6 +24,10 @@ namespace: bhasai-stage
 images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-stage
+  - name: ghcr.io/bharatsahaiyak/orchestrator
+    newTag: main
+  - name: ghcr.io/bharatsahaiyak/inboundjs
+    newTag: main
 
 replacements:
 - source:
