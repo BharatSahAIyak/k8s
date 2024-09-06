@@ -11,38 +11,6 @@ Steps :
 * `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml`
 
 * `vi argocd-notifications-configmap.yaml`
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-notifications-cm
-  namespace: argocd
-data:
-  # Define the webhook service
-  service.webhook.discord: |
-    url: "<your-webhook-url>"
-    headers:
-      - name: Content-Type
-        value: application/json
-
-  # Template for sync succeeded notifications
-  template.app-sync-succeeded: |
-    webhook:
-      discord:
-        method: POST
-        body: |
-          {
-            "username": "{{.app.metadata.name}}",
-            "content": "Application {{.app.metadata.name}} is now running new version of deployment manifests.\\nURL: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}\\nContext: continuous-delivery/{{.app.metadata.name}}"
-          }
-
-  # Trigger on successful sync
-  trigger.on-sync-succeeded: |
-    - description: Application syncing has succeeded
-      send:
-        - app-sync-succeeded
-      when: app.status.operationState.phase in ['Succeeded']
-```
 
 * `kubectl delete cm argocd-notifications-cm -n argocd` (If already present)
 
