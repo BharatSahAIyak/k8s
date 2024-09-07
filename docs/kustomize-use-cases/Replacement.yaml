@@ -1,0 +1,32 @@
+
+- source:
+    kind: ConfigMap
+    name: resources-config
+    fieldPath: data.replicas
+  targets:
+    - select:
+        kind: Deployment
+        name: text-translation-azure-dict
+      fieldPaths:
+      - spec.replicas
+
+- source:
+    kind: ConfigMap
+    name: resources-config
+    fieldPath: data.memoryRequests
+  targets:
+    - select:
+        kind: Deployment
+        name: text-translation-azure-dict
+      fieldPaths:
+      - spec.template.spec.containers.0.resources.requests.memory
+
+- source:
+    kind: ConfigMap
+    name: resources-config
+    fieldPath: data.memoryLimits
+  targets:
+    - select:
+        kind: Deployment
+      fieldPaths:
+      - spec.template.spec.containers.0.resources.limits.memory
