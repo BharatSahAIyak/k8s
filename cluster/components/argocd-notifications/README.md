@@ -2,6 +2,12 @@
 
 **This documentation will enable you to send notifications from ArgoCD for successful syncs & when the health status of an individual application is degraded or in a failed state.**
 
+Pre-requisites :
+* Make sure to enable Develpoer mode in Discord.
+    * Go to User Settings->Advanced->Developer mode.
+    * To copy any user's ID, Right click on a user and click _COPY User ID_
+    * To tag any user in the Notification add <@UserId> while replacing _UserId_ with actual User ID copied.
+
 Steps :
 
 * Go to a discord channel and click on `Server Settings`->`Integrations`->`Webhooks`, and create a webhook

@@ -17,7 +17,7 @@ data:
         body: |
           {
             "username": "{{.app.metadata.name}}",
-            "content": "Application {{.app.metadata.name}} has successfully synced to new version.\\nURL: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+            "content": "<@UserId> Application {{.app.metadata.name}} has successfully synced to new version.\\nURL: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
           }
 
   trigger.on-sync-succeeded: |
@@ -33,7 +33,7 @@ data:
         body: |
           {
             "username": "{{.app.metadata.name}}",
-            "content": "Application {{.app.metadata.name}} is currently degraded or down.\\nURL: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+            "content": "<@UserId> Application {{.app.metadata.name}} is currently degraded or down.\\nURL: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
           }
 
   trigger.on-health-degraded: |
