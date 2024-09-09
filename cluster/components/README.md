@@ -6,3 +6,4 @@
 4. [Setting up ArgoCD](./argocd/README.md)
 5. [Setting up Reflector](./reflector/README.md)
 6. [Setting up Nvidia GPU Operator](./nvidia-gpu-operator/README.md)
+7. [Setting up ArgoCD Notifications](./argocd-notifications/README.md)
