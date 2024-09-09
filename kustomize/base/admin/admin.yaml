@@ -37,6 +37,7 @@ spec:
     - "--build-arg=NEXT_PUBLIC_SUPERSET_URL=$(NEXT_PUBLIC_SUPERSET_URL)"
     - "--build-arg=NEXT_PUBLIC_TESTBED_URL=$(NEXT_PUBLIC_TESTBED_URL)"
     - "--build-arg=NEXT_PUBLIC_NODEHUB_URL=$(NEXT_PUBLIC_NODEHUB_URL)"
+    - "--build-arg=NEXT_PUBLIC_DIAGNOSIS_SUPERSET_URL=$(NEXT_PUBLIC_DIAGNOSIS_SUPERSET_URL)"
     envFrom:
       - secretRef:
           name: git-read-token
