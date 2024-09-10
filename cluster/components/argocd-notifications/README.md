@@ -6,7 +6,6 @@ Pre-requisites :
 * Make sure to enable Develpoer mode in Discord.
     * Go to User Settings->Advanced->Developer mode.
     * To copy any user's ID, Right click on a user and click _COPY User ID_
-    * To tag any user in the Notification add <@UserId> while replacing _UserId_ with actual User ID copied.
 
 Steps :
 
@@ -18,19 +17,9 @@ Steps :
 
 * `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml`
 
-* `vi argocd-notifications-configmap.yaml`
 
-* `kubectl delete cm argocd-notifications-cm -n argocd` (If already present)
-
-* `kubectl apply -f argocd-notifications-configmap.yaml`
-
-* `kubectl apply -f application.yaml`
-
-* `kubectl get cm argocd-notifications-cm -n argocd -o yaml`
-
-* `kubectl rollout restart deployment argocd-notifications-controller -n argocd`
-
-* `kubectl logs -n argocd deployment/argocd-notifications-controller`
+* Pass the Value of _WEBHOOK_URL_ and _USER_ID_ after the command: `./argocd_notifications_setup.sh`
+    * e.g. ./argocd_notifications_setup.sh "https://discord.com/api/webhooks/1280" "75795430"
 
 
 **When your ArgoCD will sync the changes then you will get a notification on the specified discord channel.**
