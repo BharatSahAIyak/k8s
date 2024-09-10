@@ -37,9 +37,9 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "512Mi"
+              memory: "1024Mi"
             limits:
-              memory: "512Mi"
+              memory: "1024Mi"
       restartPolicy: Always
 ---
 apiVersion: v1
