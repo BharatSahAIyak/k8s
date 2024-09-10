@@ -18,12 +18,3 @@ kubectl delete cm argocd-notifications-cm -n argocd --ignore-not-found
 
 # Apply the newly created ConfigMap
 kubectl apply -f argocd-notifications-configmap.yaml
-
-kubectl rollout restart deployment argocd-notifications-controller -n argocd
-
-# Wait for the deployment to restart and show the logs
-sleep 10
-kubectl logs -n argocd deployment/argocd-notifications-controller
-
-# Output a success message
-echo "ArgoCD Notifications ConfigMap has been successfully updated, the controller has been restarted, and logs are displayed."

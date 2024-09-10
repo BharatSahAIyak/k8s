@@ -21,6 +21,20 @@ Steps :
 * Pass the Value of _WEBHOOK_URL_ and _USER_ID_ after the command: `./argocd_notifications_setup.sh`
     * e.g. ./argocd_notifications_setup.sh "https://discord.com/api/webhooks/1280" "75795430"
 
+* Add this in your application.yaml's metadata section
+    * 
+    ```
+      annotations:
+        notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+        notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+        notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
+    ```
+
+* kubectl apply -f application.yaml
+
+* kubectl rollout restart deployment argocd-notifications-controller -n argocd
+
+* kubectl logs -n argocd deployment/argocd-notifications-controller
 
 **When your ArgoCD will sync the changes then you will get a notification on the specified discord channel.**
 
