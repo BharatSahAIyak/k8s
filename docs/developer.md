@@ -10,7 +10,7 @@
 
         2. Ensure to verify that the action has succeeded before redeploying a service
 
-    2. Use `cli.sh` to onboard the service. You can view this [video]() for quick overview
+    2. Use `cli.sh` to onboard the service. 
 
 ### Management of a Service - [Video](https://drive.google.com/file/d/1xBJEpFBi90L72OEA7GSjdNyNk4Pb9PQB/view)
 
