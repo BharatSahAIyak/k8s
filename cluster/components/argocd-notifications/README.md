@@ -1,41 +1,67 @@
-# ArgoCD Notifications :
+# ArgoCD Notifications
 
-**This documentation will enable you to send notifications from ArgoCD for successful syncs & when the health status of an individual application is degraded or in a failed state.**
-
-Pre-requisites :
-* Make sure to enable Develpoer mode in Discord.
-    * Go to User Settings->Advanced->Developer mode.
-    * To copy any user's ID, Right click on a user and click _COPY User ID_
-
-Steps :
-
-* Go to a discord channel and click on `Server Settings`->`Integrations`->`Webhooks`, and create a webhook
-
-* Copy the Webhook URL somewhere, it will be used later.
-
-* `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml`
-
-* `kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml`
+This guide will help you set up ArgoCD to send notifications for:
+* Successful syncs
+* When the health status of an application is degraded or failed
 
 
-* Pass the Value of _WEBHOOK_URL_ and _USER_ID_ after the command: `./argocd_notifications_setup.sh`
-    * e.g. ./argocd_notifications_setup.sh "https://discord.com/api/webhooks/1280" "75795430"
+### Prerequisites
 
-* Add this in your application.yaml's metadata section
-    * 
+* Enable Developer mode in Discord:
+    * Navigate to `User Settings` -> `Advanced` -> `Developer mode`.
+* Right-click on a user and select _Copy User ID_ to obtain the user ID.
+
+### Steps:
+
+1. Go to a discord channel and click on `Server Settings`->`Integrations`->`Webhooks`, and create a webhook
+
+2. Copy the Webhook URL; you will need it later.
+
+3. Install the Argo CD Notifications controller:
+    ```bash
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
     ```
-      annotations:
-        notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
-        notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
-        notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
+    * This command deploys the Argo CD Notifications controller, which handles sending notifications for Argo CD application status updates.
+
+4. Install the notification templates and triggers catalog:
+    ```bash
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
+    ```
+    * This command sets up a catalog of predefined notification templates and triggers, facilitating easier configuration and customization of notifications.
+
+5. Configure the webhook and user ID in the following command:
+    ```bash
+    WEBHOOK_URL="https://discord.com/api/webhooks/1280"
+    USER_ID="75795430"
+
+    echo "$(sed "s|<YourWebhookUrl>|${WEBHOOK_URL}|g; s|<@UserId>|<@${USER_ID}>|g" argocd-notifications-cm-template.yaml)" > argocd-notifications-configmap.yaml
+    ```
+    
+6. Update the ConfigMap with the new configuration:
+    ```bash
+    kubectl delete cm argocd-notifications-cm -n argocd --ignore-not-found
+    kubectl apply -f argocd-notifications-configmap.yaml
     ```
 
-* kubectl apply -f application.yaml
+7. Add annotations to your application configuration's metadata to subscribe to Discord notifications:
+    ```yaml
+    annotations:
+      notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+      notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+      notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
+    ```
 
-* kubectl rollout restart deployment argocd-notifications-controller -n argocd
+8. Apply the application configuration with notification changes:
+    ```bash
+    kubectl apply -f application.yaml
+    ```
 
-* kubectl logs -n argocd deployment/argocd-notifications-controller
+9. Restart the ArgoCD notifications controller to apply the new configuration:
+    ```bash
+    kubectl rollout restart deployment argocd-notifications-controller -n argocd
+    ```
 
-**When your ArgoCD will sync the changes then you will get a notification on the specified discord channel.**
-
-**If the health gets degraded then also you will recieve a notification on the specified discord channel**
+10. Check the logs of the notifications controller to ensure it's running correctly:
+    ```bash
+    kubectl logs -n argocd deployment/argocd-notifications-controller
+    ```
