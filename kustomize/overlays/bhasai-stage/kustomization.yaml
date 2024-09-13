@@ -1,4 +1,5 @@
 resources:
+  - ../../base/pdf-generator
   - ../../base/telemetry
   - ../../base/testbed
   - ../../base/yt-parser
