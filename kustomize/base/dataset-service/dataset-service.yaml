@@ -32,6 +32,10 @@ spec:
         - envFrom:
           - secretRef:
               name: dataset-service
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
           image: ghcr.io/bharatsahaiyak/dataset-service:dev
           imagePullPolicy: Always
           name: dataset-service

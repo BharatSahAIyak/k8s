@@ -65,6 +65,10 @@ spec:
         - envFrom:
           - secretRef:
               name: admin
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
           image: registry.local/bharatsahaiyak/admin:IMAGE_TAG
           imagePullPolicy: Always
           name: admin

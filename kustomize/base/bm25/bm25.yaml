@@ -16,7 +16,12 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/bharatsahaiyak/ai-tools/bm25:dev
+        - envFrom:
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
+          image: ghcr.io/bharatsahaiyak/ai-tools/bm25:dev
           imagePullPolicy: Always
           name: bm25
           resources:

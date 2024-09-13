@@ -71,6 +71,10 @@ spec:
         - envFrom:
           - secretRef:
               name: app
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
           image: registry.local/bharatsahaiyak/kisai-bot:IMAGE_TAG
           imagePullPolicy: Always
           name: app

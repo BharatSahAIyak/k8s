@@ -16,7 +16,12 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/bharatsahaiyak/ai-tools/mini_lm_embed:dev
+        - envFrom:
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
+          image: ghcr.io/bharatsahaiyak/ai-tools/mini_lm_embed:dev
           imagePullPolicy: Always
           name: mini-lm-embed
           resources:

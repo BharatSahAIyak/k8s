@@ -19,6 +19,10 @@ spec:
         - envFrom:
           - secretRef:
               name: llm-openai-evaluator
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
           image: ghcr.io/bharatsahaiyak/ai-tools/llm_openai_evaluator:dev
           imagePullPolicy: Always
           name: llm-openai-evaluator
