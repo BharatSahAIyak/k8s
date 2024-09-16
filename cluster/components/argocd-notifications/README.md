@@ -33,10 +33,8 @@ This guide will help you set up ArgoCD to send notifications for:
     ```bash
     WEBHOOK_URL="https://discord.com/api/webhooks/1280"
     USER_ID="75795430"
-
-    sed -i '' "s|WEBHOOK_URL|$WEBHOOK_URL|g" argocd-notifications-configmap.yaml
-
-    sed -i '' "s/USER_ID/$USER_ID/g" argocd-notifications-configmap.yaml
+ 
+    sed -e "s|WEBHOOK_URL|${WEBHOOK_URL}|g" -e "s|USER_ID|${USER_ID}|g" argocd-notifications-cm-template.yaml > argocd-notifications-configmap.yaml
     ```
     
 6. Update the ConfigMap with the new configuration:
