@@ -17,7 +17,7 @@ data:
         body: |
           {
             "username": "{{.app.metadata.name}}",
-            "content": "<@USER_ID> Application Synced"
+            "content": "<@USER_ID>\\n```diff\\n+ Application Synced\\n```"
           }
 
   trigger.on-sync-succeeded: |
@@ -33,7 +33,7 @@ data:
         body: |
           {
             "username": "{{.app.metadata.name}}",
-            "content": "<@USER_ID> Application Degraded"
+            "content": "<@USER_ID>\\n```diff\\n- Application Degraded\\n```"
           }
 
   trigger.on-health-degraded: |
