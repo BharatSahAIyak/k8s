@@ -16,7 +16,12 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/bharatsahaiyak/ai-tools/asr_mms:dev
+        - envFrom:
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds  
+          image: ghcr.io/bharatsahaiyak/ai-tools/asr_mms:dev
           imagePullPolicy: Always
           name: asr-mms
           resources:

@@ -16,7 +16,12 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - image: ghcr.io/bharatsahaiyak/ai-tools/spell_check:dev
+        - envFrom:
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
+          image: ghcr.io/bharatsahaiyak/ai-tools/spell_check:dev
           imagePullPolicy: Always
           name: spell-check
           resources:

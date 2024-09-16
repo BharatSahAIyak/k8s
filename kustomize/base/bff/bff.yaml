@@ -32,6 +32,10 @@ spec:
         - envFrom:
           - secretRef:
               name: bff
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
           image: ghcr.io/bharatsahaiyak/bff:dev
           imagePullPolicy: Always
           name: bff
