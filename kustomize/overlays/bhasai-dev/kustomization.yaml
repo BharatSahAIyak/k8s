@@ -32,6 +32,7 @@ resources:
   - ../../base/vault-auth
   - ../../base/git-read-token
   - ../../base/admin
+  - ../../base/agri-flow-classifier-stella
 
 namespace: bhasai-dev
 

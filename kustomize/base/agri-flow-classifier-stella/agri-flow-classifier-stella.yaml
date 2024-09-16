@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: agri-flow-classifier-stella
+  name: agri-flow-classifier-stella
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: agri-flow-classifier-stella
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: agri-flow-classifier-stella
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
+          image: ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_stella:dev
+          imagePullPolicy: Always
+          name: agri-flow-classifier-stella
+          resources:
+            requests:
+              memory: "2500Mi"
+            limits:
+              memory: "3000Mi"
+              nvidia.com/gpu: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agri-flow-classifier-stella
+spec:
+  selector:
+    app.kubernetes.io/name: agri-flow-classifier-stella
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agri-flow-classifier-stella
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "agri-flow-classifier-stella.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: agri-flow-classifier-stella
+            port:
+              number: 80
