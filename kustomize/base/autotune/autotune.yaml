@@ -30,9 +30,9 @@ spec:
           args: ["poetry install && python manage.py database && python manage.py runserver 0.0.0.0:8000"]
           resources:
             requests:
-              memory: "2048Mi"
+              memory: "3072Mi"
             limits:
-              memory: "2048Mi"
+              memory: "3072Mi"
         - envFrom:
           - secretRef:
               name: autotune
