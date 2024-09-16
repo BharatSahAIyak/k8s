@@ -4,7 +4,7 @@
 module "k8s_lb" {
   source                  = "./module/vm"
   node_type               = "lb"
-  number_of_nodes         = 1
+  number_of_nodes         = var.k8s_lb_node_count
   subnet_id               = azurerm_subnet.master.id
   security_group_id       = azurerm_network_security_group.lb_security_group.id
   node_vm_size            = var.k8s_lb_node_size #todo 

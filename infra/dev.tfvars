@@ -28,7 +28,8 @@ k8s_admin_disk_size = "128"
 k8s_admin_node_size = ["Standard_D4s_v3"]
 
 k8s_lb_disk_size = "128"
-k8s_lb_node_size = ["Standard_D4s_v3"]
+k8s_lb_node_size = ["Standard_D4s_v3", "Standard_D4s_v3"]
+k8s_lb_node_count = 2
 
 k8s_stateful_node_count = "3"
 k8s_stateful_node_size  = ["Standard_D4s_v3", "Standard_E4bds_v5", "Standard_E4bds_v5"] ## 4cpu 	16 GB ram 

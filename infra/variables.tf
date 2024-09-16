@@ -35,6 +35,9 @@ variable "k8s_admin_disk_size" {}
 #lb
 variable "k8s_lb_node_size" {}
 variable "k8s_lb_disk_size" {}
+variable "k8s_lb_node_count" {}
+  
+
 
 #stateful
 variable "k8s_stateful_node_count" {}
