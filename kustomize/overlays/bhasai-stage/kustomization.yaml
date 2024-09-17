@@ -9,7 +9,6 @@ resources:
   - ../../base/dataset-service
   - ../../base/deployer
   - ../../base/document-service
-  - ../../base/inboundjs
   - ../../base/nodehub
   - ../../base/orchestrator
   - ../../base/transport-socket
@@ -26,8 +25,6 @@ images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-stage
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
-    newTag: main
-  - name: ghcr.io/bharatsahaiyak/inbound-js:dev
     newTag: main
 
 replacements:
