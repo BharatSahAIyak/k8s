@@ -26,9 +26,10 @@ spec:
           name: bge-reranker
           resources:
             requests:
-              memory: "1024Mi"
+
+              memory: "4096Mi"
             limits:
-              memory: "1024Mi"
+              memory: "4096Mi"
               nvidia.com/gpu: "1"
 ---
 apiVersion: v1
