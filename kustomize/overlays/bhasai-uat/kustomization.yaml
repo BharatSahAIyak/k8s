@@ -1,22 +1,22 @@
 resources:
-  - ../../base/testbed
-  - ../../base/yt-parser
-  - ../../base/ai-tools-proxy
-  - ../../base/auth-service
-  - ../../base/bff
-  - ../../base/dataset-service
-  - ../../base/deployer
-  - ../../base/document-service
-  - ../../base/inboundjs
-  - ../../base/nodehub
-  - ../../base/orchestrator
-  - ../../base/transport-socket
-  - ../../base/uci-apis
-  - ../../base/user-management-service
+  # - ../../base/testbed
+  # - ../../base/yt-parser
+  # - ../../base/ai-tools-proxy
+  # - ../../base/auth-service
+  # - ../../base/bff
+  # - ../../base/dataset-service
+  # - ../../base/deployer
+  # - ../../base/document-service
+  # - ../../base/inboundjs
+  # - ../../base/nodehub
+  # - ../../base/orchestrator
+  # - ../../base/transport-socket
+  # - ../../base/uci-apis
+  # - ../../base/user-management-service
   - ../../base/namespace
   - ../../base/vault-auth
   - ../../base/git-read-token
-  - ../../base/admin
+  # - ../../base/admin
 
 namespace: bhasai-uat
 
