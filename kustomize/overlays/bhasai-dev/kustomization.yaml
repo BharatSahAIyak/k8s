@@ -1,5 +1,6 @@
 resources:
   - ../../base/pdf-generator
+  - ../../base/pdf-parser
   - ../../base/broadcast-service
   - ../../base/org-classifier
   - ../../base/telemetry
