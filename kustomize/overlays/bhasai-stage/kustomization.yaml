@@ -1,4 +1,5 @@
 resources:
+  - ../../base/inboundjs
   - ../../base/pdf-generator
   - ../../base/telemetry
   - ../../base/testbed
@@ -25,6 +26,8 @@ images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-stage
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
+    newTag: main
+  - name: ghcr.io/bharatsahaiyak/inboundjs:dev
     newTag: main
 
 replacements:
