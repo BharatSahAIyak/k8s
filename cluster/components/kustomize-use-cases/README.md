@@ -23,7 +23,7 @@ patches:
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: <ServiceName1>
+        name: <ServiceName>
       spec:
         replicas: <ReplicaCount1>
         template:
