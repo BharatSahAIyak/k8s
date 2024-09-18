@@ -3,7 +3,6 @@ resources:
   - ../../base/user
   - ../../base/vault-auth
   - ../../base/git-read-token
-  - ../../base/app
 
 namespace: kmai-dev
 
