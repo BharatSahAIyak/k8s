@@ -25,17 +25,17 @@ patches:
       metadata:
         name: <ServiceName>
       spec:
-        replicas: <ReplicaCount1>
+        replicas: <ReplicaCount>
         template:
           spec:
             containers:
-              - name: <ContainerName1>
+              - name: <ContainerName>
                 resources:
                   requests:
-                    memory: "<MemoryRequest1>"
+                    memory: "<MemoryRequest>"
                   limits:
-                    memory: "<MemoryLimit1>"
-                    nvidia.com/gpu: "<GPULimit1>"
+                    memory: "<MemoryLimit>"
+                    nvidia.com/gpu: "<GPULimit>"
 ```
 
 **Actual Example**
