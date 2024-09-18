@@ -3,6 +3,10 @@ kind: Application
 metadata:
   name: kmai-dev
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -21,6 +25,10 @@ kind: Application
 metadata:
   name: kmai-stage
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -39,6 +47,10 @@ kind: Application
 metadata:
   name: bhasai-dev
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -57,6 +69,10 @@ kind: Application
 metadata:
   name: akai-prod
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -75,6 +91,10 @@ kind: Application
 metadata:
   name: kmai-prod
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -93,6 +113,10 @@ kind: Application
 metadata:
   name: samagra-dev
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -111,6 +135,10 @@ kind: Application
 metadata:
   name: rajai-prod
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -129,6 +157,10 @@ kind: Application
 metadata:
   name: vistaar-prod
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -147,6 +179,10 @@ kind: Application
 metadata:
   name: bhasai-stage
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -165,6 +201,10 @@ kind: Application
 metadata:
   name: bhasai-uat
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -183,6 +223,10 @@ kind: Application
 metadata:
   name: rajai-dev
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -196,12 +240,15 @@ spec:
       prune: false
       selfHeal: true
 ---
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: bhasai-prod
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -220,6 +267,10 @@ kind: Application
 metadata:
   name: rajai-stage
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -238,6 +289,10 @@ kind: Application
 metadata:
   name: kmai-uat
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
+    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
