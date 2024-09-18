@@ -7,9 +7,18 @@ This guide will help you set up ArgoCD to send notifications for:
 
 ### Prerequisites
 
+#### To find User Id
+
 * Enable Developer mode in Discord:
     * Navigate to `User Settings` -> `Advanced` -> `Developer mode`.
 * Right-click on a user and select _Copy User ID_ to obtain the user ID.
+
+#### To find Role Id
+
+* Go to `Server Settings`
+* Go to `Roles` Tab
+* Click on the role you want to copy id for
+* Click on 3 dots and click on `Copy Role ID`
 
 ### Steps:
 
@@ -31,16 +40,17 @@ This guide will help you set up ArgoCD to send notifications for:
 
 5. Configure the webhook and user ID in the following command:
     ```bash
-    WEBHOOK_URL="https://discord.com/api/webhooks/1280"
-    USER_ID="75795430"
+    WEBHOOK_URL=""
+    # to tag role use <@&ROLE_ID>, to tag user use <@USER_ID>
+    DISCORD_TAG="" 
  
-    sed -e "s|WEBHOOK_URL|${WEBHOOK_URL}|g" -e "s|USER_ID|${USER_ID}|g" argocd-notifications-cm-template.yaml > argocd-notifications-configmap.yaml
+    sed -e "s|WEBHOOK_URL|${WEBHOOK_URL}|g" -e "s|DISCORD_TAG|${DISCORD_TAG}|g" argocd-notifications-cm-template.yaml > argocd-notifications-cm.yaml
     ```
     
 6. Update the ConfigMap with the new configuration:
     ```bash
     kubectl delete cm argocd-notifications-cm -n argocd --ignore-not-found
-    kubectl apply -f argocd-notifications-configmap.yaml
+    kubectl apply -f argocd-notifications-cm.yaml
     ```
 
 7. Add annotations to your application configuration's metadata to subscribe to Discord notifications:
