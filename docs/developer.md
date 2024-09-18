@@ -2,7 +2,7 @@
 
 1. Building Image for the Service
 
-    1. Add [this](https://github.com/Samagra-Development/devops/blob/main/examples/workflows/build-and-push.yaml) action in the service reposiotry at `.github/workflows/build-and-push.yaml`
+    1. Add [this](https://github.com/Samagra-Development/devops/blob/main/examples/workflows/build-and-push.yaml) action in the service repository at `.github/workflows/build-and-push.yaml`
 
         Note: 
         
@@ -51,7 +51,7 @@
 
     2. Navigate to the environment you want to view logs of Service
 
-    3. Seach for the service and click on 3 dots and click on Logs to view logs
+    3. Search for the service and click on 3 dots and click on Logs to view logs
 
 4. Restarting a Service
 
