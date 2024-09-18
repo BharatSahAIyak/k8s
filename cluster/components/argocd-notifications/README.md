@@ -41,7 +41,7 @@ This guide will help you set up ArgoCD to send notifications for:
 5. Configure the webhook and user ID in the following command:
     ```bash
     WEBHOOK_URL=""
-    # to tag role use <@&ROLE_ID>, to tag user use <@USER_ID>
+    # to tag role use <@\&ROLE_ID>, to tag user use <@USER_ID>
     DISCORD_TAG="" 
  
     sed -e "s|WEBHOOK_URL|${WEBHOOK_URL}|g" -e "s|DISCORD_TAG|${DISCORD_TAG}|g" argocd-notifications-cm-template.yaml > argocd-notifications-cm.yaml
