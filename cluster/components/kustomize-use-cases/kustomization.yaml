@@ -1,0 +1,37 @@
+# Leave the rest of code as it is.
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ServiceName1
+      spec:
+        replicas: 4
+        template:
+          spec:
+            containers:
+              - name: ServiceName1
+                resources:
+                  requests:
+                    memory: "6999Mi"
+                  limits:
+                    memory: "6888Mi"
+                    nvidia.com/gpu: "1"
+                    
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ServiceName2
+      spec:
+        replicas: 5
+        template:
+          spec:
+            containers:
+              - name: ServiceName2
+                resources:
+                  requests:
+                    memory: "6978Mi"
+                  limits:
+                    memory: "6887Mi"
