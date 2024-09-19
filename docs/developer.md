@@ -16,7 +16,7 @@
 
 1. Updating the tag of image in any environment
 
-    1. Naviagte to [kustomize/overlays](https://github.com/BharatSahAIyak/k8s/tree/v2/kustomize/overlays) and edit `<environment>/kustomization.yaml` (e.g., `bhasai-dev/kustomization.yaml`)
+    1. Navigate to [kustomize/overlays](https://github.com/BharatSahAIyak/k8s/tree/v2/kustomize/overlays) and edit `<environment>/kustomization.yaml` (e.g., `bhasai-dev/kustomization.yaml`)
 
     2. Add a new block called images or add a new entry in existing images block as follows
 
@@ -38,7 +38,9 @@
 
     2. Navigate to the environment (e.g., `bhasai-dev`) for which you want to update the environment variable
 
-    3. Naviagte to the folder of the service for which you want to the update the environment variable
+    3. Naviagte to the folder of the service and update the environment variables
+  
+    4. Restart the service in ArgoCD to apply the environment variable changes
 
     Note: 
     1. Request for the access of the environment from DevOps Team if you see permission errors
