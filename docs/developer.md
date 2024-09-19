@@ -10,7 +10,7 @@
 
         2. Ensure to verify that the action has succeeded before redeploying a service
 
-    2. Use `cli.sh` to onboard the service. 
+2. Use `cli.sh` to onboard the service. 
 
 ## Management of a Service - [Video](https://drive.google.com/file/d/1xBJEpFBi90L72OEA7GSjdNyNk4Pb9PQB/view)
 
@@ -59,7 +59,7 @@
 
     2. Navigate to the environment you want to view logs of Service
 
-    3. Seach for the service and click on 3 dots and click on restart to restart the service
+    3. Search for the service and click on 3 dots and click on restart to restart the service
 
     Note: Restarting a deployment pulls the image and then recreates the containers
 
