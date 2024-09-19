@@ -45,6 +45,8 @@ spec:
           name: git-read-token
       - secretRef:
           name: admin
+      - secretRef:
+          name: service-urls
   restartPolicy: Never
 ---
 apiVersion: apps/v1
