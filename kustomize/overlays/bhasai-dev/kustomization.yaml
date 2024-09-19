@@ -33,6 +33,7 @@ resources:
   - ../../base/vault-auth
   - ../../base/git-read-token
   - ../../base/admin
+  - ../../base/agri-flow-classifier-bert-test
 
 namespace: bhasai-dev
 
