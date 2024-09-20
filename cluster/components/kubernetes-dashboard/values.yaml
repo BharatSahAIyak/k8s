@@ -1,0 +1,9 @@
+api:
+  containers:
+     args:
+      - insecure-bind-address='0.0.0.0'
+      - enable-insecure-login=true
+kong:
+  proxy:
+    http:
+      enabled: true
