@@ -8,4 +8,4 @@
 6. [Setting up Nvidia GPU Operator](./nvidia-gpu-operator/README.md)
 7. [Setting up ArgoCD Notifications](./argocd-notifications/README.md)
 8. [Kustomize use cases](./kustomize-use-cases/README.md)
-9. [Kubernetes dashboad](./kubernetes-dashboard/README.md)
+9. [Setting up Kubernetes dashboard](./kubernetes-dashboard/README.md)
