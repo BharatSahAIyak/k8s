@@ -2,10 +2,18 @@
 
 This guide provides step-by-step instructions to set up the Kubernetes Dashboard, including obtaining Bearer Tokens for authentication.
 
-**1. Create the Kubernetes Dashboard Namespace**
+**1. Install the Kubernetes Dashboard Using Helm**
+
+Add the Kubernetes Dashboard Helm repository:
 
 ```bash
-kubectl create ns kubernetes-dashboard
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+```
+
+Install or upgrade the Kubernetes Dashboard release:
+
+```bash
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --create-namespace --namespace kubernetes-dashboard
 ```
 
 **2. Create a Service Account**
@@ -28,6 +36,14 @@ The token has a lifespan of one hour from its creation time.
 ```bash
 kubectl -n kubernetes-dashboard create token admin-user
 ```
+* **Note:**         
+   The token expires automatically after one hour. To revoke it immediately, delete the service account:
+
+   ```bash
+   kubectl -n kubernetes-dashboard delete serviceaccount admin-user
+   ```
+
+   ⚠ **Warning:** This will revoke the token and associated permissions. If you prefer not to delete the service account, continue with the steps below.
    
 * Check [Kubernetes docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-an-api-token-for-a-serviceaccount) for more information about API tokens for a ServiceAccount.
 
@@ -51,21 +67,7 @@ kubectl -n kubernetes-dashboard create token admin-user
    kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d
    ```
 
-**5. Install the Kubernetes Dashboard Using Helm**
-
-Add the Kubernetes Dashboard Helm repository:
-
-```bash
-helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-```
-
-Install or upgrade the Kubernetes Dashboard release:
-
-```bash
-helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --create-namespace --namespace kubernetes-dashboard
-```
-
-**6. Access the Dashboard**
+**5. Access the Dashboard**
 
 Forward the Kubernetes Dashboard service to your local port:
 
@@ -98,7 +100,7 @@ To access the Kubernetes Dashboard using Ingress, follow these steps:
    Open your web browser and navigate to:
 
    ```
-   http://dashboards.k8s.io
+   dashboards.k8s.io
    ```
 
 3. **Log In**
