@@ -69,43 +69,45 @@ kubectl -n kubernetes-dashboard create token admin-user
 
 **5. Access the Dashboard**
 
-Forward the Kubernetes Dashboard service to your local port:
+You can access the Kubernetes Dashboard in one of two ways: via **port forwarding** or **Ingress**. 
 
-```bash
-kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
-```
+*  **Option 1: Port Forwarding**
 
-Open your web browser and navigate to:
+   1. Forward the Kubernetes Dashboard service to your local port:
 
-```
-https://localhost:8443/#/login
-```
+      ```bash
+      kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
+      ```
 
-Use the Bearer Token (obtained in Step 4) to log in.
+   2. Open your web browser and navigate to:
 
-To access the Kubernetes Dashboard using Ingress, follow these steps:
+      ```
+      https://localhost:8443/#/login
+      ```
 
-### Access the Dashboard via Ingress
+   3. Use the Bearer Token (obtained in Step 4) to log in.
 
-1. **Apply the Ingress Configuration**
+*  **Option 2: Access via Ingress**
 
-   Ingress resource is defined in `dashboard-ingress.yaml`. It should route traffic to the Kubernetes Dashboard service. Apply the Ingress configuration:
+   1. **Apply the Ingress Configuration**
 
-   ```bash
-   kubectl apply -f dashboard-ingress.yaml
-   ```
+      Ingress resource is defined in `dashboard-ingress.yaml`. It should route traffic to the Kubernetes Dashboard service. Apply the Ingress configuration:
 
-2. **Access the Dashboard**
+      ```bash
+      kubectl apply -f dashboard-ingress.yaml
+      ```
 
-   Open your web browser and navigate to:
+   2. **Access the Dashboard**
 
-   ```
-   dashboards.k8s.io
-   ```
+      Open your web browser and navigate to:
 
-3. **Log In**
+      ```
+      dashboards.k8s.io
+      ```
 
-   Use the Bearer Token to log in.
+   3. **Log In**
+
+      Use the Bearer Token to log in.
 
 **References**
 
