@@ -31,10 +31,37 @@ data:
       discord:
         method: POST
         body: |
-          {
-            "username": "{{.app.metadata.name}}",
-            "content": "DISCORD_TAG\n```diff\n- Application Degraded\n```"
-          }
+           {
+             "username": "{{.app.metadata.name}}",
+             "content": "DISCORD_TAG\n```diff\n- Application Degraded\n```",
+             "embeds": [
+               {
+                 "title": "Application {{.app.metadata.name}} has degraded",
+                 "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                 "fields": [
+                   {
+                     "name": "Health Status",
+                     "value": "{{.app.status.health.status}}",
+                     "inline": "true"
+                   },
+                   {
+                     "name": "Repository",
+                     "value": "{{.app.spec.source.repoURL}}",
+                     "inline": "false"
+                   }
+                   {{range $index, $c := .app.status.conditions}}
+                   {{if not $index}},{{end}}
+                   {{if $index}},{{end}}
+                   {
+                     "name": "{{$c.type}}",
+                     "value": "{{$c.message}}",
+                     "inline": "true"
+                   }
+                   {{end}}
+                 ]
+               }
+             ]
+           }
 
   trigger.on-health-degraded: |
     - description: Application is in a degraded or down state
