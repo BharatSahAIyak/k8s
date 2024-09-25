@@ -32,8 +32,6 @@ data:
         method: POST
         body: |
            {
-             "username": "{{.app.metadata.name}}",
-             "content": "DISCORD_TAG\n```diff\n- Application Degraded\n```",
              "embeds": [
                {
                  "title": "Application {{.app.metadata.name}} has degraded",
@@ -62,7 +60,7 @@ data:
                }
              ]
            }
-
+           
   trigger.on-health-degraded: |
     - description: Application is in a degraded or down state
       send:
