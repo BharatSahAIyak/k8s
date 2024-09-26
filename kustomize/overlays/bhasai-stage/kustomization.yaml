@@ -25,10 +25,54 @@ namespace: bhasai-stage
 images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-stage
+  - name: ghcr.io/bharatsahaiyak/bff:dev
+    newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
-    newTag: main
-  - name: ghcr.io/bharatsahaiyak/inboundjs:dev
-    newTag: main
+    newTag: 0.6.5 
+  - name: ghcr.io/bharatsahaiyak/uci-apis:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/user-management-service
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/transport-socket:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/dataset-service:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/deployer:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/document-service:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/telemetry:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/nodehub:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/inbound-js:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/org-classifier:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/bge-reranker:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/bm25:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/bge-small-gpu-embeddings:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/agri-flow-classifier-bert:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/llm-openai-evaluator:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/ner:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/spell-check:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/text-translation-azure-dict:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/asr-mms:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/llm-openai-gpt3:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/agri-flow-classifier-stella:dev
+    newTag: 0.6.5
 
 replacements:
 - source:
