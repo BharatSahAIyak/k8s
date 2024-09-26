@@ -2,6 +2,8 @@
 
 This guide provides step-by-step instructions to set up the Kubernetes Dashboard, including obtaining Bearer Tokens for authentication.
 
+### Setting up Dashboard:
+
 **1. Install the Kubernetes Dashboard Using Helm**
 
 Add the Kubernetes Dashboard Helm repository: `helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/`
@@ -12,7 +14,12 @@ Install or upgrade the Kubernetes Dashboard release: `helm upgrade --install kub
 
 **3. Create a Cluster Role Binding**: `kubectl apply -f dashboard-clusterrolebinding.yaml`
 
-**4. Create a Temporary Bearer Token**: `kubectl -n kubernetes-dashboard create token admin-user`  
+**4. Access the Dashboard via Ingress**: `kubectl apply -f dashboard-ingress.yaml`  
+Visit _dashboards.k8s.io_ in your browser. You will need a token to authenticate.  
+
+### Authentication Token Creation
+
+**Create a Temporary Bearer Token**: `kubectl -n kubernetes-dashboard create token admin-user`  
 ⚠ Expires in one hour. To revoke, delete the ServiceAccount.
 
 or
@@ -22,8 +29,6 @@ or
 `kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d`  
 ⚠ Automatically cleaned up when the ServiceAccount is deleted.
 
-**5. Access the Dashboard via Ingress** `kubectl apply -f dashboard-ingress.yaml`  
-Visit _dashboards.k8s.io_ in your browser and log in with the Bearer Token.
 
 **References**
 
