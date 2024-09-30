@@ -19,8 +19,8 @@ This guide provides step-by-step instructions to set up the Kubernetes Dashboard
     2. Create a Long-Lived Bearer Token:   
     * `kubectl apply -f dashboard-adminuser-secret.yaml`   
     * `kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d`  
-    > [!NOTE]
-    > Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount.
+> [!NOTE]
+> Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount.
 
 **Configuring Ingress:**
 
