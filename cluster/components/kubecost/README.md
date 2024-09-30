@@ -5,7 +5,7 @@
     ```bash
     helm upgrade --install kubecost \
     --repo https://kubecost.github.io/cost-analyzer/ cost-analyzer \
-    --namespace kubecost --create-namespace"
+    --namespace kubecost --create-namespace
     ```
 
 2. Configuring Ingress:
