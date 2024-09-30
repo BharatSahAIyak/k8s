@@ -20,7 +20,9 @@ This guide provides step-by-step instructions to set up the Kubernetes Dashboard
     * `kubectl apply -f dashboard-adminuser-secret.yaml`   
     * `kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d`  
 > [!NOTE]
-> Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount.
+> Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount. Use below command:  
+`kubectl delete serviceaccount admin-user -n kubernetes-dashboard`
+
 
 **Configuring Ingress:**
 
