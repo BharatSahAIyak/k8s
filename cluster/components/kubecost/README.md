@@ -25,4 +25,4 @@
     Navigate to your specified hostname in a browser: _YourKubecostHostname_
 
 
-
+Refer the [official documentation](https://docs.kubecost.com/install-and-configure/install) for more info.
