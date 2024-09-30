@@ -1,16 +1,28 @@
 # Setting up Kubecost
 
-1. **This Helm command installs Kubecost, Prometheus, and Grafana in the _kubecost_ namespace, setting a custom authentication token with _kubecostToken_ for data retention across product tiers.**
-    ```bash
-    helm install kubecost cost-analyzer \
-    --repo https://kubecost.github.io/cost-analyzer/ \
-    --namespace kubecost --create-namespace \
-    --set kubecostToken="Z2F1cmF2MjEyNWNzZUBnbWFpbC5jb20=xm343yadf98"
-    ```
-2. **Apply the ingress**
+1. This Helm command installs Kubecost, Prometheus, and Grafana in the _kubecost_ namespace
 
     ```bash
-    kubectl apply -f dashboard-ingress.yaml
+    helm upgrade --install kubecost \
+    --repo https://kubecost.github.io/cost-analyzer/ cost-analyzer \
+    --namespace kubecost --create-namespace"
     ```
 
-3. **Go to _dashboards.kubecost.io/overview_ to access the board**
+2. Configuring Ingress:
+
+    1. Ensure that Kong is set up as your ingress controller.
+    2. Modify the _dashboard-ingress.yaml_ file:
+        - Replace the placeholder _YourKubecostHostname_ with your specific hostname for the Kubecost dashboard.
+
+    3. Apply the Ingress configuration:
+
+        ```bash
+        kubectl apply -f dashboard-ingress.yaml
+        ```
+
+3. Accessing the Kubecost Dashboard
+
+    Navigate to your specified hostname in a browser: _YourKubecostHostname_
+
+
+
