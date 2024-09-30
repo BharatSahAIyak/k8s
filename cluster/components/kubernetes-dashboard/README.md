@@ -5,7 +5,6 @@ This guide provides step-by-step instructions to set up the Kubernetes Dashboard
 **Setting up Dashboard:**
 
 1. Install the Kubernetes Dashboard Using Helm
-
 * Add the Kubernetes Dashboard Helm repository: `helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/`
 * Install or upgrade the Kubernetes Dashboard release: `helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --create-namespace --namespace kubernetes-dashboard`
 
@@ -20,8 +19,8 @@ This guide provides step-by-step instructions to set up the Kubernetes Dashboard
     2. Create a Long-Lived Bearer Token:   
     * `kubectl apply -f dashboard-adminuser-secret.yaml`   
     * `kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d`  
-> [!NOTE]
-> Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount.
+    > [!NOTE]
+    > Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount.
 
 **Configuring Ingress:**
 
@@ -29,8 +28,7 @@ This guide provides step-by-step instructions to set up the Kubernetes Dashboard
 2. Update the _dashboard-ingress.yaml_ file:
    - Replace the placeholder _YourDashboardHostname_ with the specific hostname for your Kubernetes Dashboard.
 3. Apply the updated Ingress configuration: `kubectl apply -f dashboard-ingress.yaml`
-4. To access the dashboard,
-   open your browser and navigate to the following URL: _YourDashboardHostname_
+4. To access the dashboard, open your browser and visit: _YourDashboardHostname_
 
 **References**
 
