@@ -2,33 +2,35 @@
 
 This guide provides step-by-step instructions to set up the Kubernetes Dashboard, including obtaining Bearer Tokens for authentication.
 
-### Setting up Dashboard:
+**Setting up Dashboard:**
 
-**1. Install the Kubernetes Dashboard Using Helm**
+1. Install the Kubernetes Dashboard Using Helm
 
-Add the Kubernetes Dashboard Helm repository: `helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/`
+* Add the Kubernetes Dashboard Helm repository: `helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/`
+* Install or upgrade the Kubernetes Dashboard release: `helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --create-namespace --namespace kubernetes-dashboard`
 
-Install or upgrade the Kubernetes Dashboard release: `helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard -f values.yaml --create-namespace --namespace kubernetes-dashboard`
 
-**2. Create a Service Account**: `kubectl apply -f dashboard-adminuser.yaml`
+**Authentication Token Creation**
 
-**3. Create a Cluster Role Binding**: `kubectl apply -f dashboard-clusterrolebinding.yaml`
+1. Create a Service Account: `kubectl apply -f dashboard-adminuser.yaml`
+2. Create a Cluster Role Binding: `kubectl apply -f dashboard-clusterrolebinding.yaml`
+3. You can create either a temporary or long-lived token:
+    1. Create a Temporary Bearer Token: `kubectl -n kubernetes-dashboard create token admin-user`  
+    or
+    2. Create a Long-Lived Bearer Token:   
+    * `kubectl apply -f dashboard-adminuser-secret.yaml`   
+    * `kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d`  
+> [!NOTE]
+> Both tokens can be revoked or cleaned up by deleting the associated ServiceAccount.
 
-**4. Access the Dashboard via Ingress**: `kubectl apply -f dashboard-ingress.yaml`  
-Visit _dashboards.k8s.io_ in your browser. You will need a token to authenticate.  
+**Configuring Ingress:**
 
-### Authentication Token Creation
-
-**Create a Temporary Bearer Token**: `kubectl -n kubernetes-dashboard create token admin-user`  
-⚠ Expires in one hour. To revoke, delete the ServiceAccount.
-
-or
-
-**Create a Long-Lived Bearer Token**:   
-`kubectl apply -f dashboard-adminuser-secret.yaml`   
-`kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"} | base64 -d`  
-⚠ Automatically cleaned up when the ServiceAccount is deleted.
-
+1. Ensure Kong is configured as your Ingress controller.
+2. Update the _dashboard-ingress.yaml_ file:
+   - Replace the placeholder _YourDashboardHostname_ with the specific hostname for your Kubernetes Dashboard.
+3. Apply the updated Ingress configuration: `kubectl apply -f dashboard-ingress.yaml`
+4. To access the dashboard,
+   open your browser and navigate to the following URL: _YourDashboardHostname_
 
 **References**
 
