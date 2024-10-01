@@ -35,7 +35,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/user-management-service
-    newTag: 0.6.5
+    newTag: 0.6.5-hotfix-1
   - name: ghcr.io/bharatsahaiyak/transport-socket:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/dataset-service:dev
