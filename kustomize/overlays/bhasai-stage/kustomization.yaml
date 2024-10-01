@@ -1,4 +1,5 @@
 resources:
+  - ../../base/broadcast-service
   - ../../base/inboundjs
   - ../../base/pdf-generator
   - ../../base/telemetry
@@ -23,6 +24,8 @@ resources:
 namespace: bhasai-stage
 
 images:
+  - name: ghcr.io/bharatsahaiyak/broadcast-service
+    newTag: 0.6.5-rc-1.1.0
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-stage
   - name: ghcr.io/bharatsahaiyak/bff:dev
