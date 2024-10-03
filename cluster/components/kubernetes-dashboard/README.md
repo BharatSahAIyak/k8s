@@ -9,7 +9,7 @@ This guide provides step-by-step instructions to set up the Kubernetes Dashboard
 
 **Setting up Dashboard Ingress:**
 
-1. Apply the ingress to expose argocd to public users `kubectl apply -f ingress.yaml` (please update the host as needed in ingress.yaml, it is assumed that Kong has been setup)
+1. Apply the ingress to expose dashboard to public users `kubectl apply -f ingress.yaml` (please update the host as needed in ingress.yaml, it is assumed that Kong has been setup)
 
 **Setting up Authentication Token**
 
