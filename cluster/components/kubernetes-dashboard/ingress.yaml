@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "YourDashboardHostname"
+  - host: "dashboard.k8s.bhasai.samagra.io"
     http:
       paths:
       - path: /
