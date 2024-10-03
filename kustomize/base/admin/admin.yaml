@@ -47,6 +47,13 @@ spec:
           name: admin
       - secretRef:
           name: service-urls
+    resources:
+      requests:
+        memory: "2048Mi"
+        cpu: "1000m"
+      limits:
+        memory: " 4096Mi"
+        cpu: "2000m"
   restartPolicy: Never
 ---
 apiVersion: apps/v1
