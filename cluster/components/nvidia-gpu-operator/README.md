@@ -5,6 +5,10 @@
 3. Install Nvidia GPU Operator `helm install --wait --generate-name -n gpu-operator --create-namespace nvidia/gpu-operator --set nfd.enabled=false`
 4. For more, refer [this](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/getting-started.html)
 
+### Setting up Metrics Ingress:
+
+1. Apply the ingress to expose _/metrics_ endpoint to public users: `kubectl apply -f ingress.yaml` (please update the host as needed in ingress.yaml, it is assumed that Kong has been setup)
+
 ### Configure GPU Sharing
 
 1. Add a config map to the namespace that is used by the GPU operator `kubectl create -n gpu-operator -f time-slicing-config-all.yaml`
