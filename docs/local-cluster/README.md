@@ -1,125 +1,106 @@
-# Overview
+# Kind Cluster Setup
 
+By the end of this setup, you will be able to:
 
-<img src="./ss/Overview.png" alt="Overview" width="370" style="margin-left: 410px;" />
+* Access the _kong-gateway-proxy_ service from your local machine using a domain name configured with Caddy.
+* Synchronize secrets from Vault to your Kubernetes cluster, ensuring secure and efficient management of sensitive data.
 
-In the following steps, you will:
+### Creating the Virtual Machine (VM):  
 
-- **Create a Virtual Machine (VM)** on your local system.
-- **Install Docker, Vault, and Caddy** on the VM using the provided "devops" repository.
-- **Install `kind` and `kubectl`** on your VM, and create a Kubernetes cluster using `kind`.
-- **Set up Vault and Kong** in the Kubernetes cluster.
+- _macOS_: Use [UTM](https://mac.getutm.app/) to create the VM.
+- _Windows/Linux_: Use [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html) or another virtualization tool compatible with your OS.
 
-By the end of this process:
+1. Download the Ubuntu Image: [Ubuntu 24.04 Live Server ARM64](https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso).
+2. Configure the VM: Set up a Bridge network to allow the VM to communicate directly with your local network, enabling access to external services and devices.
 
-- Accessing the configured domain name from your local system will route you to the `kong-gateway-proxy` service within the cluster.
-- You will also be able to synchronize secrets from Vault successfully.
+### Installing Docker, Vault, and Caddy on the VM
 
+1. Clone the Repository: _git clone https://github.com/Samagra-Development/devops.git_  
+Follow the steps (up to step 9) under "Setting up services on VM.
 
-## Creating the Virtual Machine (VM)
+2. Configure Environment Variables: Update .env file as follows
+   ```
+   DOMAIN_NAME='k8s.local'
+   DOMAIN_SCHEME='http'
+   ENVIRONMENT_USERNAME='admin'
+   ENVIRONMENT_PASSWORD='admin'
+   ```
 
-To create a Virtual Machine (VM), follow these steps based on your operating system:
+3. Modify Vault's Docker Compose Configuration: Edit `/home/username/devops/common/environment/docker-compose.yaml` to _ports_ & _network_mode_, leave rest as it is:
+    ```yaml
+    services:
+        environment:
+            ports:
+                - "8200:8200"
+            network_mode: host
+    ```
 
-- **macOS:** Use [UTM](https://mac.getutm.app/) to create the VM.
-- **Windows/Linux:** Use [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html) or another virtualization tool compatible with your OS.
+4. Update Caddy's Docker Compose Configuration: In the file _/home/username/devops/common/caddy/docker-compose.yaml_, add the line _network_mode: host_, keeping the rest of the file unchanged.
 
-1. **Download the Ubuntu Image:**
-   - Obtain the Ubuntu image for your VM from the following link: [Ubuntu 24.04 Live Server ARM64](https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso).
+5. Uncomment Desired Services: In the _/home/username/devops/docker-compose.yaml_, uncomment only the services you intend to use.
 
-2. **Configure the VM:**
-   - After installing Ubuntu, shut down the VM.
-   - In your VM settings, create and configure a Bridge network to ensure proper network connectivity for your VM.
+6. Deploy Services: Use the following command to deploy the services: `make deploy`
 
-Follow the instructions provided by your chosen virtualization tool for creating and configuring the VM with the downloaded image.
-
-
-## Installing docker, vault and Caddy on Vm:
-1. Fork and clone the fork of the following repo to setup docker, vault and caddy: ```https://github.com/Samagra-Development/devops.git``` 
-Follow the steps(Upto step 9) under : "Setting up services on VM". 
-
-2. In the .env file add the DOMAIN_NAME, ENVIRONMENT_USERNAME & ENVIRONMENT_PASSWORD :
-
-<img src="./ss/initial.png" alt="vault, caddy credentials" width="370" style="margin-left: 400px;" />
-
-
-
-
-3. Make the following changes for vault's docker-compose.yaml(/home/username/devops/common/environment/docker-compose.yaml). Add the ports and the network_mode (**Leave the rest as it is**):
-
-<img src="./ss/vault.png" alt="Example for Vault's docker-compose.yaml" width="340" style="margin-left: 410px;" />
-
-
-4. Make the following changes for caddy's docker-compose.yaml (/home/username/devops/common/caddy/docker-compose.yaml). Just add the: ```network_mode: host``` (**Leave the rest as it is**) 
-
-<img src="./ss/caddy.png" alt="Example for caddy's docker-compose.yaml" width="340" style="margin-left: 410px;" />
-
-Make sure to use the network_mode as "host":```network_mode : host```
-
-5. Only uncomment the service in docker-comopose file which you want to use, like :
-
-<img src="./ss/uncomment.png" alt="Uncomment services in docker-compose.yaml" width="340" style="margin-left: 410px;" />
-
-Use the ```make deploy```command
-
-## Creating the Cluster Using Kind:
+### Creating the Cluster Using Kind:
 
 1. [Install kind on your local machine](https://kind.sigs.k8s.io/docs/user/quick-start/)
 2. [Install kubectl on local](https://kubernetes.io/docs/tasks/tools/)
 3. [Install Helm on local machine](https://helm.sh/docs/intro/install/#from-apt-debianubuntu)
-4. Use the `docs/local-cluster/cluster-config.yaml` file of this repository for creating the cluster.
-5. Create the cluster using the following command:  
-   ```kind create cluster --name <Name for the cluster> --config ./cluster-config.yaml```
+4. Use the _docs/local-cluster/cluster-config.yaml_ file of this repository for creating the cluster.
+5. Create the cluster using the following command: (Replce _YourClusterName_ as desired)  
+   ```kind create cluster --name YourClusterName --config ./cluster-config.yaml```
 
+### Setting up vault :
 
+Follow the instructions in the: [Setting up Vault](../../cluster/components/vault/README.md)
+All necessary files are located in the same directory as the README.md in this repository.
 
-## Setting up vault :
+Ensure the following:
 
-Follow this : [Setting up Vault](../../cluster/components/vault/README.md)
-(You will find all the necessary files at the same level as the README.md in this repo.)
+1. Update the Kubernetes Configuration: In the command from Step 10, replace <Node's Internal IP> :```vault write auth/kubernetes/config token_reviewer_jwt="$jwt" kubernetes_host="https://<Node's Internal IP>:6443" kubernetes_ca_cert="$cert" ```
+    -  To get node's internal IP of node type : ```kubectl get nodes -o wide```
 
-Make sure :
-1. In vault-values.yaml: ```
-address: "http://<VM's IP>:<Vault's port, eg 
-: 8200>"```  eg : ```"http://192.168.64.1:8200```
-
+2. Modify Vault's Address: Before Step 13, update the _vault-values.yaml_ file to set the _address_ as follows:   
+`address: "http://<VM's IP>:<Vault's port, eg 
+: 8200>"`  eg : `"http://192.168.64.1:8200`
    - To get ip address of VM, type : ```ip a```
-2. To Go to the Vault's UI using <VM's IP>:8200 and In Secrets Engine "kv" create a secret called "sample-secret" with a key eg : a with value b
-3. Make changes accordingly in this command(Step 10th) :```vault write auth/kubernetes/config token_reviewer_jwt="$jwt" kubernetes_host="https://<Node's Internal IP>:6443" kubernetes_ca_cert="$cert" ```
-4. To get INTERNAL_IP of node type : ```kubectl get nodes -o wide```
 
-## Setting up kong :
+3. Access Vault's UI:
+   * Navigate to _http://<VM's IP>:8200_ in your browser.
+   * In the "kv" Secrets Engine, create a secret named "sample-secret" with the following details:
+     - Key: (e.g., `a`)
+     - Value: (e.g., `b`)
+   * After creating the secret, proceed to run Step 15th.
 
-Follow this to setup kong : [Setting up kong](../../cluster/components/kong/README.md)
-(You will find all the necessary files at the same level as the README.md in this repo.)
+4. Follow the provided steps to verify that the secrets have been successfully synchronized.
 
-At last to check the services, type : ```kubectl get svc -n kong```
+### Setting up kong :
 
-<img src="./ss/kong-svc.png" alt="kong's svc" width="400" style="margin-left: 370px;" />
+Follow the instructions in the: [Setting up kong](../../cluster/components/kong/README.md)guide. 
+All necessary files are located in the same directory as the README.md in this repository.
 
+To verify the services, run: ```kubectl get svc -n kong```
 
+### Configure Caddy and Reload It
 
-# Configure Caddy and Reload it: 
+1. Navigate to the devops repository used for setting up Caddy.
+2. Update the root-level Caddyfile located at /home/username/devops/Caddyfile by adding the following configuration, replacing <Node's Internal IP> with the actual internal IP address:
 
-1. Cd into the devops repository which you used to setup Caddy.
-2. Configure the Caddy file at root level. Use the Node's Internal IP. 
+   ```
+   {$DOMAIN_SCHEME}://{$DOMAIN_NAME} {
+       reverse_proxy <Node's Internal IP>:32001
+   }
+   ```
+3. On your local machine, edit the _/etc/hosts_ file to add the following line, replacing _<VM's IP>_ with the actual IP address of your VM:
 
-<img src="./ss/caddy-config.png" alt="Caddy" width="340" style="margin-left: 400px;" />
+    ```
+    <VM's IP> k8s.local
+    ```
 
-```
-#import ./common/monitoring/Caddyfile
-#import ./common/minio/Caddyfile
-#import ./common/environment/Caddyfile
-#import ./common/fusionauth/Caddyfile
-# The registry doesn't have a auth thus exposing it publicly means anyone can access the images pushed to this registry
-#import ./common/registry/Caddyfile
+4. To reload Caddy on the VM, run:
+   ```bash
+   make down
+   make deploy
+   ```
+5. Now, when you access _k8s.local_ from your local machine's browser, you should see the Kong Gateway interface.
 
-{$DOMAIN_SCHEME}://{$DOMAIN_NAME} {
-    reverse_proxy <Nodes's Internal IP>:32001
-}
-```
-
-3. Go to your Local machine's /etc/hosts file and add eg : ```192.168.64.1 k8s.local``` 
-4. On VM To reload Caddy type :```make down``` then ```make deploy```
-5. Now when you will hit ```k8s.local``` from local machine's browser the you should get something like below: 
-
-<img src="./ss/kong-gateway.png" alt="kong's gateway" width="340" style="margin-left: 310px;" />
