@@ -18,7 +18,7 @@ By the end of this setup, you will be able to:
 1. Clone the Repository: _git clone https://github.com/Samagra-Development/devops.git_  
 Follow the steps (up to step 9) under "Setting up services on VM.
 
-2. Configure Environment Variables: Update .env file as follows
+2. Configure Environment Variables: Update .env file as follows, leave rest as it is.
    ```
    DOMAIN_NAME='k8s.local'
    DOMAIN_SCHEME='http'
@@ -26,7 +26,7 @@ Follow the steps (up to step 9) under "Setting up services on VM.
    ENVIRONMENT_PASSWORD='admin'
    ```
 
-3. Modify Vault's Docker Compose Configuration: Edit `/home/username/devops/common/environment/docker-compose.yaml` to _ports_ & _network_mode_, leave rest as it is:
+3. Modify Vault's Docker Compose Configuration: Edit `/home/username/devops/common/environment/docker-compose.yaml` to include _ports_ & _network_mode_, leave rest as it is:
     ```yaml
     services:
         environment:
