@@ -26,7 +26,7 @@ Follow the steps (up to step 9) under "Setting up services on VM.
    ENVIRONMENT_PASSWORD='admin'
    ```
 
-3. Modify Vault's Docker Compose Configuration: Edit `/home/username/devops/common/environment/docker-compose.yaml` to include _ports_ & _network_mode_, leave rest as it is:
+3. Modify Vault's Docker Compose Configuration: Edit _/home/username/devops/common/environment/docker-compose.yaml_ to include _ports_ & _network_mode_, leave rest as it is:
     ```yaml
     services:
         environment:
