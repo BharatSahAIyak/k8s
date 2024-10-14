@@ -52,7 +52,7 @@ spec:
         memory: "2048Mi"
         cpu: "1000m"
       limits:
-        memory: " 4096Mi"
+        memory: "6144Mi"
         cpu: "2000m"
   restartPolicy: Never
 ---
