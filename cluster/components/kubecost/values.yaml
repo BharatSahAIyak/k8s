@@ -1,0 +1,10 @@
+global:
+  prometheus:
+    enabled: false
+    fqdn: http://prometheus.localdev.me  # Pointing to your Prometheus instance
+  grafana:
+    enabled: false  # Disable Grafana bundled with Kubecost
+
+kubecostProductConfigs:
+  grafanaURL: "http://grafana.localdev.me"  # Custom Grafana instance URL
+
