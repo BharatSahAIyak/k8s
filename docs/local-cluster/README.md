@@ -1,15 +1,19 @@
 # Kind Cluster Setup
 
-By the end of this setup, you will be able to:
+**Assumptions:**   
+All necessary files are in the same directory as the current 
+_README.md_ and apply to the directory of any _README.md_ you're working in.
 
-* Access the _kong-gateway-proxy_ service from your local machine using a domain name configured with Caddy.
-* Synchronize secrets from Vault to your Kubernetes cluster, ensuring secure and efficient management of sensitive data.
+**Outcomes:**  
+1. Access the Kong Gateway interface from your local machine using a domain name configured with Caddy.
+2. Synchronize secrets from Vault to your Kubernetes cluster, ensuring secure and efficient management of sensitive data.
 
 ### Creating the Virtual Machine (VM):  
+Installing Virtualization Software:
+1. _macOS_: Use [UTM](https://mac.getutm.app/) to create the VM.
+2. _Windows/Linux_: Use [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html) or another virtualization tool compatible with your OS.
 
-- _macOS_: Use [UTM](https://mac.getutm.app/) to create the VM.
-- _Windows/Linux_: Use [Oracle VM VirtualBox](https://www.oracle.com/in/virtualization/technologies/vm/downloads/virtualbox-downloads.html) or another virtualization tool compatible with your OS.
-
+Preparing the Ubuntu VM with Network Connectivity:
 1. Download the Ubuntu Image: [Ubuntu 24.04 Live Server ARM64](https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04-live-server-arm64.iso).
 2. Configure the VM: Set up a Bridge network to allow the VM to communicate directly with your local network, enabling access to external services and devices.
 
@@ -51,27 +55,25 @@ Follow the steps (up to step 9) under "Setting up services on VM.
 1. [Install kind on your local machine](https://kind.sigs.k8s.io/docs/user/quick-start/)
 2. [Install kubectl on local](https://kubernetes.io/docs/tasks/tools/)
 3. [Install Helm on local machine](https://helm.sh/docs/intro/install/#from-apt-debianubuntu)
-4. Use the _docs/local-cluster/cluster-config.yaml_ file of this repository for creating the cluster.
-5. Create the cluster using the following command: (Replce _YourClusterName_ as desired)  
+4. Use the _cluster-config.yaml_ file for creating the cluster.
+5. Create the cluster using the following command: (Replace _YourClusterName_ as desired)  
    ```kind create cluster --name YourClusterName --config ./cluster-config.yaml```
 
 ### Setting up vault :
 
 Follow the instructions in the: [Setting up Vault](../../cluster/components/vault/README.md)
-All necessary files are located in the same directory as the README.md in this repository.
 
 Ensure the following:
 
-1. Update the Kubernetes Configuration: In the command from Step 10, replace <Node's Internal IP> :```vault write auth/kubernetes/config token_reviewer_jwt="$jwt" kubernetes_host="https://<Node's Internal IP>:6443" kubernetes_ca_cert="$cert" ```
-    -  To get node's internal IP of node type : ```kubectl get nodes -o wide```
+1. Update the Kubernetes Configuration: In the command from Step 10, replace <Node's_Internal_IP> :```vault write auth/kubernetes/config token_reviewer_jwt="$jwt" kubernetes_host="https://<Node's_Internal_IP>:6443" kubernetes_ca_cert="$cert" ```
+    -  To get node's internal IP of node type : ```kubectl get nodes -o wide | awk '/INTERNAL-IP/ {getline; print $6}'```
 
 2. Modify Vault's Address: Before Step 13, update the _vault-values.yaml_ file to set the _address_ as follows:   
-`address: "http://<VM's IP>:<Vault's port, eg 
-: 8200>"`  eg : `"http://192.168.64.1:8200`
+`address: "http://<VM's_IP>:8200"`  eg : `"http://192.168.64.1:8200`
    - To get ip address of VM, type : ```ip a```
 
 3. Access Vault's UI:
-   * Navigate to _http://<VM's IP>:8200_ in your browser.
+   * Navigate to _http://<VM's_IP>:8200_ in your browser.
    * In the "kv" Secrets Engine, create a secret named "sample-secret" with the following details:
      - Key: (e.g., `a`)
      - Value: (e.g., `b`)
@@ -81,25 +83,24 @@ Ensure the following:
 
 ### Setting up kong :
 
-Follow the instructions in the: [Setting up kong](../../cluster/components/kong/README.md)guide. 
-All necessary files are located in the same directory as the README.md in this repository.
+Follow the instructions in the: [Setting up kong](../../cluster/components/kong/README.md) guide. 
 
 To verify the services, run: ```kubectl get svc -n kong```
 
 ### Configure Caddy and Reload It
 
 1. Navigate to the devops repository used for setting up Caddy.
-2. Update the root-level Caddyfile located at /home/username/devops/Caddyfile by adding the following configuration, replacing <Node's Internal IP> with the actual internal IP address:
+2. Update the root-level Caddyfile located at _devops/Caddyfile_ by adding the following configuration, replacing <Node's_Internal_IP> with the actual internal IP address:
 
    ```
    {$DOMAIN_SCHEME}://{$DOMAIN_NAME} {
-       reverse_proxy <Node's Internal IP>:32001
+       reverse_proxy <Node's_Internal_IP>:32001
    }
    ```
-3. On your local machine, edit the _/etc/hosts_ file to add the following line, replacing _<VM's IP>_ with the actual IP address of your VM:
+3. On your local machine, edit the _/etc/hosts_ file to add the following line, replacing _<VM's_IP>_ with the actual IP address of your VM:
 
     ```
-    <VM's IP> k8s.local
+    <VM's_IP> k8s.local
     ```
 
 4. To reload Caddy on the VM, run:
