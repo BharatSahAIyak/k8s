@@ -26,20 +26,25 @@ Follow the steps (up to step 9) under "Setting up services on VM.
    ENVIRONMENT_PASSWORD='admin'
    ```
 
-3. Modify Vault's Docker Compose Configuration: Edit _/home/username/devops/common/environment/docker-compose.yaml_ to include _ports_ & _network_mode_, leave rest as it is:
+3. Modify Vault's Docker Compose Configuration: Edit _common/environment/docker-compose.yaml_ and set `network_mode` to `host`
     ```yaml
     services:
-        environment:
-            ports:
-                - "8200:8200"
-            network_mode: host
+      environment:
+         ...
+         network_mode: host
     ```
 
-4. Update Caddy's Docker Compose Configuration: In the file _/home/username/devops/common/caddy/docker-compose.yaml_, add the line _network_mode: host_, keeping the rest of the file unchanged.
+4. Modify Caddy's Docker Compose Configuration: Edit _common/caddy/docker-compose.yaml_ and set `network_mode` to `host`
+    ```yaml
+    services:
+      caddy:
+         ...
+         network_mode: host
+    ```
 
-5. Uncomment Desired Services: In the _/home/username/devops/docker-compose.yaml_, uncomment only the services you intend to use.
+5. Uncomment include statemenet for `vault` in _docker-compose.yaml_
 
-6. Deploy Services: Use the following command to deploy the services: `make deploy`
+6. Deploy Services using `make deploy`
 
 ### Creating the Cluster Using Kind:
 
