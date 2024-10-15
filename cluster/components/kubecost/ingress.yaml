@@ -3,16 +3,18 @@ kind: Ingress
 metadata:
   name: kubecost-ingress
   namespace: kubecost
+  annotations:
+    konghq.com/strip-path: "true"
 spec:
   ingressClassName: kong
   rules:
-  - host: "dashboard.k8s.bhasai.samagra.io"
+  - host: "metrics.k8s.bhasai.samagra.io"
     http:
       paths:
-      - path: /
+      - path: /kubecost
         pathType: ImplementationSpecific
         backend:
           service:
             name: kubecost-cost-analyzer
             port:
-              number: 9090
+              number: 9003
