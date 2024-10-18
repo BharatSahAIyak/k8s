@@ -5,3 +5,4 @@
 3. [Setting up Generic Components .e.g, promtail, argocd, etc](./cluster/components/README.md)
 4. [Scaling Kubernetes](./docs/scaling.md)
 5. [Developer Documentation](./docs/developer.md)
+5. [Seeting up Kind Cluster](./docs/local-cluster/README.md)

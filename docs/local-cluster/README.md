@@ -1,12 +1,10 @@
 # Kind Cluster Setup
 
-**Assumptions:**   
-All necessary files are in the same directory as the current 
-_README.md_ and apply to the directory of any _README.md_ you're working in.
 
-**Outcomes:**  
-1. Access the Kong Gateway interface from your local machine using a domain name configured with Caddy.
-2. Synchronize secrets from Vault to your Kubernetes cluster, ensuring secure and efficient management of sensitive data.
+This document will guide you through the following steps:
+1. Setup a Kind Cluster.
+2. Setup Kong Ingress and configure Caddy as a load balancer.
+3. Setup Vault and use it as a secret manager for the cluster.
 
 ### Creating the Virtual Machine (VM):  
 Installing Virtualization Software:
@@ -65,7 +63,7 @@ Follow the instructions in the: [Setting up Vault](../../cluster/components/vaul
 
 Ensure the following:
 
-1. Update the Kubernetes Configuration: In the command from Step 10, replace <Node_Internal_IP> :```vault write auth/kubernetes/config token_reviewer_jwt="$jwt" kubernetes_host="https://<Node_Internal_IP>:6443" kubernetes_ca_cert="$cert" ```
+1. Update the Kubernetes Configuration: In the command from Step 10, replace <NODE_INTERNAL_IP> :```vault write auth/kubernetes/config token_reviewer_jwt="$jwt" kubernetes_host="https://<NODE_INTERNAL_IP>:6443" kubernetes_ca_cert="$cert" ```
     -  To get node's internal IP of node type : ```kubectl get nodes -o wide | awk '/INTERNAL-IP/ {getline; print $6}'```
 
 2. Modify Vault's Address: Before Step 13, update the _vault-values.yaml_ file to set the _address_ as follows:   
@@ -90,11 +88,11 @@ To verify the services, run: ```kubectl get svc -n kong```
 ### Configure Caddy and Reload It
 
 1. Navigate to the devops repository used for setting up Caddy.
-2. Update the root-level Caddyfile located at _devops/Caddyfile_ by adding the following configuration, replacing <Node's_Internal_IP> with the actual internal IP address:
+2. Update the root-level Caddyfile located at _devops/Caddyfile_ by adding the following configuration, replacing <NODE_INTERNAL_IP> with the actual internal IP address:
 
    ```
    {$DOMAIN_SCHEME}://{$DOMAIN_NAME} {
-       reverse_proxy <Node_Internal_IP>:32001
+       reverse_proxy <NODE_INTERNAL_IP>:32001
    }
    ```
 3. On your local machine, edit the _/etc/hosts_ file to add the following line, replacing _<VM_IP>_ with the actual IP address of your VM:
