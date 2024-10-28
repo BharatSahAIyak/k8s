@@ -1,4 +1,4 @@
 defaultVaultConnection:
    enabled: true
-   address: "http://10.10.4.4:8200"
+   address: "http://10.100.4.4:8200"
    skipTLSVerify: true
