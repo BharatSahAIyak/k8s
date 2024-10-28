@@ -29,8 +29,8 @@ namespace: ks-stage
 images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: ks-stage
-  # - name: ghcr.io/kumbh-sahaiyak/bff:dev
-  #   newTag: 0.6.5
+  - name: ghcr.io/kumbh-sahaiyak/bff:dev
+    newTag: bhashini_feature
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
     newTag: 0.6.5 
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
@@ -80,4 +80,3 @@ replacements:
 
 patches:
 - path: patch.yaml
-- path: bff-patch.yaml
