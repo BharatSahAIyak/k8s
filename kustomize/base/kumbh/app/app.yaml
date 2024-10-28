@@ -12,6 +12,20 @@ spec:
   refreshAfter: 10s
   vaultAuthRef: static-auth
 ---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: ks-git-read-token
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/ks-git-read-token
+  destination:
+    name: ks-git-read-token
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
 apiVersion: v1
 kind: Pod
 metadata:
