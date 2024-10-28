@@ -3,16 +3,36 @@ kind: Ingress
 metadata:
   name: admin
 spec:
+  ingressClassName: kong
   rules:
   - host: "admin.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: admin
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: admin-secure
 spec:
+  ingressClassName: kong
   rules:
   - host: "admin-secure.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: admin
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -21,6 +41,15 @@ metadata:
 spec:
   rules:
   - host: "ai-tools-proxy.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ai-tools-proxy
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
@@ -29,6 +58,15 @@ spec:
 # spec:
 #   rules:
 #   - host: "app.stage.kumbhsahaiyak.xyz"
+    # http:
+    #   paths:
+    #   - path: /
+    #     pathType: ImplementationSpecific
+    #     backend:
+    #       service:
+    #         name: app
+    #         port:
+    #           number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -37,6 +75,15 @@ metadata:
 spec:
   rules:
   - host: "auth-service.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
@@ -45,6 +92,15 @@ spec:
 # spec:
 #   rules:
 #   - host: "autotune.stage.kumbhsahaiyak.xyz"
+    # http:
+    #   paths:
+    #   - path: /
+    #     pathType: ImplementationSpecific
+    #     backend:
+    #       service:
+    #         name: autotune
+    #         port:
+    #           number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -53,6 +109,15 @@ metadata:
 spec:
   rules:
   - host: "bff.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
@@ -61,6 +126,15 @@ spec:
 # spec:
 #   rules:
 #   - host: "bge-reranker.stage.kumbhsahaiyak.xyz"
+    # http:
+    #   paths:
+    #   - path: /
+    #     pathType: ImplementationSpecific
+    #     backend:
+    #       service:
+    #         name: bge-reranker
+    #         port:
+    #           number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
@@ -69,6 +143,15 @@ spec:
 # spec:
 #   rules:
 #   - host: "bge-small-gpu-embeddings.stage.kumbhsahaiyak.xyz"
+    # http:
+    #   paths:
+    #   - path: /
+    #     pathType: ImplementationSpecific
+    #     backend:
+    #       service:
+    #         name: bge-small-gpu-embeddings
+    #         port:
+    #           number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -77,6 +160,15 @@ metadata:
 spec:
   rules:
   - host: "dataset-service.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: dataset-service
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -85,6 +177,15 @@ metadata:
 spec:
   rules:
   - host: "deployer.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: deployer
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -93,6 +194,15 @@ metadata:
 spec:
   rules:
   - host: "document-service.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: document-service
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -101,6 +211,15 @@ metadata:
 spec:
   rules:
   - host: "inboundjs.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: inboundjs
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -109,6 +228,15 @@ metadata:
 spec:
   rules:
   - host: "nodehub.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nodehub
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -117,6 +245,15 @@ metadata:
 spec:
   rules:
   - host: "orchestrator.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: orchestrator
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
@@ -141,6 +278,15 @@ metadata:
 spec:
   rules:
   - host: "telemetry.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -149,6 +295,15 @@ metadata:
 spec:
   rules:
   - host: "testbed.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: testbed
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -157,6 +312,15 @@ metadata:
 spec:
   rules:
   - host: "transport-socket.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: transport-socket
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -165,6 +329,15 @@ metadata:
 spec:
   rules:
   - host: "uci-apis.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: uci-apis
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -173,6 +346,15 @@ metadata:
 spec:
   rules:
   - host: "user.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -181,6 +363,15 @@ metadata:
 spec:
   rules:
   - host: "user-management-service.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user-management-service
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
