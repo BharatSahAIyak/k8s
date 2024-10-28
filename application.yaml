@@ -13,7 +13,7 @@ spec:
   source:
     path: kustomize/overlays/ks-stage
     repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
-    targetRevision: v2
+    targetRevision: v2-ks
   project: default
   syncPolicy:
     automated:
