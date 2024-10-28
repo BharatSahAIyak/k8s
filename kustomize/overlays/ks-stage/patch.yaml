@@ -118,40 +118,40 @@ spec:
             name: bff
             port:
               number: 80
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: bge-reranker
-# spec:
-#   rules:
-#   - host: "bge-reranker.stage.kumbhsahaiyak.xyz"
-    # http:
-    #   paths:
-    #   - path: /
-    #     pathType: ImplementationSpecific
-    #     backend:
-    #       service:
-    #         name: bge-reranker
-    #         port:
-    #           number: 80
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: bge-small-gpu-embeddings
-# spec:
-#   rules:
-#   - host: "bge-small-gpu-embeddings.stage.kumbhsahaiyak.xyz"
-    # http:
-    #   paths:
-    #   - path: /
-    #     pathType: ImplementationSpecific
-    #     backend:
-    #       service:
-    #         name: bge-small-gpu-embeddings
-    #         port:
-    #           number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bge-reranker
+spec:
+  rules:
+  - host: "bge-reranker.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bge-reranker
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bge-small-gpu-embeddings
+spec:
+  rules:
+  - host: "bge-small-gpu-embeddings.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bge-small-gpu-embeddings
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

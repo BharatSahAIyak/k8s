@@ -8,6 +8,8 @@ resources:
   - ../../base/auth-service
   - ../../base/bff
   - ../../base/dataset-service
+  - ../../base/bge-small-gpu-embeddings
+  - ../../base/bge-reranker
   - ../../base/deployer
   - ../../base/document-service
   - ../../base/nodehub
