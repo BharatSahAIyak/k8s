@@ -209,6 +209,7 @@ kind: Ingress
 metadata:
   name: inboundjs
 spec:
+  ingressClassName: kong
   rules:
   - host: "inboundjs.stage.kumbhsahaiyak.xyz"
     http:
