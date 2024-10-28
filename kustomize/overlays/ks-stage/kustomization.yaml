@@ -23,11 +23,14 @@ resources:
   - ../../base/common-secrets
   - ../../base/git-read-token
   - ../../base/admin
+  - ../../base/kumbh/app
 
 namespace: ks-stage
 
 images:
   - name: registry.local/bharatsahaiyak/admin
+    newTag: ks-stage
+  - name: registry.local/kumbhsahaiyak/app
     newTag: ks-stage
   - name: ghcr.io/kumbh-sahaiyak/bff:dev
     newTag: bhashini_feature
