@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: lipsync
+  name: lipsync
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: lipsync
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: lipsync
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
+          image: ghcr.io/kumbh-sahaiyak/lipsync:dev
+          imagePullPolicy: Always
+          name: lipsync
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "1"
+            limits:
+              memory: "2048Mi"
+              cpu: "3"
+      imagePullSecrets:
+      - name: ks-regcred
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lipsync
+spec:
+  selector:
+    app.kubernetes.io/name: lipsync
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lipsync
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "lipsync.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: lipsync
+            port:
+              number: 80

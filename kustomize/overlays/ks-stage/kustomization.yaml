@@ -24,6 +24,7 @@ resources:
   - ../../base/git-read-token
   - ../../base/admin
   - ../../base/kumbh/app
+  - ../../base/kumbh/lipsync
 
 namespace: ks-stage
 
@@ -34,6 +35,8 @@ images:
     newTag: ks-stage
   - name: ghcr.io/kumbh-sahaiyak/bff:dev
     newTag: bhashini_feature
+  - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
+    newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
     newTag: 0.6.5 
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
