@@ -52,7 +52,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev
-    newTag: 0.6.5-hotfix-1
+    newTag: 0.6.5-hotfix-2
 
 replacements:
 - source:
