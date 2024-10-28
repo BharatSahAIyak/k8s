@@ -1,0 +1,191 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: admin
+spec:
+  rules:
+  - host: "admin.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: admin-secure
+spec:
+  rules:
+  - host: "admin-secure.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-tools-proxy
+spec:
+  rules:
+  - host: "ai-tools-proxy.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: app
+# spec:
+#   rules:
+#   - host: "app.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth-service
+spec:
+  rules:
+  - host: "auth-service.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: autotune
+# spec:
+#   rules:
+#   - host: "autotune.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bff
+spec:
+  rules:
+  - host: "bff.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: bge-reranker
+# spec:
+#   rules:
+#   - host: "bge-reranker.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: bge-small-gpu-embeddings
+# spec:
+#   rules:
+#   - host: "bge-small-gpu-embeddings.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dataset-service
+spec:
+  rules:
+  - host: "dataset-service.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: deployer
+spec:
+  rules:
+  - host: "deployer.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: document-service
+spec:
+  rules:
+  - host: "document-service.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: inboundjs
+spec:
+  rules:
+  - host: "inboundjs.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nodehub
+spec:
+  rules:
+  - host: "nodehub.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orchestrator
+spec:
+  rules:
+  - host: "orchestrator.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: pdf-generator
+# spec:
+#   rules:
+#   - host: "pdf-generator.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: pdf-parser
+# spec:
+#   rules:
+#   - host: "pdf-parser.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: telemetry
+spec:
+  rules:
+  - host: "telemetry.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: testbed
+spec:
+  rules:
+  - host: "testbed.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: transport-socket
+spec:
+  rules:
+  - host: "transport-socket.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uci-apis
+spec:
+  rules:
+  - host: "uci-apis.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user
+spec:
+  rules:
+  - host: "user.stage.kumbhsahaiyak.xyz"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user-management-service
+spec:
+  rules:
+  - host: "user-management-service.stage.kumbhsahaiyak.xyz"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: yt-parser
+# spec:
+#   rules:
+#   - host: "yt-parser.stage.kumbhsahaiyak.xyz"

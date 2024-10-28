@@ -34,7 +34,7 @@
  containerd_registries_mirrors:
   - prefix: registry.local
     mirrors:
-     - host: http://10.10.4.4:5000
+     - host: http://10.100.4.4:5000
        capabilities: ["pull", "resolve"]
        skip_verify: false
 
