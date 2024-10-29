@@ -71,11 +71,14 @@ module "k8s_admin" {
 }
 
 # For SSH Key Management
-resource "aws_key_pair" "admin_key" {
-  key_name   = "admin-key"
-  public_key = module.k8s_admin.private_key # Needs to be checked 
+resource "aws_secretsmanager_secret" "ssh_private_key" {
+  name = "ssh_private-key"
 }
 
+resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
+  secret_id     = aws_secretsmanager_secret.ssh_private_key.id
+  secret_string = module.k8s_admin.private_key
+}
 
 
 resource "null_resource" "setup-admin" {
@@ -87,13 +90,13 @@ resource "null_resource" "setup-admin" {
     type        = "ssh"
     user        = "ubuntu"
     private_key = module.k8s_admin.private_key
-    host        = module.k8s_admin.vm-ips["${var.vpc_name}-admin-0"].public-ip
+    host        = module.k8s_admin.vm-ips["${var.vpc_name}-admin-0"].public_ip
   }
   provisioner "file" {
     content = templatefile("${path.module}/inventory.ini.tftpl",
-      { master_nodes = [for vm, ips in module.k8s_master.vm-ips : { name = vm, ip = ips.private-ip }],
-        worker_nodes = [for vm, ips in module.k8s_worker.vm-ips : { name = vm, ip = ips.private-ip }],
-        worker_gpu_nodes = [for vm, ips in module.k8s_worker_gpu.vm-ips : { name = vm, ip = ips.private-ip }],
+      { master_nodes = [for vm, ips in module.k8s_master.vm-ips : { name = vm, ip = ips.private_ip }],
+        worker_nodes = [for vm, ips in module.k8s_worker.vm-ips : { name = vm, ip = ips.private_ip }],
+        worker_gpu_nodes = [for vm, ips in module.k8s_worker_gpu.vm-ips : { name = vm, ip = ips.private_ip }],
     })
     destination = "/home/ubuntu/inventory.ini"
   }
