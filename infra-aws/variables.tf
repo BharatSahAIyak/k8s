@@ -8,6 +8,8 @@ variable "master_subnet_cidr" {}
 
 variable "admin_subnet_cidr" {}
 
+variable "lb_subnet_cidr" {}
+
 variable "worker_subnet_cidr" {}
 variable "stateful_subnet_cidr" {}
 

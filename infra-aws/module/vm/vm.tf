@@ -79,10 +79,16 @@ output "nic_ids" {
   value = aws_network_interface.nic[*].id
 }
 
-output "vm_ips" {
+output "vm-ips" {
   value = { for vm in aws_instance.vm : vm.tags["Name"] => {
     id         = vm.id
     public_ip  = vm.public_ip
     private_ip = vm.private_ip
   } }
 }
+
+output "private_key" {
+  sensitive = true
+  value     = tls_private_key.rsa_key.private_key_openssh
+}
+

@@ -8,6 +8,15 @@ resource "aws_vpc" "vn" {
   }
 }
 
+resource "aws_subnet" "lb_subnet" {
+  vpc_id                  = aws_vpc.vn.id
+  cidr_block              = var.lb_subnet_cidr  
+
+  tags = {
+    Name = "${var.vpc_name}-lb-subnet"
+  }
+}
+
 resource "aws_subnet" "master_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.master_subnet_cidr  
