@@ -1,0 +1,87 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: flowise
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/flowise
+  destination:
+    name: flowise
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-flowise
+spec:
+  containers:
+  - name: kaniko-flowise
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=$(CONTEXT)"
+    - "--destination=$(DESTINATION)"
+    - "--cache=true"
+    envFrom:
+      - secretRef:
+          name: ks-git-read-token
+      - secretRef:
+          name: flowise
+  restartPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: flowise
+  name: flowise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flowise
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flowise
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: flowise
+          image: registry.local/kumbhsahaiyak/flowise:IMAGE_TAG
+          imagePullPolicy: Always
+          name: flowise
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flowise
+spec:
+  selector:
+    app.kubernetes.io/name: flowise
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flowise
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "flowise.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: flowise
+            port:
+              number: 80
