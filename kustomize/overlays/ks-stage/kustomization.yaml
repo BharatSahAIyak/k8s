@@ -25,6 +25,7 @@ resources:
   - ../../base/admin
   - ../../base/kumbh/app
   - ../../base/kumbh/lipsync
+  - ../../base/kumbh/flowise
 
 namespace: ks-stage
 
@@ -32,6 +33,8 @@ images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/app
+    newTag: ks-stage
+  - name: registry.local/kumbhsahaiyak/flowise
     newTag: ks-stage
   - name: ghcr.io/kumbh-sahaiyak/bff:dev
     newTag: bhashini_feature
