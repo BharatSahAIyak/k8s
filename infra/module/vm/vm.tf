@@ -73,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     name                 = "${var.resource_group_name}-${var.node_type}-disk-${count.index}"
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
-    disk_size_gb         = var.node_disk_size
+    disk_size_gb         = var.node_disk_size[count.index]
   }
 
   network_interface_ids = [azurerm_network_interface.nic[count.index].id]
