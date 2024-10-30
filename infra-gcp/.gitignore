@@ -1,0 +1,36 @@
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Local .terraform directories
+**/.terraform/*
+
+# Terraform plan output files
+*.tfplan
+plan.out
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Ignore all .tfvars files, which may contain sensitive data
+*.tfvars
+*.tfvars.json
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# GCP specific credentials and configuration files
+# These files should not be checked into version control
+*.json  # Service account keys (if any)
+*.pem   # Private keys or certificates (if any)
+
+# Local files
+*.local    # Any local-specific configuration or files
