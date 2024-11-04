@@ -1,4 +1,3 @@
-# Variables
 variable "node_type" {}
 variable "number_of_nodes" {}
 variable "subnet_id" {}
@@ -24,7 +23,7 @@ resource "aws_network_interface" "nic" {
   subnet_id   = var.subnet_id
   description = "${var.vpc_name}-${var.node_type}-${count.index}-nic"
 
-  security_groups = [var.security_group_id]  # Make sure to use the variable for security group
+  security_groups = [var.security_group_id]  
 
 
   tags = {
@@ -55,8 +54,8 @@ resource "aws_instance" "vm" {
 
   root_block_device {
     volume_size           = var.node_disk_size
-    volume_type           = "gp2"  # Similar to Standard_LRS
-    delete_on_termination = true   # equivalent of delete_os_disk_on_deletion = true in state.tf
+    volume_type           = "gp2"  
+    delete_on_termination = true   
   }
 
   tags = {
@@ -69,7 +68,7 @@ resource "aws_instance" "vm" {
 
 data "aws_ami" "ubuntu_ami" {
   most_recent = true
-  owners      = ["099720109477"]  # Canonical's AWS account ID for Ubuntu images
+  owners      = ["099720109477"] 
 
   filter {
     name   = "name"
