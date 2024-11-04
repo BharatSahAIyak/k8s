@@ -72,7 +72,7 @@ module "k8s_admin" {
 
 # For SSH Key Management
 resource "aws_secretsmanager_secret" "ssh_private_key" {
-  name = "ssh_private-key"
+  name = "ssh_private-key3"
 }
 
 resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
@@ -122,4 +122,5 @@ resource "null_resource" "setup-admin" {
     destination = "/home/ubuntu/.ssh/stateful.pem"
   }
 }
+
 

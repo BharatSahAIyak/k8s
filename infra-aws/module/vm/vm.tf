@@ -65,6 +65,8 @@ resource "aws_instance" "vm" {
   }
 }
 
+
+
 data "aws_ami" "ubuntu_ami" {
   most_recent = true
   owners      = ["099720109477"]  # Canonical's AWS account ID for Ubuntu images
@@ -91,4 +93,6 @@ output "private_key" {
   sensitive = true
   value     = tls_private_key.rsa_key.private_key_openssh
 }
+
+
 
