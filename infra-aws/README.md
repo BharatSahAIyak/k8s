@@ -1,7 +1,15 @@
 # k8s
 
+# Steps to create S3 bucket
+
+1. `cd infra-aws/bucket-setup`
+2. `terraform init`
+3. `terrafrom apply`
+
 # Steps to update infra
 
+1. `cd infra-aws`
+2. `terraform init -reconfigure`
 1. `terraform plan -var-file=dev.tfvars -out plan.out`
 2. `terraform apply plan.out`
 
