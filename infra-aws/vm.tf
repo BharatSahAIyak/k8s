@@ -72,7 +72,7 @@ module "k8s_admin" {
 
 # For SSH Key Management
 resource "aws_secretsmanager_secret" "ssh_private_key" {
-  name = "ssh_private-key3"
+  name = "ssh_private-key"
 }
 
 resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
@@ -81,46 +81,46 @@ resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
 }
 
 
-resource "null_resource" "setup-admin" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-  depends_on = [module.k8s_admin, module.k8s_lb, module.k8s_master, module.k8s_stateful, module.k8s_worker, module.k8s_worker_gpu]
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = module.k8s_admin.private_key
-    host        = module.k8s_admin.vm-ips["${var.vpc_name}-admin-0"].public_ip
-  }
-  provisioner "file" {
-    content = templatefile("${path.module}/inventory.ini.tftpl",
-      { master_nodes = [for vm, ips in module.k8s_master.vm-ips : { name = vm, ip = ips.private_ip }],
-        worker_nodes = [for vm, ips in module.k8s_worker.vm-ips : { name = vm, ip = ips.private_ip }],
-        worker_gpu_nodes = [for vm, ips in module.k8s_worker_gpu.vm-ips : { name = vm, ip = ips.private_ip }],
-    })
-    destination = "/home/ubuntu/inventory.ini"
-  }
+# resource "null_resource" "setup-admin" {
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
+#   depends_on = [module.k8s_admin, module.k8s_lb, module.k8s_master, module.k8s_stateful, module.k8s_worker, module.k8s_worker_gpu]
+#   connection {
+#     type        = "ssh"
+#     user        = "ubuntu"
+#     private_key = module.k8s_admin.private_key
+#     host        = module.k8s_admin.vm-ips["${var.vpc_name}-admin-0"].public_ip
+#   }
+#   provisioner "file" {
+#     content = templatefile("${path.module}/inventory.ini.tftpl",
+#       { master_nodes = [for vm, ips in module.k8s_master.vm-ips : { name = vm, ip = ips.private_ip }],
+#         worker_nodes = [for vm, ips in module.k8s_worker.vm-ips : { name = vm, ip = ips.private_ip }],
+#         worker_gpu_nodes = [for vm, ips in module.k8s_worker_gpu.vm-ips : { name = vm, ip = ips.private_ip }],
+#     })
+#     destination = "/home/ubuntu/inventory.ini"
+#   }
 
-  provisioner "file" {
-    content     = module.k8s_master.private_key
-    destination = "/home/ubuntu/.ssh/master.pem"
-  }
-  provisioner "file" {
-    content     = module.k8s_worker.private_key
-    destination = "/home/ubuntu/.ssh/worker.pem"
-  }
-  provisioner "file" {
-    content     = module.k8s_worker_gpu.private_key
-    destination = "/home/ubuntu/.ssh/worker_gpu.pem"
-  }
-  provisioner "file" {
-    content     = module.k8s_lb.private_key
-    destination = "/home/ubuntu/.ssh/lb.pem"
-  }
-  provisioner "file" {
-    content     = module.k8s_stateful.private_key
-    destination = "/home/ubuntu/.ssh/stateful.pem"
-  }
-}
+#   provisioner "file" {
+#     content     = module.k8s_master.private_key
+#     destination = "/home/ubuntu/.ssh/master.pem"
+#   }
+#   provisioner "file" {
+#     content     = module.k8s_worker.private_key
+#     destination = "/home/ubuntu/.ssh/worker.pem"
+#   }
+#   provisioner "file" {
+#     content     = module.k8s_worker_gpu.private_key
+#     destination = "/home/ubuntu/.ssh/worker_gpu.pem"
+#   }
+#   provisioner "file" {
+#     content     = module.k8s_lb.private_key
+#     destination = "/home/ubuntu/.ssh/lb.pem"
+#   }
+#   provisioner "file" {
+#     content     = module.k8s_stateful.private_key
+#     destination = "/home/ubuntu/.ssh/stateful.pem"
+#   }
+# }
 
 
