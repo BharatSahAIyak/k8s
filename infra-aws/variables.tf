@@ -44,3 +44,6 @@ variable "k8s_lb_node_count" {}
 variable "k8s_stateful_node_count" {}
 variable "k8s_stateful_node_size" {}
 variable "k8s_stateful_disk_size" {}
+
+#VPN
+variable "onsite_IP" {}
