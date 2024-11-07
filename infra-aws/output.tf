@@ -45,3 +45,8 @@ output "lb-private-key" {
   value = module.k8s_lb.private_key
   sensitive = true
 }
+
+
+output "public_ip" {
+  value = module.k8s_lb.public_ip
+}

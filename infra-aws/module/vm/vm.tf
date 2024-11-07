@@ -93,5 +93,7 @@ output "private_key" {
   value     = tls_private_key.rsa_key.private_key_openssh
 }
 
-
-
+#to be used in aws_nat_gateway in networking 
+output "public_ip" {
+  value = aws_eip.public_ip.*.id  
+}
