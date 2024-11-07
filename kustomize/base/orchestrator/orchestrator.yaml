@@ -43,7 +43,7 @@ spec:
             requests:
               memory: "1024Mi"
             limits:
-              memory: "1024Mi"
+              memory: "2g"
       restartPolicy: Always
 ---
 apiVersion: v1
