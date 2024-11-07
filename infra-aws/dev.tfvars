@@ -37,8 +37,7 @@ k8s_stateful_node_count = "1"
 k8s_stateful_node_size  = ["t2.micro"] ## 4cpu 	16 GB ram 
 k8s_stateful_disk_size  = "50"
 
-
-#vpn
-onsite_IP = "172.0.0.1"
+#vpn eg: "172.0.0.1"
+onsite_IP = ""
 
 

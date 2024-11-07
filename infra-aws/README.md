@@ -16,7 +16,7 @@ provider "aws" {
 
 # Steps to update infra
 
-1. `cd infra-aws`
+1. `cd ../`
 2.  Add access key and secret key to provider "aws"{} 
 ```
 provider "aws" {
