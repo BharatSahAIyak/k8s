@@ -30,7 +30,6 @@ spec:
       - secretRef:
           name: voice-cloning
   restartPolicy: Never
-  nodeName: kumbhsahaiyakstaging-worker-gpu-0
 ---
 apiVersion: apps/v1
 kind: Deployment
