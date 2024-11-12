@@ -17,6 +17,7 @@ kind: Pod
 metadata:
   name: kaniko-voice-cloning
 spec:
+  nodeName: kumbhsahaiyakstaging-worker-gpu-0
   containers:
   - name: kaniko-voice-cloning
     image: gcr.io/kaniko-project/executor:latest
