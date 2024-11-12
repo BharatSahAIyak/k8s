@@ -26,6 +26,7 @@ resources:
   - ../../base/kumbh/app
   - ../../base/kumbh/lipsync
   - ../../base/kumbh/flowise
+  - ../../base/kumbh/voice_cloning
 
 namespace: ks-stage
 
@@ -33,6 +34,8 @@ images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/app
+    newTag: ks-stage
+  - name: registry.local/kumbhsahaiyak/voice_cloning
     newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/flowise
     newTag: ks-stage

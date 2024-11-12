@@ -1,0 +1,91 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: voice-cloning
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/voice_cloning
+  destination:
+    name: voice-cloning
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-voice-cloning
+spec:
+  containers:
+  - name: kaniko-voice-cloning
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=$(CONTEXT)"
+    - "--destination=$(DESTINATION)"
+    - "--cache=true"
+    envFrom:
+      - secretRef:
+          name: ks-git-read-token
+      - secretRef:
+          name: voice-cloning
+  restartPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: voice-cloning
+  name: voice-cloning
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: voice-cloning
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: voice-cloning
+    spec:
+      containers:
+        - image: registry.local/kumbhsahaiyak/voice_cloning:IMAGE_TAG
+          imagePullPolicy: Always
+          name: voice-cloning
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "0.5"
+            limits:
+              memory: "10Gi"
+              cpu: "2"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: voice-cloning
+spec:
+  selector:
+    app.kubernetes.io/name: voice-cloning
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voice-cloning
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "voice-clone.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: voice-cloning
+            port:
+              number: 80
