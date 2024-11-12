@@ -13,6 +13,8 @@ module "k8s_lb" {
   node_public_ip          = true
 }
 
+
+
 module "k8s_master" {
   source                  = "./module/vm" 
   node_type               = "master"
@@ -72,7 +74,7 @@ module "k8s_admin" {
 
 # For SSH Key Management
 resource "aws_secretsmanager_secret" "ssh_private_key" {
-  name = "ssh_private-key"
+  name = "ssh_private-key7"
 }
 
 resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
@@ -122,5 +124,3 @@ resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
 #     destination = "/home/ubuntu/.ssh/stateful.pem"
 #   }
 # }
-
-

@@ -76,6 +76,13 @@ data "aws_ami" "ubuntu_ami" {
   }
 }
 
+resource "aws_eip_association" "eip_assoc" {
+  count                = var.node_public_ip ? var.number_of_nodes : 0
+  network_interface_id = aws_network_interface.nic[count.index].id
+  allocation_id        = aws_eip.public_ip[count.index].id
+}
+
+
 output "nic_ids" {
   value = aws_network_interface.nic[*].id
 }

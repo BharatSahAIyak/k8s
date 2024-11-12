@@ -1,5 +1,12 @@
 # k8s
 
+# Export access token and secret access key
+Run this on terminal before Setup of S3 bucket and infra
+```
+export AWS_ACCESS_KEY_ID="your_access_key"
+export AWS_SECRET_ACCESS_KEY="your_secret_key"
+```
+
 # Steps to create S3 bucket
 
 1. `cd infra-aws/bucket-setup`
