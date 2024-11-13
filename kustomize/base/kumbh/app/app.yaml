@@ -58,6 +58,8 @@ spec:
     - "--build-arg=NEXT_PUBLIC_SOCKET_URL=$(NEXT_PUBLIC_SOCKET_URL)"
     - "--build-arg=NEXT_PUBLIC_DEBUG=$(NEXT_PUBLIC_DEBUG)"
     - "--build-arg=NEXT_PUBLIC_BOT_NAME=$(old-kmai-dev)"
+    - "--build-arg=NEXT_PUBLIC_MAXIMUM_CM_VIDEO=$(NEXT_PUBLIC_MAXIMUM_CM_VIDEO)"
+    - "--build-arg=NEXT_PUBLIC_MINIO_URL=$(NEXT_PUBLIC_MINIO_URL)"
     envFrom:
       - secretRef:
           name: ks-git-read-token
