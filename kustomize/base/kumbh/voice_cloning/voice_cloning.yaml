@@ -30,6 +30,9 @@ spec:
       - secretRef:
           name: voice-cloning
     resources:
+      resources:
+        requests:
+          cpu: "2"
       limits:
         nvidia.com/gpu: "1"
   restartPolicy: Never
