@@ -17,15 +17,15 @@ kind: Pod
 metadata:
   name: kaniko-voice-cloning
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: gpuNode
-            operator: In
-            values:
-            - "true"
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: gpuNode
+  #           operator: In
+  #           values:
+  #           - "true"
   containers:
   - name: kaniko-voice-cloning
     image: gcr.io/kaniko-project/executor:latest
@@ -47,15 +47,15 @@ metadata:
     app.kubernetes.io/name: voice-cloning
   name: voice-cloning
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: gpuNode
-            operator: In
-            values:
-            - "true"
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: gpuNode
+  #           operator: In
+  #           values:
+  #           - "true"
   replicas: 1
   selector:
     matchLabels:
