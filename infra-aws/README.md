@@ -19,7 +19,7 @@ provider "aws" {
   }
 ```
 3. `terraform init`
-4. `terrafrom apply`
+4. `terraform apply`
 
 # Steps to update infra
 
