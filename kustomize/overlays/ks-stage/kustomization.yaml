@@ -49,6 +49,9 @@ images:
     newTag: 0.6.5-hotfix-1
   - name: ghcr.io/bharatsahaiyak/user-management-service
     newTag: 0.6.5-hotfix-1
+  - name: samagragovernance/esamwad-user-service
+    newName: ghcr.io/samagra-development/user-service
+    newTag: master
   - name: ghcr.io/bharatsahaiyak/transport-socket:dev
     newTag: 0.6.5-hotfix-1
   - name: ghcr.io/bharatsahaiyak/dataset-service:dev
