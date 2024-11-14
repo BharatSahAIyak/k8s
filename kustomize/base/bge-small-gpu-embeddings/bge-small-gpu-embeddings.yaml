@@ -21,7 +21,7 @@ spec:
               name: service-urls
           - secretRef:
               name: service-creds
-          image: ghcr.io/bharatsahaiyak/ai-tools/bge_small_gpu_embeddings:dev
+          image: ghcr.io/kumbh-sahaiyak/ai-tools/bge_small_gpu_embeddings:main
           imagePullPolicy: Always
           name: bge-small-gpu-embeddings
           resources:
@@ -30,6 +30,8 @@ spec:
             limits:
               memory: "1024Mi"
               nvidia.com/gpu: "1"
+      imagePullSecrets:
+      - name: ks-regcred
 ---
 apiVersion: v1
 kind: Service
