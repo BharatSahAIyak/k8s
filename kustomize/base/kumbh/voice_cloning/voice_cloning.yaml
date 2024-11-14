@@ -11,31 +11,31 @@ spec:
     create: true
   refreshAfter: 10s
   vaultAuthRef: static-auth
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: kaniko-voice-cloning
-spec:
-  containers:
-  - name: kaniko-voice-cloning
-    image: gcr.io/kaniko-project/executor:latest
-    args:
-    - "--context=$(CONTEXT)"
-    - "--destination=$(DESTINATION)"
-    - "--cache=true"
-    envFrom:
-      - secretRef:
-          name: ks-git-read-token
-      - secretRef:
-          name: voice-cloning
-    resources:
-      resources:
-        requests:
-          cpu: "2"
-      limits:
-        nvidia.com/gpu: "1"
-  restartPolicy: Never
+# ---
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: kaniko-voice-cloning
+# spec:
+#   containers:
+#   - name: kaniko-voice-cloning
+#     image: gcr.io/kaniko-project/executor:latest
+#     args:
+#     - "--context=$(CONTEXT)"
+#     - "--destination=$(DESTINATION)"
+#     - "--cache=true"
+#     envFrom:
+#       - secretRef:
+#           name: ks-git-read-token
+#       - secretRef:
+#           name: voice-cloning
+#     resources:
+#       resources:
+#         requests:
+#           cpu: "2"
+#       limits:
+#         nvidia.com/gpu: "1"
+#   restartPolicy: Never
 ---
 apiVersion: apps/v1
 kind: Deployment
