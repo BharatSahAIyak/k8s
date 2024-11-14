@@ -8,11 +8,8 @@ resource "aws_vpc" "vn" {
   }
 }
 
-# lb-machine
-## contains
-### aws_internet_gateway to provide internet connection 
-### aws_route_table for public route table
-### lb_subnet
+# lb-machine <starts> #
+## aws_internet_gateway to provide internet connection 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vn.id
 
@@ -21,7 +18,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-
+## aws_route_table for public route table
 resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.vn.id
 
@@ -40,11 +37,13 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
+## lb_subnet
 resource "aws_route_table_association" "public_subnet_association" {
   subnet_id      = aws_subnet.lb_subnet.id
   route_table_id = aws_route_table.public_route_table.id
 }
 
+## lb_subnet
 resource "aws_subnet" "lb_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.lb_subnet_cidr  
@@ -53,7 +52,7 @@ resource "aws_subnet" "lb_subnet" {
     Name = "${var.vpc_name}-lb-subnet"
   }
 }
-
+# lb-machine <ends> #
 
 
 # NAT in the public subnet(lb_subnet)
@@ -91,7 +90,7 @@ resource "aws_route_table" "private_route_table" {
 
 
 
-#Private Subnets
+# Private Subnets
 resource "aws_subnet" "master_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.master_subnet_cidr  
@@ -100,7 +99,6 @@ resource "aws_subnet" "master_subnet" {
     Name = "${var.vpc_name}-master-subnet"
   }
 }
-
 resource "aws_subnet" "admin_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.admin_subnet_cidr
@@ -109,7 +107,6 @@ resource "aws_subnet" "admin_subnet" {
     Name = "${var.vpc_name}-admin-subnet"
   }
 }
-
 resource "aws_subnet" "worker_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.worker_subnet_cidr  
@@ -118,7 +115,6 @@ resource "aws_subnet" "worker_subnet" {
     Name = "${var.vpc_name}-worker-subnet"
   }
 }
-
 resource "aws_subnet" "stateful_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.stateful_subnet_cidr
@@ -152,7 +148,7 @@ resource "aws_route_table_association" "stateful_subnet_assoc" {
 }
 
 
-
+# Security Group for admin node
 resource "aws_security_group" "admin_security_group" {
   name        = "${var.vpc_name}-admin-sg"
   description = "Security group for admin access"
@@ -172,7 +168,6 @@ resource "aws_security_group" "internal_security_group" {
   vpc_id      = aws_vpc.vn.id
   
 }
-
 
 resource "aws_security_group" "lb_security_group" {
   name        = "${var.vpc_name}-lb-sg"
@@ -194,6 +189,8 @@ resource "aws_security_group" "lb_security_group" {
   }
 }
 
+
+
 # #VPN (site-to-site connection)
 # resource "aws_vpn_gateway" "vpn_gateway" {
 #   vpc_id = aws_vpc.vn.id
@@ -213,21 +210,105 @@ resource "aws_security_group" "lb_security_group" {
 # }
 
 
-# #NAT(Network Address Translation) for lb_subnet
-# resource "aws_internet_gateway" "internet_gw" {
-#   vpc_id = aws_vpc.vn.id
+# WAF(Web Application Firewall) for regional sope 
+## Using AWS_Managed_Rules 
+resource "aws_wafv2_web_acl" "WAF" {
+  name        = "aws-managed-rule-waf"
+  scope       = "REGIONAL"
 
-#   tags = {
-#     Name = "main"
-#   }
-# }
- 
+  default_action {
+    allow {}
+  }
 
-# resource "aws_nat_gateway" "nat" {
-#   allocation_id = module.k8s_lb.public_ip[0]
-#   subnet_id     = aws_subnet.master_subnet.id
+  rule {
+    name     = "rule-1"
+    priority = 1
 
-#   # To ensure proper ordering, it is recommended to add an explicit dependency
-#   # on the Internet Gateway for the VPC.
-#   depends_on = [aws_internet_gateway.internet_gw]
-# }
+    override_action {
+      count {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesCommonRuleSet"
+        vendor_name = "AWS"
+
+        rule_action_override {
+          action_to_use {
+            count {}
+          }
+
+          name = "SizeRestrictions_QUERYSTRING"
+        }
+
+        rule_action_override {
+          action_to_use {
+            count {}
+          }
+
+          name = "NoUserAgent_HEADER"
+        }
+
+        # scope_down_statement {
+        #   geo_match_statement {
+        #     country_codes = ["US", "NL"]
+        #   }
+        # }
+      }
+    }
+
+    # rule specific visibility config
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "friendly-rule-metric-name"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWS-AWSManagedRulesAmazonIpReputationList"
+    priority = 10
+
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesAmazonIpReputationList"
+        vendor_name = "AWS"
+
+        rule_action_override {
+          action_to_use {
+            count {}
+          }
+
+          name = "SizeRestrictions_QUERYSTRING"
+        }
+
+      }
+    
+    }
+
+    override_action {
+      count {}
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = false
+      metric_name                = "friendly-rule-metric-name"
+      sampled_requests_enabled   = false
+    }
+  }
+
+
+  tags = {
+    Tag1 = "${var.vpc_name}"
+  }
+
+  # token_domains = ["mywebsite.com", "myotherwebsite.com"]
+
+  # global ACL level visiblity config
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "friendly-metric-name"
+    sampled_requests_enabled   = true
+  }
+}

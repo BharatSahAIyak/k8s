@@ -74,13 +74,36 @@ module "k8s_admin" {
 
 # For SSH Key Management
 resource "aws_secretsmanager_secret" "ssh_private_key" {
-  name = "ssh_private-key7"
+  name = "ssh_private-key12"
 }
 
 resource "aws_secretsmanager_secret_version" "ssh_private_key_version" {
   secret_id     = aws_secretsmanager_secret.ssh_private_key.id
   secret_string = module.k8s_admin.private_key
 }
+
+resource "aws_guardduty_detector" "MyDetector" {
+  enable = true
+
+  datasources {
+    s3_logs {
+      enable = true
+    }
+    kubernetes {
+      audit_logs {
+        enable = false
+      }
+    }
+    malware_protection {
+      scan_ec2_instance_with_findings {
+        ebs_volumes {
+          enable = true
+        }
+      }
+    }
+  }
+}
+
 
 
 # resource "null_resource" "setup-admin" {
