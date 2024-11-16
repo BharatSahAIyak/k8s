@@ -28,7 +28,6 @@ spec:
             requests:
               memory: "512Mi"
             limits:
-              memory: "1024Mi"
               nvidia.com/gpu: "1"
       imagePullSecrets:
       - name: ks-regcred
