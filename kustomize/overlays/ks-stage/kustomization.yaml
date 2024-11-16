@@ -40,7 +40,7 @@ images:
   - name: registry.local/kumbhsahaiyak/flowise
     newTag: ks-stage
   - name: ghcr.io/kumbh-sahaiyak/bff:dev
-    newTag: bhashini_feature
+    newTag: stage
   - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
     newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
