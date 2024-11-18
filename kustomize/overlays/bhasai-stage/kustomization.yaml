@@ -29,9 +29,9 @@ images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: bhasai-stage
   - name: ghcr.io/bharatsahaiyak/bff:dev
-    newTag: 0.6.5
+    newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
-    newTag: 0.6.5 
+    newTag: main 
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/user-management-service
@@ -47,7 +47,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/telemetry:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
-    newTag: 0.6.5
+    newTag: main
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev

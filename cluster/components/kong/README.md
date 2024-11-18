@@ -7,5 +7,5 @@
 5. Install Kong CRDs `kubectl apply -k https://github.com/Kong/kubernetes-ingress-controller/config/crd`
 6. Add Kong Helm Repo `helm repo add kong https://charts.konghq.com`
 7. Update Helm Repos `helm repo update`
-8. Install Kong Ingress `helm install kong kong/ingress -f kong-values.yaml -n kong`
+8. Install Kong Ingress `helm install kong kong/ingress --version=0.13.1 -f kong-values.yaml -n kong`
 9. Enable Kong Prometheus Plugin `kubectl apply -f prometheus-plugin.yaml` (For more refer [this](https://docs.konghq.com/kubernetes-ingress-controller/latest/production/observability/prometheus-grafana/))
