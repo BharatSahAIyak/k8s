@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kong-gateway-admin
+  namespace: kong
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "metrics.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /kong-gateway-admin
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: kong-gateway-admin
+            port:
+              number: 8001

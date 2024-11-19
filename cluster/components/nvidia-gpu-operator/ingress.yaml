@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gpu-operator-metrics
+  namespace: gpu-operator
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "metrics.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /gpu-operator
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: gpu-operator
+            port:
+              number: 8080
+      - path: /dcgm-exporter
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nvidia-dcgm-exporter
+            port:
+              number: 9400
