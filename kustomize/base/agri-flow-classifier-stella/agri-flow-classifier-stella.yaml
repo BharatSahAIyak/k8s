@@ -26,9 +26,9 @@ spec:
           name: agri-flow-classifier-stella
           resources:
             requests:
-              memory: "2500Mi"
+              memory: "512Mi"
             limits:
-              memory: "3000Mi"
+              memory: "1024Mi"
               nvidia.com/gpu: "1"
 ---
 apiVersion: v1
