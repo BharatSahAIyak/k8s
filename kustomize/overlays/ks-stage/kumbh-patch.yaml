@@ -1,0 +1,89 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.uat.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: kumbh-app
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bff
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "bff.uat.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flowise
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "flowise.uat.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: flowise
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lipsync
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "lipsync.uat.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: lipsync
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: voice-cloning
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "voice-clone.uat.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: voice-cloning
+            port:
+              number: 80
