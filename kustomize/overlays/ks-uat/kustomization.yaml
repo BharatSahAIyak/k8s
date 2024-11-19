@@ -1,0 +1,97 @@
+resources:
+  - ../../base/inboundjs
+  # - ../../base/pdf-generator
+  - ../../base/telemetry
+  - ../../base/testbed
+  # - ../../base/yt-parser
+  - ../../base/ai-tools-proxy
+  - ../../base/auth-service
+  - ../../base/kumbh/bff
+  - ../../base/dataset-service
+  - ../../base/bge-small-gpu-embeddings
+  - ../../base/bge-reranker
+  - ../../base/deployer
+  - ../../base/document-service
+  - ../../base/nodehub
+  - ../../base/orchestrator
+  - ../../base/transport-socket
+  - ../../base/uci-apis
+  - ../../base/user-management-service
+  - ../../base/user
+  - ../../base/namespace
+  - ../../base/vault-auth
+  - ../../base/common-secrets
+  - ../../base/git-read-token
+  - ../../base/admin
+  - ../../base/kumbh/app
+  - ../../base/kumbh/lipsync
+  - ../../base/kumbh/flowise
+  - ../../base/kumbh/voice_cloning
+
+namespace: ks-uat
+
+images:
+  - name: registry.local/bharatsahaiyak/admin
+    newTag: ks-uat
+  - name: registry.local/kumbhsahaiyak/app
+    newTag: ks-uat
+  - name: registry.local/kumbhsahaiyak/voice_cloning
+    newTag: ks-uat
+  - name: registry.local/kumbhsahaiyak/flowise
+    newTag: ks-uat
+  - name: ghcr.io/kumbh-sahaiyak/bff:dev
+    newTag: stage
+  - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
+    newTag: main
+  - name: ghcr.io/bharatsahaiyak/orchestrator:dev
+    newTag: 0.7.0-hotfix-1
+  - name: ghcr.io/bharatsahaiyak/uci-apis:dev
+    newTag: 0.6.5-hotfix-1
+  - name: ghcr.io/bharatsahaiyak/user-management-service
+    newTag: 0.6.5-hotfix-1
+  - name: samagragovernance/esamwad-user-service
+    newName: ghcr.io/samagra-development/user-service
+    newTag: master
+  - name: ghcr.io/bharatsahaiyak/transport-socket:dev
+    newTag: 0.6.5-hotfix-1
+  - name: ghcr.io/bharatsahaiyak/dataset-service:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/deployer:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/document-service:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/telemetry:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/nodehub:dev
+    newTag: 0.6.5
+  - name: ghcr.io/bharatsahaiyak/inbound-js:dev
+    newTag: 0.6.5-hotfix-2
+
+replacements:
+- source:
+    kind: Namespace
+    fieldPath: metadata.name
+  targets:
+    - select:
+        kind: VaultStaticSecret
+      fieldPaths:
+      - spec.path
+      options:
+        delimiter: "/"
+        index: 0
+# - source:
+#     kind: Namespace
+#     fieldPath: metadata.name
+#   targets:
+#     - select:
+#         kind: Ingress
+#       fieldPaths:
+#       - spec.rules.0.host
+#       options:
+#         delimiter: "."
+#         index: 1
+
+patches:
+- path: patch.yaml

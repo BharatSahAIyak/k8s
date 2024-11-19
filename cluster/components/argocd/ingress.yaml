@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "ci.stage.kumbhsahaiyak.xyz"
+  - host: "ci.uat.kumbhsahaiyak.xyz"
     http:
       paths:
       - path: /
