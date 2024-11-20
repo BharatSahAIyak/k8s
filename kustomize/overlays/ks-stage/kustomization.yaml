@@ -95,4 +95,3 @@ replacements:
 
 patches:
 - path: patch.yaml
-- path: kumbh-patch.yaml
