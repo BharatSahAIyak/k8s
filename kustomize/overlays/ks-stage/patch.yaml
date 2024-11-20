@@ -309,23 +309,6 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: user
-spec:
-  rules:
-  - host: "user.stage.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: user
-            port:
-              number: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: user-management-service
 spec:
   rules:

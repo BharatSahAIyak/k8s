@@ -15,6 +15,62 @@ spec:
             name: bff
             port:
               number: 80
+      - path: /pwa/tts/synthesize
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /pwa/stt/telemetry
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /pwa/stt/upload
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /pwa/stt/initiate
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /pwa/stt/synthesize
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /feedback/add
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /lipsync/video
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /login/option
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
       - path: /
         pathType: ImplementationSpecific
         backend:

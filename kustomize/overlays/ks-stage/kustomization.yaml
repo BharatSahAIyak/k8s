@@ -96,3 +96,4 @@ replacements:
 patches:
 - path: patch.yaml
 - path: bff-patch.yaml
+- path: user-service-patch.yaml
