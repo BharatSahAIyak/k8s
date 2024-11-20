@@ -95,3 +95,4 @@ replacements:
 
 patches:
 - path: patch.yaml
+- path: bff-patch.yaml
