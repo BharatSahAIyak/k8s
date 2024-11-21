@@ -1,4 +1,5 @@
 resources:
+  - ../../base/profanity
   - ../../base/pdf-generator
   - ../../base/pdf-parser
   - ../../base/broadcast-service

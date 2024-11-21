@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: profanity
+  name: profanity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: profanity
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: profanity
+    spec:
+      restartPolicy: Always
+      containers:
+        - envFrom:
+          - secretRef:
+              name: profanity
+          image: ghcr.io/india-profanity/profanity-api:main
+          imagePullPolicy: Always
+          name: profanity
+          resources:
+            requests:
+              memory: "2048Mi"
+            limits:
+              memory: "2048Mi"
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: profanity
+spec:
+  selector:
+    app.kubernetes.io/name: profanity
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: profanity
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/profanity
+  destination:
+    name: profanity
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: profanity
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "profanity.NAMESPACE.k8s.bhasai.samagra.io"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: profanity
+            port:
+              number: 80
