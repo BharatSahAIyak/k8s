@@ -71,6 +71,13 @@ spec:
             name: bff
             port:
               number: 80
+      - path: /metrics/v1/save
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
       - path: /
         pathType: ImplementationSpecific
         backend:
