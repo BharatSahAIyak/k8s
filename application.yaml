@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ks-stage
+  name: ks-prod
   namespace: argocd
   annotations:
     notifications.argoproj.io/subscribe.on-health-degraded.discord: ""
@@ -11,9 +11,9 @@ spec:
   destination:
     server: 'https://kubernetes.default.svc'
   source:
-    path: kustomize/overlays/ks-stage
+    path: kustomize/overlays/ks-prod
     repoURL: 'git@github.com:BharatSahAIyak/k8s.git'
-    targetRevision: v2-ks
+    targetRevision: v2-ks-prod
   project: default
   syncPolicy:
     automated:
