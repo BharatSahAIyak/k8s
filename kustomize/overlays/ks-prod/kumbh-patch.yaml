@@ -20,7 +20,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "app.prod.kumbhsahaiyak.xyz"
+  - host: "chatbot.kumbh.up.gov.in"
     http:
       paths:
       - path: /
