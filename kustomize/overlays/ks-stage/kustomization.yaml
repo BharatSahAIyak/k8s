@@ -27,6 +27,7 @@ resources:
   - ../../base/kumbh/lipsync
   - ../../base/kumbh/flowise
   - ../../base/kumbh/voice_cloning
+  - ../../base/kumbh/bm25
 
 namespace: ks-stage
 
@@ -68,6 +69,8 @@ images:
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev
     newTag: 0.6.5-hotfix-2
+  - name: ghcr.io/kumbh-sahaiyak/bff:dev
+    newTag: main
 
 replacements:
 - source:
