@@ -32,6 +32,8 @@ spec:
       containers:
         - envFrom:
           - secretRef:
+              name: bm25
+          - secretRef:
               name: service-urls
           - secretRef:
               name: service-creds
@@ -43,6 +45,8 @@ spec:
               memory: "512Mi"
             limits:
               memory: "1024Mi"
+      imagePullSecrets:
+      - name: ks-regcred
       
 ---
 apiVersion: v1
