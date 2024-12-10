@@ -45,9 +45,9 @@ images:
   - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
     newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
-    newTag: 0.7.0-hotfix-4
+    newTag: 0.7.0-hotfix-5
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
-    newTag: 0.6.5-hotfix-1
+    newTag: 0.7.0-hotfix-1
   - name: ghcr.io/bharatsahaiyak/user-management-service
     newTag: 0.6.5-hotfix-1
   - name: samagragovernance/esamwad-user-service
@@ -62,7 +62,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/document-service:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/telemetry:dev
-    newTag: 0.7.0-hotfix-3
+    newTag: 0.7.0-hotfix-5
   - name: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
