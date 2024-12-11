@@ -38,6 +38,16 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
+  - host: "chatbot.kumbhsahaiyak.up.gov.in"
+    http:
+      paths:
+      - path: /flowise
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: flowise
+            port:
+              number: 80
   - host: "flowise.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -56,6 +66,16 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
+  - host: "chatbot.kumbhsahaiyak.up.gov.in"
+    http:
+      paths:
+      - path: /bm25
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bm25
+            port:
+              number: 80
   - host: "bm25.prod.kumbhsahaiyak.xyz"
     http:
       paths:
