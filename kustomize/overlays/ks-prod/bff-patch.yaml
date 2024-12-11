@@ -5,80 +5,80 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "bff.prod.kumbhsahaiyak.xyz"
+  - host: "chatbot.kumbhsahaiyak.up.gov.in"
     http:
       paths:
-      - path: /pwa/tts/initiate
+      - path: /bff/pwa/tts/initiate
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /pwa/tts/synthesize
+      - path: /bff/pwa/tts/synthesize
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /pwa/stt/telemetry
+      - path: /bff/pwa/stt/telemetry
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /pwa/stt/upload
+      - path: /bff/pwa/stt/upload
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /pwa/stt/initiate
+      - path: /bff/pwa/stt/initiate
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /pwa/stt/synthesize
+      - path: /bff/pwa/stt/synthesize
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /feedback/add
+      - path: /bff/feedback/add
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /lipsync/video
+      - path: /bff/lipsync/video
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /login/option
+      - path: /bff/login/option
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /metrics/v1/save
+      - path: /bff/metrics/v1/save
         pathType: ImplementationSpecific
         backend:
           service:
             name: bff
             port:
               number: 80
-      - path: /
+      - path: /bff
         pathType: ImplementationSpecific
         backend:
           service:

@@ -4,52 +4,52 @@ metadata:
   name: user
 spec:
   rules:
-  - host: "user.prod.kumbhsahaiyak.xyz"
+  - host: "chatbot.kumbhsahaiyak.up.gov.in"
     http:
       paths:
-      - path: /api/updateUser/(.*)
+      - path: /user/api/updateUser/(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: user
             port:
               number: 80
-      - path: /api/sendOTP
+      - path: /user/api/sendOTP
         pathType: ImplementationSpecific
         backend:
           service:
             name: user
             port:
               number: 80
-      - path: /api/login/otp
+      - path: /user/api/login/otp
         pathType: ImplementationSpecific
         backend:
           service:
             name: user
             port:
               number: 80
-      - path: /api/searchUserByQuery
+      - path: /user/api/searchUserByQuery
         pathType: ImplementationSpecific
         backend:
           service:
             name: user
             port:
               number: 80
-      - path: /api/logout
+      - path: /user/api/logout
         pathType: ImplementationSpecific
         backend:
           service:
             name: user
             port:
               number: 80
-      - path: /api/jwt/verify
+      - path: /user/api/jwt/verify
         pathType: ImplementationSpecific
         backend:
           service:
             name: user
             port:
               number: 80
-      - path: /
+      - path: /user
         pathType: ImplementationSpecific
         backend:
           service:
