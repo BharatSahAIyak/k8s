@@ -48,6 +48,24 @@ spec:
             name: flowise
             port:
               number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bm25
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "bm25.prod.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bm25
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
