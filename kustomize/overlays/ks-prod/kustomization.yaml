@@ -10,6 +10,7 @@ resources:
   - ../../base/dataset-service
   - ../../base/bge-small-gpu-embeddings
   - ../../base/bge-reranker
+  - ../../base/text-translation-azure-dict
   - ../../base/deployer
   - ../../base/document-service
   - ../../base/nodehub
@@ -64,7 +65,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/telemetry:dev
     newTag: 0.7.0-hotfix-5
   - name: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
-    newTag: 0.6.5
+    newTag: 0.7.0
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev
