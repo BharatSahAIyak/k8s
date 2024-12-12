@@ -150,6 +150,24 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  name: text-translation-azure-dict
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /text-translation-azure-dict
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: text-translation-azure-dict
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
   annotations:
     konghq.com/strip-path: "true"
   name: dataset-service
