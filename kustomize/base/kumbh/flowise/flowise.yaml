@@ -25,6 +25,10 @@ spec:
     - "--destination=$(DESTINATION)"
     - "--cache=true"
     - "--build-arg=SERVE_PATH=$(SERVE_PATH)"
+    - "--build-arg=REACT_APP_REGISTRY_BASE_URL=$(REACT_APP_REGISTRY_BASE_URL)"
+    - "--build-arg=REACT_APP_SOCKET_URL=$(REACT_APP_SOCKET_URL)"
+    - "--build-arg=REACT_APP_UCI_API=$(REACT_APP_UCI_API)"
+    - "--build-arg=REACT_PUBLIC_SOCKET_PATH=$(REACT_PUBLIC_SOCKET_PATH)"
     envFrom:
       - secretRef:
           name: git-read-token
