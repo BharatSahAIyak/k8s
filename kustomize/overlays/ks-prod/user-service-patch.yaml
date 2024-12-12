@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     konghq.com/plugins: rewrite-plugin
-    konghq.com/regex-priority: "1"
+    # konghq.com/regex-priority: "1"
   name: user
 spec:
   rules:
