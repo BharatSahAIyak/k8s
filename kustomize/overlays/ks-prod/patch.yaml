@@ -434,6 +434,13 @@ spec:
             name: transport-socket
             port:
               number: 80
+      - path: /socket.io
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: transport-socket
+            port:
+              number: 80
   - host: "transport-socket.prod.kumbhsahaiyak.xyz"
     http:
       paths:
