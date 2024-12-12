@@ -72,16 +72,6 @@ spec:
             name: ai-tools-proxy
             port:
               number: 80
-  - host: "ai-tools-proxy.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: ai-tools-proxy
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -95,16 +85,6 @@ spec:
     http:
       paths:
       - path: /auth-service
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: auth-service
-            port:
-              number: 80
-  - host: "auth-service.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
@@ -147,16 +127,6 @@ spec:
             name: bge-reranker
             port:
               number: 80
-  - host: "bge-reranker.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bge-reranker
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -170,16 +140,6 @@ spec:
     http:
       paths:
       - path: /bge-small-gpu-embeddings
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bge-small-gpu-embeddings
-            port:
-              number: 80
-  - host: "bge-small-gpu-embeddings.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
@@ -205,16 +165,6 @@ spec:
             name: dataset-service
             port:
               number: 80
-  - host: "dataset-service.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: dataset-service
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -234,16 +184,6 @@ spec:
             name: deployer
             port:
               number: 80
-  - host: "deployer.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: deployer
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -257,16 +197,6 @@ spec:
     http:
       paths:
       - path: /document-service
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: document-service
-            port:
-              number: 80
-  - host: "document-service.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
@@ -293,16 +223,6 @@ spec:
             name: inboundjs
             port:
               number: 80
-  - host: "inboundjs.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: inboundjs
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -322,16 +242,6 @@ spec:
             name: nodehub
             port:
               number: 80
-  - host: "nodehub.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: nodehub
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -345,16 +255,6 @@ spec:
     http:
       paths:
       - path: /orchestrator
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: orchestrator
-            port:
-              number: 80
-  - host: "orchestrator.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
@@ -396,16 +296,6 @@ spec:
             name: telemetry
             port:
               number: 80
-  - host: "telemetry.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: telemetry
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -419,16 +309,6 @@ spec:
     http:
       paths:
       - path: /testbed
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: testbed
-            port:
-              number: 80
-  - host: "testbed.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
@@ -461,16 +341,6 @@ spec:
             name: transport-socket
             port:
               number: 80
-  - host: "transport-socket.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: transport-socket
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -490,16 +360,6 @@ spec:
             name: uci-apis
             port:
               number: 80
-  - host: "uci-apis.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: uci-apis
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -513,16 +373,6 @@ spec:
     http:
       paths:
       - path: /user-management-service
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: user-management-service
-            port:
-              number: 80
-  - host: "user-management-service.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
