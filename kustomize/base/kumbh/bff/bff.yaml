@@ -43,7 +43,7 @@ spec:
             requests:
               memory: "512Mi"
             limits:
-              memory: "512Mi"
+              memory: "4Gi"
       imagePullSecrets:
       - name: ks-regcred
       restartPolicy: Always
