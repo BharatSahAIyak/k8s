@@ -10,76 +10,6 @@ spec:
   - host: "chatbot.kumbh.up.gov.in"
     http:
       paths:
-      - path: /bff/pwa/tts/initiate
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/pwa/tts/synthesize
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/pwa/stt/telemetry
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/pwa/stt/upload
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/pwa/stt/initiate
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/pwa/stt/synthesize
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/feedback/add
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/lipsync/video
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/login/option
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
-      - path: /bff/metrics/v1/save
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: bff
-            port:
-              number: 80
       - path: /bff
         pathType: ImplementationSpecific
         backend:
@@ -87,6 +17,76 @@ spec:
             name: bff
             port:
               number: 80
+      # - path: /bff/pwa/tts/synthesize
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/pwa/stt/telemetry
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/pwa/stt/upload
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/pwa/stt/initiate
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/pwa/stt/synthesize
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/feedback/add
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/lipsync/video
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/login/option
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff/metrics/v1/save
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
+      # - path: /bff
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: bff
+      #       port:
+      #         number: 80
   - host: "bff.prod.kumbhsahaiyak.xyz"
     http:
       paths:
