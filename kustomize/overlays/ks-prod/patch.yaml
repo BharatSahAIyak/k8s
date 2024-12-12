@@ -150,6 +150,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: text-translation-azure-dict
 spec:
   ingressClassName: kong
