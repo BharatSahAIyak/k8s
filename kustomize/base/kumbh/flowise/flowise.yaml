@@ -24,6 +24,7 @@ spec:
     - "--context=$(CONTEXT)"
     - "--destination=$(DESTINATION)"
     - "--cache=true"
+    - "--build-arg=SERVE_PATH=$(SERVE_PATH)"
     - "--build-arg=REACT_APP_ORCHESTRATOR_URL=$(REACT_APP_ORCHESTRATOR_URL)"
     envFrom:
       - secretRef:
