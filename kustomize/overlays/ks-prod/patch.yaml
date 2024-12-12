@@ -37,9 +37,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: ai-tools-proxy
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /ai-tools-proxy
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ai-tools-proxy
+            port:
+              number: 80
   - host: "ai-tools-proxy.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -54,9 +66,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: auth-service
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /auth-service
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 80
   - host: "auth-service.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -88,9 +112,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: bge-reranker
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /bge-reranker
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bge-reranker
+            port:
+              number: 80
   - host: "bge-reranker.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -105,9 +141,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: bge-small-gpu-embeddings
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /bge-small-gpu-embeddings
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bge-small-gpu-embeddings
+            port:
+              number: 80
   - host: "bge-small-gpu-embeddings.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -122,9 +170,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: dataset-service
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /dataset-service
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: dataset-service
+            port:
+              number: 80
   - host: "dataset-service.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -139,9 +199,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: deployer
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /deployer
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: deployer
+            port:
+              number: 80
   - host: "deployer.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -156,9 +228,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: document-service
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /document-service
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: document-service
+            port:
+              number: 80
   - host: "document-service.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -173,10 +257,22 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: inboundjs
 spec:
   ingressClassName: kong
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /inboundjs
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: inboundjs
+            port:
+              number: 80
   - host: "inboundjs.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -191,9 +287,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: nodehub
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /nodehub
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nodehub
+            port:
+              number: 80
   - host: "nodehub.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -208,9 +316,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: orchestrator
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /orchestrator
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: orchestrator
+            port:
+              number: 80
   - host: "orchestrator.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -241,9 +361,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: telemetry
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /telemetry
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry
+            port:
+              number: 80
   - host: "telemetry.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -258,9 +390,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: testbed
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /testbed
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: testbed
+            port:
+              number: 80
   - host: "testbed.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -275,9 +419,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: transport-socket
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /transport-socket
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: transport-socket
+            port:
+              number: 80
   - host: "transport-socket.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -292,9 +448,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: uci-apis
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /uci-apis
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: uci-apis
+            port:
+              number: 80
   - host: "uci-apis.prod.kumbhsahaiyak.xyz"
     http:
       paths:
@@ -309,9 +477,21 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/strip-path: "true"
   name: user-management-service
 spec:
   rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /user-management-service
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user-management-service
+            port:
+              number: 80
   - host: "user-management-service.prod.kumbhsahaiyak.xyz"
     http:
       paths:
