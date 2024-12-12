@@ -2,7 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    konghq.com/strip-path: "true"
+    konghq.com/plugins: rewrite-plugin
+    konghq.com/regex-priority: "1"
   name: user
 spec:
   rules:
@@ -45,13 +46,6 @@ spec:
             port:
               number: 80
       - path: /user/api/jwt/verify
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: user
-            port:
-              number: 80
-      - path: /user
         pathType: ImplementationSpecific
         backend:
           service:
