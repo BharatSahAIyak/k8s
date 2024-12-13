@@ -64,7 +64,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/telemetry:dev
     newTag: 0.7.0-hotfix-5
   - name: ghcr.io/bharatsahaiyak/ai-tools-proxy:dev
-    newTag: 0.6.5
+    newTag: 0.7.0-hotfix-1
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev
