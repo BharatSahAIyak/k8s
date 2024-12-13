@@ -56,7 +56,7 @@ metadata:
     app.kubernetes.io/name: admin
   name: admin
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: admin

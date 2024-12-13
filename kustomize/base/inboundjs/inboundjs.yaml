@@ -41,10 +41,10 @@ spec:
           name: inboundjs
           resources:
             requests:
-              cpu: "2"
+              cpu: "8"
               memory: "8Gi"
             limits:
-              cpu: "2"
+              cpu: "8"
               memory: "8Gi"
       restartPolicy: Always
 ---
