@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: transport-socket
   name: transport-socket
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: transport-socket
@@ -41,11 +41,11 @@ spec:
           name: transport-socket
           resources:
             requests:
-              cpu: "2"
-              memory: "4Gi"
+              cpu: "4"
+              memory: "8Gi"
             limits:
-              cpu: "2"
-              memory: "4Gi"
+              cpu: "4"
+              memory: "8Gi"
       restartPolicy: Always
 ---
 apiVersion: v1
