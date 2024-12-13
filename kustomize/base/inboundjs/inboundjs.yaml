@@ -42,10 +42,10 @@ spec:
           resources:
             requests:
               cpu: "2"
-              memory: "4Gi"
+              memory: "8Gi"
             limits:
               cpu: "2"
-              memory: "4Gi"
+              memory: "8Gi"
       restartPolicy: Always
 ---
 apiVersion: v1
