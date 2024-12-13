@@ -24,9 +24,9 @@ resources:
   - ../../base/git-read-token
   - ../../base/admin
   - ../../base/kumbh/app
-  - ../../base/kumbh/lipsync
+  # - ../../base/kumbh/lipsync
   - ../../base/kumbh/flowise
-  - ../../base/kumbh/voice_cloning
+  # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
 
 namespace: ks-stage
@@ -36,14 +36,14 @@ images:
     newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/app
     newTag: ks-stage
-  - name: registry.local/kumbhsahaiyak/voice_cloning
-    newTag: ks-stage
+  # - name: registry.local/kumbhsahaiyak/voice_cloning
+  #   newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/flowise
     newTag: ks-stage
   - name: ghcr.io/kumbh-sahaiyak/bff:dev
     newTag: stage
-  - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
-    newTag: main
+  # - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
+  #   newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
     newTag: 0.7.0-hotfix-7
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
@@ -100,3 +100,6 @@ patches:
 - path: patch.yaml
 - path: bff-patch.yaml
 - path: user-service-patch.yaml
+
+patchesStrategicMerge:
+- scaling-patch.yaml
