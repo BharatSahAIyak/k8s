@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: inboundjs
   name: inboundjs
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: inboundjs
