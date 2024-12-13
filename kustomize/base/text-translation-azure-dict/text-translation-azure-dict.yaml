@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/name: text-translation-azure-dict
   name: text-translation-azure-dict
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: text-translation-azure-dict
@@ -28,9 +28,11 @@ spec:
           name: text-translation-azure-dict
           resources:
             requests:
-              memory: "512Mi"
+              cpu: "2"
+              memory: "4Gi"
             limits:
-              memory: "1024Mi"
+              cpu: "2"
+              memory: "4Gi"
               nvidia.com/gpu: "1"
 ---
 apiVersion: v1

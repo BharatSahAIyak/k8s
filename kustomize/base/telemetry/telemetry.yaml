@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: telemetry
   name: telemetry
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: telemetry
@@ -41,9 +41,11 @@ spec:
           name: telemetry
           resources:
             requests:
-              memory: "512Mi"
+              cpu: "2"
+              memory: "4Gi"
             limits:
-              memory: "512Mi"
+              cpu: "2"
+              memory: "4Gi"
       restartPolicy: Always
 ---
 apiVersion: v1

@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/name: bge-reranker
   name: bge-reranker
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: bge-reranker
@@ -26,9 +26,10 @@ spec:
           name: bge-reranker
           resources:
             requests:
-
+              cpu: 2
               memory: "4096Mi"
             limits:
+              cpu: 2
               memory: "4096Mi"
               nvidia.com/gpu: "1"
 ---

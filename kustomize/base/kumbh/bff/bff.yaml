@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: bff
   name: bff
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: bff
@@ -41,8 +41,10 @@ spec:
           name: bff
           resources:
             requests:
-              memory: "512Mi"
+              cpu: "2"
+              memory: "4Gi"
             limits:
+              cpu: "2"
               memory: "4Gi"
       imagePullSecrets:
       - name: ks-regcred
