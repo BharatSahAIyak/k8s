@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: inboundjs
   name: inboundjs
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: inboundjs
@@ -41,9 +41,11 @@ spec:
           name: inboundjs
           resources:
             requests:
-              memory: "1024Mi"
+              cpu: "2"
+              memory: "4Gi"
             limits:
-              memory: "1024Mi"
+              cpu: "2"
+              memory: "4Gi"
       restartPolicy: Always
 ---
 apiVersion: v1

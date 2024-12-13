@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: orchestrator
   name: orchestrator
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: orchestrator
@@ -41,11 +41,11 @@ spec:
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: 0.5
-              memory: "1024Mi"
+              cpu: "2"
+              memory: "4Gi"
             limits:
-              cpu: 1
-              memory: "2Gi"
+              cpu: "2"
+              memory: "4Gi"
       restartPolicy: Always
 ---
 apiVersion: v1

@@ -76,7 +76,7 @@ metadata:
     app.kubernetes.io/name: app
   name: app
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: app
