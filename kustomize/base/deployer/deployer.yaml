@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: deployer
   name: deployer
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: deployer
@@ -42,10 +42,10 @@ spec:
           resources:
             requests:
               cpu: "2"
-              memory: "4Gi"
+              memory: "8Gi"
             limits:
               cpu: "2"
-              memory: "4Gi"
+              memory: "8Gi"
       restartPolicy: Always
 ---
 apiVersion: v1

@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/name: bm25
   name: bm25
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: bm25
@@ -43,10 +43,10 @@ spec:
           resources:
             requests:
               cpu: "2"
-              memory: "4Gi"
+              memory: "8Gi"
             limits:
               cpu: "2"
-              memory: "4Gi"
+              memory: "8Gi"
       imagePullSecrets:
       - name: ks-regcred
       

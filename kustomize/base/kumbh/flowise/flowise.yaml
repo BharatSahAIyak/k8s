@@ -44,7 +44,7 @@ metadata:
     app.kubernetes.io/name: flowise
   name: flowise
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: flowise
