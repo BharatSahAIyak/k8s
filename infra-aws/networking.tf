@@ -54,6 +54,21 @@ resource "aws_subnet" "lb_subnet" {
 }
 # lb-machine <ends> #
 
+#admin subnet association
+resource "aws_route_table_association" "admin_subnet_assoc" {
+  subnet_id      = aws_subnet.admin_subnet.id
+  route_table_id = aws_route_table.public_route_table.id
+}
+
+#admin subnet
+resource "aws_subnet" "admin_subnet" {
+  vpc_id                  = aws_vpc.vn.id
+  cidr_block              = var.admin_subnet_cidr
+  availability_zone = "ap-south-1b"
+  tags = {
+    Name = "${var.vpc_name}-admin-subnet"
+  }
+}
 
 # NAT in the public subnet(lb_subnet)
 ## - nat_eip(aws_eip resource) specifically for nat_gateway
@@ -99,14 +114,7 @@ resource "aws_subnet" "master_subnet" {
     Name = "${var.vpc_name}-master-subnet"
   }
 }
-resource "aws_subnet" "admin_subnet" {
-  vpc_id                  = aws_vpc.vn.id
-  cidr_block              = var.admin_subnet_cidr
-  availability_zone = "ap-south-1b"
-  tags = {
-    Name = "${var.vpc_name}-admin-subnet"
-  }
-}
+
 resource "aws_subnet" "worker_subnet" {
   vpc_id                  = aws_vpc.vn.id
   cidr_block              = var.worker_subnet_cidr  
@@ -129,11 +137,6 @@ resource "aws_subnet" "stateful_subnet" {
 # Associate Private Route Table with each Private Subnet(master, admin, worker, stateful)
 resource "aws_route_table_association" "master_subnet_assoc" {
   subnet_id      = aws_subnet.master_subnet.id
-  route_table_id = aws_route_table.private_route_table.id
-}
-
-resource "aws_route_table_association" "admin_subnet_assoc" {
-  subnet_id      = aws_subnet.admin_subnet.id
   route_table_id = aws_route_table.private_route_table.id
 }
 
@@ -160,12 +163,38 @@ resource "aws_security_group" "admin_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_security_group" "internal_security_group" {
   name        = "${var.vpc_name}-internal-sg"
   description = "Security group for internal communication"
   vpc_id      = aws_vpc.vn.id
+  ingress {
+    from_port   = 22  # SSH port
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${var.vn_cidr}"]
+  }
+
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${var.vn_cidr}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   
 }
 
@@ -175,8 +204,20 @@ resource "aws_security_group" "lb_security_group" {
   vpc_id      = aws_vpc.vn.id  
 
   ingress {
+    from_port   = 22  # SSH port
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${var.vn_cidr}"]
+  }
+  ingress {
     from_port   = 80  
     to_port     = 80   
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+  ingress {
+    from_port   = 22
+    to_port     = 22   
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] 
   }
@@ -186,6 +227,12 @@ resource "aws_security_group" "lb_security_group" {
     to_port     = 443  
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]  
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 

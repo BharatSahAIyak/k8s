@@ -47,3 +47,5 @@ variable "k8s_stateful_disk_size" {}
 
 #VPN
 variable "onsite_IP" {}
+
+variable "env" {}

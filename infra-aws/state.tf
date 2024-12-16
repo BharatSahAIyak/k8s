@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "bhasaideploymentstorage"
-    key    = "bhasai/live/dev-k8s"
+    bucket = "ksproddeploymentstorage"
+    key    = "ks/live/prod-k8s"
     region = "ap-south-1"
   }
 }

@@ -53,7 +53,7 @@ resource "aws_instance" "vm" {
   }
 
   root_block_device {
-    volume_size           = var.node_disk_size
+    volume_size           = var.node_disk_size[count.index]
     volume_type           = "gp2"  
     delete_on_termination = true   
   }
@@ -72,7 +72,7 @@ data "aws_ami" "ubuntu_ami" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20241120"]
   }
 }
 

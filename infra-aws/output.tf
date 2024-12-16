@@ -2,9 +2,9 @@ output "master-vm-ips" {
   value = module.k8s_master.vm-ips
 }
 
-output "worker-vm-ips" {
-  value = merge(module.k8s_worker.vm-ips,module.k8s_worker_gpu.vm-ips)
-}
+# output "worker-vm-ips" {
+#   value = merge(module.k8s_worker.vm-ips,module.k8s_worker_gpu.vm-ips)
+# }
 
 output "admin-vm-ips" {
   value = module.k8s_admin.vm-ips
@@ -26,10 +26,10 @@ output "admin-private-key" {
   value = module.k8s_admin.private_key
   sensitive = true
 }
-output "worker-private-key" {
-  value = module.k8s_worker.private_key
-  sensitive = true
-}
+# output "worker-private-key" {
+#   value = module.k8s_worker.private_key
+#   sensitive = true
+# }
 
 output "worker-gpu-private-key" {
   value = module.k8s_worker_gpu.private_key
