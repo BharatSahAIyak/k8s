@@ -101,5 +101,5 @@ patches:
 - path: bff-patch.yaml
 - path: user-service-patch.yaml
 
-patchesStrategicMerge:
-- scaling-patch.yaml
+# patchesStrategicMerge:
+# - scaling-patch.yaml
