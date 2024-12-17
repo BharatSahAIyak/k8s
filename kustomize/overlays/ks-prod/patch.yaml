@@ -25,6 +25,16 @@ spec:
             name: admin
             port:
               number: 80
+  - host: "superset.admin.chatbot.kumbhsahaiyak.in"
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: admin
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
