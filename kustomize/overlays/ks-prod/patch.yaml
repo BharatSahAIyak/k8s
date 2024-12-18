@@ -15,16 +15,6 @@ spec:
             name: admin
             port:
               number: 80
-  - host: "admin.prod.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: admin
-            port:
-              number: 80
   - host: "superset.admin.chatbot.kumbhsahaiyak.in"
     http:
       paths:
@@ -403,16 +393,6 @@ spec:
     http:
       paths:
       - path: /user-management-service
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: user-management-service
-            port:
-              number: 80
-  - host: "dashboard.kumbhsahaiyak.xyz"
-    http:
-      paths:
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
