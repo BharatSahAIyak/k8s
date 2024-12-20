@@ -68,7 +68,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev
-    newTag: uat-dev
+    newTag: uat-dep-2
   - name: ghcr.io/kumbh-sahaiyak/ai-tools/bm25:dev
     newTag: main
 
