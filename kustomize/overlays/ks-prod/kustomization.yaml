@@ -55,7 +55,7 @@ images:
     newName: ghcr.io/samagra-development/user-service
     newTag: master
   - name: ghcr.io/bharatsahaiyak/transport-socket:dev
-    newTag: 0.7.0-hotfix-2
+    newTag: 0.7.0-hotfix-1
   - name: ghcr.io/bharatsahaiyak/dataset-service:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/deployer:dev
