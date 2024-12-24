@@ -28,6 +28,7 @@ resources:
   - ../../base/kumbh/flowise
   # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
+  - ../../base/kumbh/geoquery
 
 namespace: ks-stage
 
