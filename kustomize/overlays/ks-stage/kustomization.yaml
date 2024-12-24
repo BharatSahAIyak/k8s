@@ -35,7 +35,7 @@ images:
   - name: registry.local/bharatsahaiyak/admin
     newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/app
-    newTag: ks-stage
+    newTag: near-me
   # - name: registry.local/kumbhsahaiyak/voice_cloning
   #   newTag: ks-stage
   - name: registry.local/kumbhsahaiyak/flowise
