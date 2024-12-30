@@ -1,0 +1,79 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-api-photo-booth-wa-rewrite-plugin
+  name: bff-api-13
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/api/photo-booth/wa
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-place-search-rewrite-plugin
+  name: bff-api-13
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/place/search
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-translation-synthesize-rewrite-plugin
+  name: bff-api-13
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/translation/synthesize
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-stt-whatsapp-rewrite-plugin
+  name: bff-api-13
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/stt/whatsapp
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80

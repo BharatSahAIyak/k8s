@@ -1,0 +1,35 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-api-photo-booth-wa-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/photo-booth/wa"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-place-search-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/place/search"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-translation-synthesize-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/translation/synthesize"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-stt-whatsapp-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/stt/whatsapp"

@@ -29,6 +29,7 @@ resources:
   # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
   - ../../base/kumbh/geoquery
+  - ./api_plugin
 
 namespace: ks-stage
 
