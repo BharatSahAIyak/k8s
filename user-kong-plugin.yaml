@@ -1,0 +1,53 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-health-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/health"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-api-sendotp-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/sendOTP"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-api-login-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/login/otp"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-api-searchuserbyquery-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/searchUserByQuery"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-api-logout-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/logout"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-api-jwt-verify-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/jwt/verify"

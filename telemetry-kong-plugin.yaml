@@ -1,0 +1,17 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: telemetry-health-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/health"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: telemetry-metrics-v1-save-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/metrics/v1/save"

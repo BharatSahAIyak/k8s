@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: telemetry-health-rewrite-plugin
+  name: telemetry-api-1
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /telemetry/health
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: telemetry-metrics-v1-save-rewrite-plugin
+  name: telemetry-api-2
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /telemetry/metrics/v1/save
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry
+            port:
+              number: 80

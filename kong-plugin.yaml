@@ -1,0 +1,116 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-health-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/health"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-pwa-tts-initiate-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/pwa/tts/initiate"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-pwa-tts-synthesize-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/pwa/tts/synthesize"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-pwa-stt-telemetry-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/pwa/stt/telemetry"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-pwa-stt-upload-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/pwa/stt/upload"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-pwa-stt-initiate-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/pwa/stt/initiate"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-pwa-stt-synthesize-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/pwa/stt/synthesize"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-feedback-add-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/feedback/add"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-lipsync-video-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/lipsync/video"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-login-option-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/login/option"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-user-updateuser-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/user/updateUser/(.*)"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-api-photo-booth-pwa-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/photo-booth/pwa"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-metrics-v1-save-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/metrics/v1/save"

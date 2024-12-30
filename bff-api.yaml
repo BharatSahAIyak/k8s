@@ -1,0 +1,259 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-health-rewrite-plugin
+  name: bff-api-1
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/health
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-pwa-tts-initiate-rewrite-plugin
+  name: bff-api-2
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/pwa/tts/initiate
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-pwa-tts-synthesize-rewrite-plugin
+  name: bff-api-3
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/pwa/tts/synthesize
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-pwa-stt-telemetry-rewrite-plugin
+  name: bff-api-4
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/pwa/stt/telemetry
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-pwa-stt-upload-rewrite-plugin
+  name: bff-api-5
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/pwa/stt/upload
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-pwa-stt-initiate-rewrite-plugin
+  name: bff-api-6
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/pwa/stt/initiate
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-pwa-stt-synthesize-rewrite-plugin
+  name: bff-api-7
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/pwa/stt/synthesize
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-feedback-add-rewrite-plugin
+  name: bff-api-8
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/feedback/add
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-lipsync-video-rewrite-plugin
+  name: bff-api-9
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/lipsync/video
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80      
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-login-option-rewrite-plugin
+  name: bff-api-10
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/login/option
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-user-updateuser-rewrite-plugin
+  name: bff-api-11
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/user/updateUser/(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-api-photo-booth-pwa-rewrite-plugin
+  name: bff-api-12
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/api/photo-booth/pwa
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-metrics-v1-save-rewrite-plugin
+  name: bff-api-13
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/metrics/v1/save
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
