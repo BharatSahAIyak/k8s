@@ -7,6 +7,7 @@ resources:
   - ../../base/ai-tools-proxy
   - ../../base/auth-service
   - ../../base/kumbh/bff
+  - ../../base/kumbh/api_plugin
   - ../../base/dataset-service
   - ../../base/bge-small-gpu-embeddings
   - ../../base/bge-reranker
@@ -29,7 +30,6 @@ resources:
   # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
   - ../../base/kumbh/geoquery
-  - ./api_plugin
 
 namespace: ks-stage
 

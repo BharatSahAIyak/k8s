@@ -1,0 +1,77 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: move-to-health
+plugin: request-transformer
+config:
+  replace:
+    uri: "/health"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: "move-to-health"
+  name: api-block
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /bff/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+      - path: /uci-apis/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: uci-apis
+            port:
+              number: 80
+      - path: /dataset-service/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: dataset-service
+            port:
+              number: 80
+      - path: /document-service/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: document-service
+            port:
+              number: 80
+      - path: /ai-tools-proxy/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: ai-tools-proxy
+            port:
+              number: 80
+      - path: /deployer/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: deployer
+            port:
+              number: 80
+      - path: /telemetry/api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry
+            port:
+              number: 80
+      - path: /user/swagger
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user
+            port:
+              number: 80
