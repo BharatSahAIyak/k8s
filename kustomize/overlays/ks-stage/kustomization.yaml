@@ -31,6 +31,7 @@ resources:
   - ../../base/kumbh/bm25
   - ../../base/kumbh/geoquery
   - ../../base/kumbh/telemetry_reliability_auto_tagger
+  - ../../base/kumbh/html-to-pdf
 
 namespace: ks-stage
 
