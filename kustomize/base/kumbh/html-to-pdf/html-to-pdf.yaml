@@ -32,6 +32,10 @@ spec:
         - envFrom:
           - secretRef:
               name: html-to-pdf
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
           image: ghcr.io/kumbh-sahaiyak/html_to_pdf:main
           imagePullPolicy: Always
           name: html-to-pdf
@@ -40,6 +44,8 @@ spec:
               memory: "512Mi"
             limits:
               memory: "1024Mi"
+      imagePullSecrets:
+      - name: ks-regcred
       restartPolicy: Always
 ---
 apiVersion: v1
