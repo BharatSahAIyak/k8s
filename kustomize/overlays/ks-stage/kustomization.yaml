@@ -30,6 +30,7 @@ resources:
   # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
   - ../../base/kumbh/geoquery
+  - ../../base/kumbh/telemetry_reliability_auto_tagger
 
 namespace: ks-stage
 
