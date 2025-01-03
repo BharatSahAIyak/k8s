@@ -1,13 +1,13 @@
 apiVersion: secrets.hashicorp.com/v1beta1
 kind: VaultStaticSecret
 metadata:
-  name: telemetry_reliability_auto_tagger
+  name: telemetry-reliability-auto-tagger
 spec:
   type: kv-v2
   mount: kv
-  path: NAMESPACE/telemetry_reliability_auto_tagger
+  path: NAMESPACE/telemetry-reliability-auto-tagger
   destination:
-    name: telemetry_reliability_auto_tagger
+    name: telemetry-reliability-auto-tagger
     create: true
   refreshAfter: 10s
   vaultAuthRef: static-auth
@@ -16,25 +16,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: telemetry_reliability_auto_tagger
-  name: telemetry_reliability_auto_tagger
+    app.kubernetes.io/name: telemetry-reliability-auto-tagger
+  name: telemetry-reliability-auto-tagger
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: telemetry_reliability_auto_tagger
+      app.kubernetes.io/name: telemetry-reliability-auto-tagger
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: telemetry_reliability_auto_tagger
+        app.kubernetes.io/name: telemetry-reliability-auto-tagger
     spec:
       containers:
         - envFrom:
           - secretRef:
-              name: telemetry_reliability_auto_tagger
+              name: telemetry-reliability-auto-tagger
           image: ghcr.io/bharatsahaiyak/telemetry-reliability-auto-tagger:dev
           imagePullPolicy: Always
-          name: telemetry_reliability_auto_tagger
+          name: telemetry-reliability-auto-tagger
           resources:
             requests:
               memory: "512Mi"
@@ -45,10 +45,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: telemetry_reliability_auto_tagger
+  name: telemetry-reliability-auto-tagger
 spec:
   selector:
-    app.kubernetes.io/name: telemetry_reliability_auto_tagger
+    app.kubernetes.io/name: telemetry-reliability-auto-tagger
   ports:
     - protocol: TCP
       port: 80
@@ -57,7 +57,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: telemetry_reliability_auto_tagger
+  name: telemetry-reliability-auto-tagger
   annotations:
     konghq.com/strip-path: "true"
 spec:
@@ -70,6 +70,6 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: telemetry_reliability_auto_tagger
+            name: telemetry-reliability-auto-tagger
             port:
               number: 80
