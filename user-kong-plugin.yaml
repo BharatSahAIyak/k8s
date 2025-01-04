@@ -51,3 +51,12 @@ plugin: request-transformer
 config:
   replace:
     uri: "/api/jwt/verify"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: user-api-7-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/login-with-unique-id"

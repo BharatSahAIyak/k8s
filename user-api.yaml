@@ -116,3 +116,23 @@ spec:
             name: user
             port:
               number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: user-api-7-plugin
+  name: user-api-7
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /user/api/login-with-unique-id
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: user
+            port:
+              number: 80
