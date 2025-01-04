@@ -4,7 +4,7 @@ metadata:
   name: user
 spec:
   rules:
-  - host: "user.stage.kumbhsahaiyak.xyz"
+  - host: "app.stage.kumbhsahaiyak.xyz"
     http:
       paths:
       - path: /api/updateUser/(.*)
@@ -43,13 +43,6 @@ spec:
             port:
               number: 80
       - path: /api/jwt/verify
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: user
-            port:
-              number: 80
-      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
