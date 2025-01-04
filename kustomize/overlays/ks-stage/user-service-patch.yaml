@@ -4,7 +4,7 @@ metadata:
   name: user
 spec:
   rules:
-  - host: "app.stage.kumbhsahaiyak.xyz"
+  - host: "user.stage.kumbhsahaiyak.xyz"
     http:
       paths:
       - path: /api/updateUser/(.*)
