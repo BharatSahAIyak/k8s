@@ -3,6 +3,7 @@ resources:
   - ../../base/text-translation-azure-dict
   - ../../base/bge-small-gpu-embeddings
   - ../../base/agri-flow-classifier-bert
+  - ../../base/org-classifier
   - ../../base/llm-openai-evaluator
   - ../../base/asr-mms
   - ../../base/mini-lm-embed
@@ -16,6 +17,8 @@ resources:
 namespace: bhasai-prod
 
 images:
+  - name: ghcr.io/bharatsahaiyak/org-classifier:dev
+    newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/ai-tools/spell_check
     newTag: 0.6.0-rc-1
   - name: ghcr.io/bharatsahaiyak/ai-tools/ner
