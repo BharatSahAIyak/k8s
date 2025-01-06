@@ -1,6 +1,5 @@
 resources:
-  - ../../base/broadcast-service
-  - ../../base/inboundjs
+\  - ../../base/inboundjs
   - ../../base/pdf-generator
   - ../../base/telemetry
   - ../../base/testbed
