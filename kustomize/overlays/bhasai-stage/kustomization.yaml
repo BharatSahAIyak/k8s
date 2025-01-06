@@ -1,5 +1,5 @@
 resources:
-\  - ../../base/inboundjs
+  - ../../base/inboundjs
   - ../../base/pdf-generator
   - ../../base/telemetry
   - ../../base/testbed
