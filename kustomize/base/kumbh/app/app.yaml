@@ -103,6 +103,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    konghq.com/plugins: app-rate-limit
   name: kumbh-app
 spec:
   selector:
