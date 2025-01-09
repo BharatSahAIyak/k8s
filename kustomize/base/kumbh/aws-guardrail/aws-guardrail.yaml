@@ -67,7 +67,7 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "app.stage.kumbhsahaiyak.xyz"
+  - host: "aws-guardrail.stage.kumbhsahaiyak.xyz"
     http:
       paths:
       - path: /guardrail
