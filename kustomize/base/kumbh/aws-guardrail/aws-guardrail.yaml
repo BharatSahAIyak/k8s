@@ -67,10 +67,10 @@ metadata:
 spec:
   ingressClassName: kong
   rules:
-  - host: "aws-guardrail.stage.kumbhsahaiyak.xyz"
+  - host: "app.stage.kumbhsahaiyak.xyz"
     http:
       paths:
-      - path: /guardrail
+      - path: /guardrail/
         pathType: ImplementationSpecific
         backend:
           service:
