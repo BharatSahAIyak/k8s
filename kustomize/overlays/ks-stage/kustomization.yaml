@@ -32,6 +32,7 @@ resources:
   - ../../base/kumbh/geoquery
   - ../../base/kumbh/telemetry_reliability_auto_tagger
   - ../../base/kumbh/html-to-pdf
+  - ../../base/kumbh/aws-guardrail
 
 namespace: ks-stage
 
