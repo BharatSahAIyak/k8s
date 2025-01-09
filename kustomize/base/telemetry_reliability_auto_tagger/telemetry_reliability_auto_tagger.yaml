@@ -1,0 +1,75 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: telemetry-reliability-auto-tagger
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/telemetry-reliability-auto-tagger
+  destination:
+    name: telemetry-reliability-auto-tagger
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: telemetry-reliability-auto-tagger
+  name: telemetry-reliability-auto-tagger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: telemetry-reliability-auto-tagger
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: telemetry-reliability-auto-tagger
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: telemetry-reliability-auto-tagger
+          image: ghcr.io/bharatsahaiyak/telemetry-reliability-auto-tagger:dev
+          imagePullPolicy: Always
+          name: telemetry-reliability-auto-tagger
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "1024Mi"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemetry-reliability-auto-tagger
+spec:
+  selector:
+    app.kubernetes.io/name: telemetry-reliability-auto-tagger
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: telemetry-reliability-auto-tagger
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /telemetry-reliability-auto-tagger
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: telemetry-reliability-auto-tagger
+            port:
+              number: 80

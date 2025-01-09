@@ -29,6 +29,7 @@ resources:
   - ../../base/kumbh/flowise
   # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
+  - ../../base/kumbh/telemetry_reliability_auto_tagger
 
 namespace: ks-prod
 
