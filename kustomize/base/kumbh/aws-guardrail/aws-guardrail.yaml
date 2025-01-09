@@ -36,7 +36,7 @@ spec:
               name: service-urls
           - secretRef:
               name: service-creds
-          image: ghcr.io/kumbh-sahaiyak/aws-guardrail:main
+          image: ghcr.io/kumbh-sahaiyak/ai-tools/aws-guardrail:main
           imagePullPolicy: Always
           name: aws-guardrail
           resources:
