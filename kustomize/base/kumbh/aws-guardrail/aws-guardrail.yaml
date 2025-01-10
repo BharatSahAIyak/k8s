@@ -36,14 +36,14 @@ spec:
               name: service-urls
           - secretRef:
               name: service-creds
-          image: ghcr.io/kumbh-sahaiyak/ai-tools/aws-guardrail:main
+          image: ghcr.io/kumbh-sahaiyak/aws_guardrail:main
           imagePullPolicy: Always
           name: aws-guardrail
           resources:
             requests:
-              memory: "512Mi"
-            limits:
               memory: "1Gi"
+            limits:
+              memory: "2Gi"
       imagePullSecrets:
       - name: ks-regcred
       restartPolicy: Always
