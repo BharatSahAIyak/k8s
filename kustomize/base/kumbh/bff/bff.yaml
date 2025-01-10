@@ -51,6 +51,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    konghq.com/plugins: bff-rate-limit
   name: bff
 spec:
   selector:
