@@ -105,5 +105,6 @@ patches:
 - path: patch.yaml
 - path: bff-patch.yaml
 
-# patchesStrategicMerge:
+patchesStrategicMerge:
 # - scaling-patch.yaml
+ - rate-limit-patch.yaml

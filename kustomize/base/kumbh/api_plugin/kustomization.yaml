@@ -2,3 +2,4 @@ resources:
   - bff-api.yaml
   - kong-plugin-bff.yaml
   - api-block.yaml
+  - rate-limit-plugin.yaml
