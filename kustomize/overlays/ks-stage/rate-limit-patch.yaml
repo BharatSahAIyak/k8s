@@ -6,7 +6,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
 config:
-  minute: 500
+  minute: 100000
   limit_by: ip
   policy: local
 plugin: rate-limiting
