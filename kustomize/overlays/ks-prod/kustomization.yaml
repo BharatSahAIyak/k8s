@@ -77,7 +77,7 @@ images:
   - name: ghcr.io/kumbh-sahaiyak/ai-tools/bm25:dev
     newTag: main
   - name: ghcr.io/kumbh-sahaiyak/html_to_pdf:main
-    newTag: v1.1.0
+    newTag: v1.1.1
   - name: ghcr.io/kumbh-sahaiyak/aws_guardrail_fastapi:main
     newTag: v1.1.0
 
