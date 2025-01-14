@@ -63,6 +63,7 @@ spec:
     - "--build-arg=NEXT_PUBLIC_AUTHORIZATION=$(NEXT_PUBLIC_AUTHORIZATION)"
     - "--build-arg=NEXT_PUBLIC_GOOGLE_ANALYTICS=$(NEXT_PUBLIC_GOOGLE_ANALYTICS)"
     - "--build-arg=NEXT_PUBLIC_MAXIMUM_GIF_GENERATION=$(NEXT_PUBLIC_MAXIMUM_GIF_GENERATION)"
+    - "--build-arg=ADMIN_API_KEY=$(ADMIN_API_KEY)"
     envFrom:
       - secretRef:
           name: ks-git-read-token
