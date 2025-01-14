@@ -30,6 +30,9 @@ resources:
   # - ../../base/kumbh/voice_cloning
   - ../../base/kumbh/bm25
   - ../../base/kumbh/telemetry_reliability_auto_tagger
+  - ../../base/kumbh/html-to-pdf
+  - ../../base/kumbh/geoquery
+  - ../../base/kumbh/aws-guardrail
 
 namespace: ks-prod
 
@@ -73,6 +76,10 @@ images:
     newTag: 0.7.1-uat-2
   - name: ghcr.io/kumbh-sahaiyak/ai-tools/bm25:dev
     newTag: main
+  - name: ghcr.io/kumbh-sahaiyak/html_to_pdf:main
+    newTag: v1.1.0
+  - name: ghcr.io/kumbh-sahaiyak/aws_guardrail_fastapi:main
+    newTag: v1.1.0
 
 replacements:
 - source:

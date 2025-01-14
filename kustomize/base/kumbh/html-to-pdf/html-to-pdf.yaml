@@ -1,0 +1,81 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: html-to-pdf
+spec:
+  type: kv-v2
+  mount: kv
+  path: NAMESPACE/html-to-pdf
+  destination:
+    name: html-to-pdf
+    create: true
+  refreshAfter: 10s
+  vaultAuthRef: static-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: html-to-pdf
+  name: html-to-pdf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: html-to-pdf
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: html-to-pdf
+    spec:
+      containers:
+        - envFrom:
+          - secretRef:
+              name: html-to-pdf
+          - secretRef:
+              name: service-urls
+          - secretRef:
+              name: service-creds
+          image: ghcr.io/kumbh-sahaiyak/html_to_pdf:main
+          imagePullPolicy: Always
+          name: html-to-pdf
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "1024Mi"
+      imagePullSecrets:
+      - name: ks-regcred
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: html-to-pdf
+spec:
+  selector:
+    app.kubernetes.io/name: html-to-pdf
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: html-to-pdf
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "app.stage.kumbhsahaiyak.xyz"
+    http:
+      paths:
+      - path: /html-to-pdf
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: html-to-pdf
+            port:
+              number: 80

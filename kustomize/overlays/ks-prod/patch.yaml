@@ -402,6 +402,64 @@ spec:
             name: user-management-service
             port:
               number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: html-to-pdf
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /html-to-pdf
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: html-to-pdf
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: geoquery
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /geoquery
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: geoquery
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aws-guardrail
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /guardrail/
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: aws-guardrail
+            port:
+              number: 80
 # ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
