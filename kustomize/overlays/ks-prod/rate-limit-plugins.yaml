@@ -1,0 +1,25 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limit-20ps
+  namespace: ks-prod
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  second: 20
+  limit_by: ip
+  policy: local
+plugin: rate-limiting
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limit-1000ps
+  namespace: ks-prod
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  second: 1000
+  limit_by: ip
+  policy: local
+plugin: rate-limiting

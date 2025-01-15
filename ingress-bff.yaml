@@ -1,0 +1,57 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-api-photo-booth-wa-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/photo-booth/wa"
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: bff-api-photo-booth-pwa-rewrite-plugin
+plugin: request-transformer
+config:
+  replace:
+    uri: "/api/photo-booth/pwa"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-api-photo-booth-wa-rewrite-plugin
+  name: bff-api-pb-wa
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /bff/api/photo-booth/wa
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: bff-api-photo-booth-pwa-rewrite-plugin
+  name: bff-api-pb-pwa
+spec:
+  ingressClassName: kong
+  rules:
+  - host: "chatbot.kumbh.up.gov.in"
+    http:
+      paths:
+      - path: /bff/api/photo-booth/pwa
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: bff
+            port:
+              number: 80

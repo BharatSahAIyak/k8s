@@ -33,6 +33,7 @@ resources:
   - ../../base/kumbh/html-to-pdf
   - ../../base/kumbh/geoquery
   - ../../base/kumbh/aws-guardrail
+  - ./rate-limit-plugins.yaml
 
 namespace: ks-prod
 
@@ -110,3 +111,6 @@ patches:
 - path: bff-patch.yaml
 - path: user-service-patch.yaml
 - path: kumbh-patch.yaml
+
+patchesStrategicMerge:
+ - rate-limit-patch.yaml

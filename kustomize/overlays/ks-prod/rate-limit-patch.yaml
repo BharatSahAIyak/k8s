@@ -1,0 +1,146 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: ai-tools-proxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: auth-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-1000ps
+  name: aws-guardrail
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: bff
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-1000ps
+  name: bge-reranker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-1000ps
+  name: bge-small-gpu-embeddings
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: bm25
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: dataset-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: deployer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: document-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: geoquery
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-1000ps
+  name: html-to-pdf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: inboundjs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: nodehub
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: orchestrator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: telemetry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: telemetry-reliability-auto-tagger
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: testbed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: uci-apis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: user
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    konghq.com/plugins: rate-limit-20ps
+  name: user-management-service
