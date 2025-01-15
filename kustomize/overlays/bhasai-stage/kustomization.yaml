@@ -38,7 +38,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/transport-socket:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/dataset-service:dev
-    newTag: 0.6.5
+    newTag: main
   - name: ghcr.io/bharatsahaiyak/deployer:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/document-service:dev
