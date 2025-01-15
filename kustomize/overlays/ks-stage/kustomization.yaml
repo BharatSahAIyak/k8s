@@ -76,6 +76,8 @@ images:
     newTag: 0.7.1-uat-2
   - name: ghcr.io/kumbh-sahaiyak/ai-tools/bm25:dev
     newTag: main
+  - name: ghcr.io/kumbh-sahaiyak/html_to_pdf:main
+    newTag: stage
 
 replacements:
 - source:
