@@ -47,7 +47,7 @@ images:
   - name: registry.local/kumbhsahaiyak/flowise
     newTag: ks-prod
   - name: ghcr.io/kumbh-sahaiyak/bff:dev
-    newTag: v1.1.1
+    newTag: v1.1.3
   # - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
   #   newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
