@@ -50,7 +50,7 @@ images:
   # - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
   #   newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
-    newTag: 0.7.2-dev
+    newTag: v0.7.2-dev
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
     newTag: 0.7.0-hotfix-1
   - name: ghcr.io/bharatsahaiyak/user-management-service
