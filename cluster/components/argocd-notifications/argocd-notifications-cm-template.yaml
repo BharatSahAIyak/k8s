@@ -33,7 +33,7 @@ data:
         body: |
           {
             "username": "{{.app.metadata.name}}",
-            "content": "DISCORD_TAG\n```diff\n+ Application degraded\n```",
+            "content": "DISCORD_TAG\n```diff\n- Application degraded\n```",
             "title": "Application {{.app.metadata.name}} has degraded",
             "embeds": [
               {
