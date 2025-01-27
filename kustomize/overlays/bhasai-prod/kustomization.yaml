@@ -28,7 +28,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/ai-tools/text_translation_azure_dict
     newTag: 0.6.0-rc-1
   - name: ghcr.io/bharatsahaiyak/ai-tools/agri_flow_classifier_bert
-    newTag: 0.6.0-rc-1
+    newTag: 0.7.0
   - name: ghcr.io/bharatsahaiyak/ai-tools/llm_openai_evaluator
     newTag: 0.6.0-rc-1
   - name: ghcr.io/bharatsahaiyak/ai-tools/asr_mms
