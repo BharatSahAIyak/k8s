@@ -50,7 +50,7 @@ images:
   # - name: ghcr.io/kumbh-sahaiyak/lipsync:dev
   #   newTag: main
   - name: ghcr.io/bharatsahaiyak/orchestrator:dev
-    newTag: 0.7.2-dev-1
+    newTag: v0.7.2-dev-1
   - name: ghcr.io/bharatsahaiyak/uci-apis:dev
     newTag: 0.7.0-hotfix-1
   - name: ghcr.io/bharatsahaiyak/user-management-service
@@ -59,7 +59,7 @@ images:
     newName: ghcr.io/samagra-development/user-service
     newTag: master
   - name: ghcr.io/bharatsahaiyak/transport-socket:dev
-    newTag: 0.7.0-hotfix-2
+    newTag: v0.7.1-dev
   - name: ghcr.io/bharatsahaiyak/dataset-service:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/deployer:dev
@@ -73,7 +73,7 @@ images:
   - name: ghcr.io/bharatsahaiyak/nodehub:dev
     newTag: 0.6.5
   - name: ghcr.io/bharatsahaiyak/inbound-js:dev
-    newTag: 0.7.2-dev
+    newTag: v0.7.2-dev-hotfix-1
   - name: ghcr.io/kumbh-sahaiyak/ai-tools/bm25:dev
     newTag: main
   - name: ghcr.io/kumbh-sahaiyak/html_to_pdf:main
