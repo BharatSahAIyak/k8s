@@ -29,6 +29,7 @@ spec:
     - "--build-arg=REACT_APP_SOCKET_URL=$(REACT_APP_SOCKET_URL)"
     - "--build-arg=REACT_APP_UCI_API=$(REACT_APP_UCI_API)"
     - "--build-arg=REACT_APP_SOCKET_PATH=$(REACT_APP_SOCKET_PATH)"
+    - "--build-arg=REACT_APP_ORCHESTRATOR_URL=$(REACT_APP_ORCHESTRATOR_URL)"
     envFrom:
       - secretRef:
           name: git-read-token
