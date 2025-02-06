@@ -54,7 +54,7 @@ resource "aws_instance" "vm" {
 
   root_block_device {
     volume_size           = var.node_disk_size[count.index]
-    volume_type           = "gp2"  
+    volume_type           = "gp3"  
     delete_on_termination = true   
   }
 
